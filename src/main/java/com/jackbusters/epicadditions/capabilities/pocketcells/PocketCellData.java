@@ -4,7 +4,7 @@ import net.minecraft.nbt.CompoundTag;
 
 public class PocketCellData {
     private boolean hasPocketCell; // A quick value to state whether or not this player has a pocket cell yet
-    private int pocketCellLevel; // The pocket cell level of the player. Each level expands the width, length, and height by 32. Level 1 = 32x32x32, 2 = 64x64x64, etc...
+    private int pocketCellLevel; // The pocket cell level of the player. Each level expands the width, length, and height by 16. Level 1 = 17x17x17, 2 = 33x33x33, etc...
     private int pocketCellIndex; // The index will denote which pocket cell is associated with this player.
     private final int MAX_CELL_LEVEL = 4; // The max cell level allowed.
 
