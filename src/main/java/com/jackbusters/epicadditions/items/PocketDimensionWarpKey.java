@@ -18,7 +18,7 @@ import java.util.function.Function;
 import java.util.function.Predicate;
 
 public class PocketDimensionWarpKey extends BowItem {
-    Predicate<ItemStack> EVERYTHING = (itemStack) -> true;
+    private final Predicate<ItemStack> EVERYTHING = (itemStack) -> true;
 
     public PocketDimensionWarpKey(Properties properties) {
         super(properties);
@@ -37,20 +37,6 @@ public class PocketDimensionWarpKey extends BowItem {
             sendToProperDimension(playerUsing, pocketDimension, playerDimension, overworld);
         }
     }
-
-//    @Override
-//    public @NotNull InteractionResultHolder<ItemStack> use(@NotNull Level level, @NotNull Player playerUsing, @NotNull InteractionHand usedHand) {
-//        if(level instanceof ServerLevel serverLevel) {
-//            MinecraftServer minecraftServer = serverLevel.getServer();
-//
-//            ResourceKey<Level> pocketDimensionKey = ResourceKey.create(Registries.DIMENSION, new ResourceLocation(EpicJourney.MOD_ID, "pocket"));
-//            ServerLevel pocketDimension = minecraftServer.getLevel(pocketDimensionKey);
-//            ServerLevel playerDimension = minecraftServer.getLevel(serverLevel.dimension());
-//            ServerLevel overworld = minecraftServer.getLevel(Level.OVERWORLD);
-//            sendToProperDimension(playerUsing, pocketDimension, playerDimension, overworld);
-//        }
-//        return super.use(level, playerUsing, usedHand);
-//    }
 
     /*
         Will assure the key correctly teleports the player to and from their Pocket Dimension cell.
@@ -80,7 +66,7 @@ public class PocketDimensionWarpKey extends BowItem {
     }
 
     /*
-        Piggy-Backing off the bow to provide a useful Random Things-like animation to using the Pocket Dimension key
+        Piggy-Backing off the bow to provide a useful "Random Things"-like animation to using the Pocket Dimension key
      */
     @Override
     public @NotNull Predicate<ItemStack> getAllSupportedProjectiles() {

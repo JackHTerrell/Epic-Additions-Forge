@@ -1,5 +1,7 @@
 package com.jackbusters.epicadditions;
 
+import com.jackbusters.epicadditions.capabilities.pocketcells.PocketCellProvider;
+import net.minecraft.world.entity.Entity;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.registries.NewRegistryEvent;
