@@ -1,14 +1,14 @@
-package com.jackbusters.epicjourney;
+package com.jackbusters.epicadditions;
 
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.registries.NewRegistryEvent;
 
-@Mod(EpicJourney.MOD_ID)
-public class EpicJourney {
-    public static final String MOD_ID = "epicjourney";
+@Mod(EpicAdditions.MOD_ID)
+public class EpicAdditions {
+    public static final String MOD_ID = "epicadditions";
 
-    public EpicJourney(){
+    public EpicAdditions(){
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::RegisterRegistries);
     }
 

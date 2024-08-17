@@ -1,4 +1,4 @@
-package com.jackbusters.epicjourney.glm;
+package com.jackbusters.epicadditions.glm;
 
 import com.google.common.base.Suppliers;
 import com.mojang.serialization.Codec;

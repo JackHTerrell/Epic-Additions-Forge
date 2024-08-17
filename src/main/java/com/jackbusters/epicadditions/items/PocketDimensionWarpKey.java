@@ -1,6 +1,6 @@
-package com.jackbusters.epicjourney.items;
+package com.jackbusters.epicadditions.items;
 
-import com.jackbusters.epicjourney.EpicJourney;
+import com.jackbusters.epicadditions.EpicAdditions;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
@@ -30,7 +30,7 @@ public class PocketDimensionWarpKey extends BowItem {
         if(level instanceof ServerLevel serverLevel) {
             MinecraftServer minecraftServer = serverLevel.getServer();
 
-            ResourceKey<Level> pocketDimensionKey = ResourceKey.create(Registries.DIMENSION, new ResourceLocation(EpicJourney.MOD_ID, "pocket"));
+            ResourceKey<Level> pocketDimensionKey = ResourceKey.create(Registries.DIMENSION, new ResourceLocation(EpicAdditions.MOD_ID, "pocket"));
             ServerLevel pocketDimension = minecraftServer.getLevel(pocketDimensionKey);
             ServerLevel playerDimension = minecraftServer.getLevel(serverLevel.dimension());
             ServerLevel overworld = minecraftServer.getLevel(Level.OVERWORLD);
