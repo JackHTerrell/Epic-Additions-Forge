@@ -19,5 +19,6 @@ public class EpicAdditions {
         EpicRegistry.registerEntities();
         EpicRegistry.registerCreativeModeTabs();
         EpicRegistry.registerLootModifiers();
+        EpicRegistry.registerBlocks();
     }
 }

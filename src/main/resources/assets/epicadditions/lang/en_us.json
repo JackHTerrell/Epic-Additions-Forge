@@ -1,4 +1,6 @@
 {
     "itemGroup.main.epicadditions": "Epic Additions",
-    "item.epicadditions.pocket_dimension_key": "Pocket Dimension Key"
+    "item.epicadditions.pocket_dimension_key": "Pocket Dimension Key",
+    "item.epicadditions.cell_block": "Cell Block",
+    "block.epicadditions.cell_block": "Cell Block"
 }
