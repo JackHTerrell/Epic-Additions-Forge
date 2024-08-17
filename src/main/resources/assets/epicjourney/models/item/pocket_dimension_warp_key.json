@@ -1,0 +1,7 @@
+{
+  "parent": "item/generated",
+  "textures": {
+    "layer0": "epicjourney:items/pocket_dimension_warp_key"
+  }
+}
+

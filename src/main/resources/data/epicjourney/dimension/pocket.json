@@ -1,0 +1,16 @@
+{
+  "type": "epicjourney:pocket",
+  "generator": {
+    "type": "minecraft:flat",
+    "settings": {
+      "biome": "minecraft:plains",
+      "layers": [
+        {
+          "block": "minecraft:air",
+          "height": 0
+        }
+      ],
+      "structure_overrides": []
+    }
+  }
+}
