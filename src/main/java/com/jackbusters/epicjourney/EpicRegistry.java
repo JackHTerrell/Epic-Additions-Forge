@@ -22,7 +22,7 @@ public class EpicRegistry {
     public static final DeferredRegister<Codec<? extends IGlobalLootModifier>> LOOT_MODIFIERS = DeferredRegister.create(ForgeRegistries.Keys.GLOBAL_LOOT_MODIFIER_SERIALIZERS, EpicJourney.MOD_ID);
 
     // Items
-    public static final RegistryObject<Item> POCKET_DIMENSION_KEY = ITEMS.register("pocket_dimension_warp_key", ()->
+    public static final RegistryObject<Item> POCKET_DIMENSION_KEY = ITEMS.register("pocket_dimension_key", ()->
             new PocketDimensionWarpKey(new Item.Properties()));
 
     // Creative Mode Tabs
