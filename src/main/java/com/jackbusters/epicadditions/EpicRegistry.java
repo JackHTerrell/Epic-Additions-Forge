@@ -1,5 +1,6 @@
 package com.jackbusters.epicadditions;
 
+import com.jackbusters.epicadditions.blocks.CellBlock;
 import com.jackbusters.epicadditions.glm.EpicLootModifier;
 import com.jackbusters.epicadditions.items.PocketDimensionWarpKey;
 import com.mojang.serialization.Codec;
@@ -30,7 +31,10 @@ public class EpicRegistry {
 
     // Blocks
     public static final RegistryObject<Block> CELL_BLOCK = BLOCKS.register("cell_block",
-            () -> new Block(BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_CYAN).instrument(NoteBlockInstrument.BASEDRUM).strength(-1.0F, 3600000.0F).noLootTable().isValidSpawn(Blocks::never).noOcclusion()));
+            () -> new CellBlock(BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_CYAN)
+                    .instrument(NoteBlockInstrument.BASEDRUM).strength(-1.0F, 3600000.0F)
+                    .noLootTable().isValidSpawn(Blocks::never).isRedstoneConductor(Blocks::never)
+                    .isSuffocating(Blocks::never).isViewBlocking(Blocks::never).noOcclusion()));
 
     // Items
     public static final RegistryObject<Item> POCKET_DIMENSION_KEY = ITEMS.register("pocket_dimension_key", ()->
