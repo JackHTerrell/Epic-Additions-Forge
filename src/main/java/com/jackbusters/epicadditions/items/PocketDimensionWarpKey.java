@@ -1,6 +1,9 @@
 package com.jackbusters.epicadditions.items;
 
 import com.jackbusters.epicadditions.EpicAdditions;
+import com.jackbusters.epicadditions.EpicRegistry;
+import com.jackbusters.epicadditions.capabilities.pocketcells.PocketCellProvider;
+import com.jackbusters.epicadditions.constructs.PocketCell;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
@@ -14,6 +17,7 @@ import net.minecraft.world.level.Level;
 import net.minecraftforge.common.util.ITeleporter;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Function;
 import java.util.function.Predicate;
 
@@ -60,6 +64,11 @@ public class PocketDimensionWarpKey extends BowItem {
         entityUsing.changeDimension(pocketDimension, new ITeleporter() {
             @Override
             public Entity placeEntity(Entity entity, ServerLevel currentWorld, ServerLevel destWorld, float yaw, Function<Boolean, Entity> repositionEntity) {
+                entity.getCapability(PocketCellProvider.POCKET_CELL_DATA).ifPresent(data -> {
+                    if(!data.doesHavePocketCell()) {
+                        PocketCell.buildPocketCell(EpicRegistry.CELL_BLOCK.get(), data.getPocketCellLevel(), destWorld);
+                    }
+                });
                 return ITeleporter.super.placeEntity(entity, currentWorld, destWorld, yaw, repositionEntity);
             }
         });
