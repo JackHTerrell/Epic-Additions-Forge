@@ -27,8 +27,9 @@ public class PocketCellEvents {
     public static void attachLevelCapability(AttachCapabilitiesEvent<Level> event){
         if(event.getObject() instanceof ServerLevel level) {
             ResourceKey<Level> pocketDimensionKey = ResourceKey.create(Registries.DIMENSION, new ResourceLocation(EpicAdditions.MOD_ID, "pocket"));
-            if (level.equals(level.getServer().getLevel(pocketDimensionKey)))
+            if (level.dimension().equals(pocketDimensionKey)) {
                 event.addCapability(new ResourceLocation(EpicAdditions.MOD_ID, "pocket_dimension_data"), new PocketCellProvider());
+            }
         }
     }
 
