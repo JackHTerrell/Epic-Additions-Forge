@@ -3,7 +3,7 @@
   "generator": {
     "type": "minecraft:flat",
     "settings": {
-      "biome": "minecraft:plains",
+      "biome": "epicadditions:pocket_plains_like",
       "layers": [
         {
           "block": "minecraft:air",

@@ -11,9 +11,12 @@ import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.MoverType;
+import net.minecraft.world.entity.RelativeMovement;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.BowItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
@@ -21,6 +24,8 @@ import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.util.ITeleporter;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.EnumSet;
+import java.util.Set;
 import java.util.function.Function;
 import java.util.function.Predicate;
 
@@ -59,7 +64,7 @@ public class PocketDimensionWarpKey extends BowItem {
             @Override
             public Entity placeEntity(Entity entity, ServerLevel currentWorld, ServerLevel destWorld, float yaw, Function<Boolean, Entity> repositionEntity) {
                 entity.getCapability(PocketCellProvider.POCKET_CELL_DATA).ifPresent(data -> {
-//                    data.setHasPocketCell(false); //TODO dont forget to remove this.
+                    data.setHasPocketCell(false); //TODO dont forget to remove this.
                 });
                 return ITeleporter.super.placeEntity(entity, currentWorld, destWorld, yaw, repositionEntity);
             }
@@ -76,13 +81,31 @@ public class PocketDimensionWarpKey extends BowItem {
                     }
                     pocketDimension.getCapability(PocketCellLevelDataProvider.POCKET_CELL_LEVEL_DATA).ifPresent(levelData -> {
                         BlockPos posOfCell = levelData.getTangibleCellLocations().get(data.getPocketCellIndex());
-                        System.out.println("Position of your cell is: "+posOfCell);
-                        entityUsing.moveTo(posOfCell.getX(), posOfCell.getY()+1, posOfCell.getZ(), entity.getYRot(), entity.getXRot());
+                        System.out.println("Position of your cell is: "+posOfCell+". Your PC level is: "+data.getPocketCellLevel());
+                        Entity toPosEntity = repositionEntity.apply(false);
+                        if(toPosEntity instanceof ServerPlayer serverPlayer){
+                            serverPlayer.teleportTo(posOfCell.getX(), posOfCell.getY()+1, posOfCell.getZ());
+                        }
                     });
                 });
                 return ITeleporter.super.placeEntity(entity, currentWorld, destWorld, yaw, repositionEntity);
             }
         });
+    }
+
+    /*
+        Want to mimic teleport command, keep movement
+     */
+    private Set<RelativeMovement> getMovementSet(){
+        Set<RelativeMovement> set = EnumSet.noneOf(RelativeMovement.class);
+
+        set.add(RelativeMovement.X);
+        set.add(RelativeMovement.Y);
+        set.add(RelativeMovement.Z);
+        set.add(RelativeMovement.X_ROT);
+        set.add(RelativeMovement.Y_ROT);
+
+        return set;
     }
 
     /*
