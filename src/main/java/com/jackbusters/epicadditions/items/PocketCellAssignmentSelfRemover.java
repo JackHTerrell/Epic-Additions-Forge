@@ -27,6 +27,7 @@ public class PocketCellAssignmentSelfRemover extends Item {
         if(pLevel instanceof ServerLevel)
             pPlayer.getCapability(PocketCellProvider.POCKET_CELL_DATA).ifPresent(data -> {
                 data.setHasPocketCell(false);
+                pPlayer.sendSystemMessage(Component.translatable("hovertext.item.pocket_cell_assignment_remover.status"));
             });
         return super.use(pLevel, pPlayer, pUsedHand);
     }

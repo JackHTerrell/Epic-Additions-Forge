@@ -7,5 +7,6 @@
     "block.epicadditions.cell_block": "Cell Block",
 
     "hovertext.item.pocket_cell_generator": "Debug Item for testing pocket cell generation. Dev Purposes, cells will not be assigned to any player.",
-    "hovertext.item.pocket_cell_assignment_remover": "Unlinks your own pocket cell from your uuid. Used for dev debug purposes. Will result in a new Pocket Cell being generated."
+    "hovertext.item.pocket_cell_assignment_remover": "Unlinks your own pocket cell from your uuid. Used for dev debug purposes. Will result in a new Pocket Cell being generated.",
+    "hovertext.item.pocket_cell_assignment_remover.status": "Cell Assignment Removed."
 }
