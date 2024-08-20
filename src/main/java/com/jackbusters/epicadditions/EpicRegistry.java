@@ -2,21 +2,20 @@ package com.jackbusters.epicadditions;
 
 import com.jackbusters.epicadditions.blocks.CellBlock;
 import com.jackbusters.epicadditions.glm.EpicLootModifier;
+import com.jackbusters.epicadditions.items.PocketCellGenerator;
 import com.jackbusters.epicadditions.items.PocketDimensionWarpKey;
 import com.mojang.serialization.Codec;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.item.BlockItem;
-import net.minecraft.world.item.CreativeModeTab;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.*;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.properties.NoteBlockInstrument;
 import net.minecraft.world.level.material.MapColor;
 import net.minecraftforge.common.loot.IGlobalLootModifier;
+import net.minecraftforge.event.BuildCreativeModeTabContentsEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -39,6 +38,9 @@ public class EpicRegistry {
     // Items
     public static final RegistryObject<Item> POCKET_DIMENSION_KEY = ITEMS.register("pocket_dimension_key", ()->
             new PocketDimensionWarpKey(new Item.Properties()));
+
+    public static final RegistryObject<Item> POCKET_CELL_GENERATOR = ITEMS.register("pocket_cell_generator", ()->
+            new PocketCellGenerator(new Item.Properties()));
 
     public static final RegistryObject<BlockItem> CELL_BLOCK_ITEM = ITEMS.register("cell_block", ()->
             new BlockItem(CELL_BLOCK.get(), new Item.Properties()));
@@ -72,5 +74,10 @@ public class EpicRegistry {
     }
     public static void registerBlocks(){
         BLOCKS.register(FMLJavaModLoadingContext.get().getModEventBus());
+    }
+
+    public static void addToExistingTabs(BuildCreativeModeTabContentsEvent event){
+        if(event.getTabKey().equals(CreativeModeTabs.OP_BLOCKS))
+            event.accept(POCKET_CELL_GENERATOR.get());
     }
 }

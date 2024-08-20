@@ -17,7 +17,6 @@ import net.minecraft.world.level.Level;
 import net.minecraftforge.common.util.ITeleporter;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Function;
 import java.util.function.Predicate;
 
@@ -66,7 +65,8 @@ public class PocketDimensionWarpKey extends BowItem {
             public Entity placeEntity(Entity entity, ServerLevel currentWorld, ServerLevel destWorld, float yaw, Function<Boolean, Entity> repositionEntity) {
                 entity.getCapability(PocketCellProvider.POCKET_CELL_DATA).ifPresent(data -> {
                     if(!data.doesHavePocketCell()) {
-                        PocketCell.buildPocketCell(EpicRegistry.CELL_BLOCK.get(), data.getPocketCellLevel(), destWorld);
+//                        PocketCell.buildNewPocketCell(EpicRegistry.CELL_BLOCK.get(), data.getPocketCellLevel(), destWorld, entity);
+//                        data.setHasPocketCell(true);
                     }
                 });
                 return ITeleporter.super.placeEntity(entity, currentWorld, destWorld, yaw, repositionEntity);
