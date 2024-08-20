@@ -13,7 +13,7 @@ public class EpicServerConfig {
     static {
         BUILDER.push("Server Config");
 
-        pocketCellDimensions = BUILDER.comment("Determines the dimensions of the Pocket Cells in the Pocket Dimension. Must be an odd number. For example, a value of 17 will result in 17x17x17 cells.").worldRestart().defineList("pocketCellDimensions", List.of(17), o -> o instanceof Integer val && val.doubleValue() % 2 != 0); // Is a list so that I can create a custom predicate. Need value to only be odd numbers for proper function.
+        pocketCellDimensions = BUILDER.comment("Determines the dimensions of the Pocket Cells in the Pocket Dimension. Must be an odd number greater than 1 and less than 33. For example, a value of 17 will result in 17x17x17 cells.").worldRestart().defineList("pocketCellDimensions", List.of(17), o -> o instanceof Integer val && (val.doubleValue() % 2 != 0) && val>2 && val<32); // Is a list so that I can create a custom predicate. Need value to only be odd numbers for proper function.
 
         BUILDER.pop();
 

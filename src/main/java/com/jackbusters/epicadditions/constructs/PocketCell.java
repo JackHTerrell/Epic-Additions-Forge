@@ -1,6 +1,7 @@
 package com.jackbusters.epicadditions.constructs;
 
 import com.jackbusters.epicadditions.capabilities.pocketcells.PocketCellLevelDataProvider;
+import com.jackbusters.epicadditions.capabilities.pocketcells.PocketCellProvider;
 import com.jackbusters.epicadditions.configurations.EpicServerConfig;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Vec3i;
@@ -10,12 +11,13 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.levelgen.structure.BoundingBox;
 
 import java.util.List;
+import java.util.UUID;
 
 public class PocketCell {
 
     private static final int commonDimension = EpicServerConfig.pocketCellDimensions.get().get(0);
     /*
-        Constructs a pocket cell in the correct location.
+        Constructs a pocket cell in the correct location. Returns false if pocket cell fails to build. Theoretically, should never happen.
      */
     public static void buildNewPocketCell(Block buildingBlock, int pocketCellLevel, ServerLevel pocketDimension, Entity entity){
         pocketDimension.getCapability(PocketCellLevelDataProvider.POCKET_CELL_LEVEL_DATA).ifPresent(data -> {
@@ -24,15 +26,105 @@ public class PocketCell {
                 data.setTangibleCellLocations(List.of(initialStartPos));
                 data.setPlayersWithCells(List.of(entity.getUUID()));
                 forceBuildCell(buildingBlock, pocketCellLevel, pocketDimension, initialStartPos);
+                entity.getCapability(PocketCellProvider.POCKET_CELL_DATA).ifPresent(pData -> {
+                    pData.setHasPocketCell(true);
+                    pData.setPocketCellIndex(0);
+                });
             }
-            int distanceBetweenCellCenters = 33;
-            BlockPos lastAddedCell = data.getTangibleCellLocations().get(data.getTangibleCellLocations().size()-1);
-            BlockPos nextCell;
+            else {
+                int distanceBetweenCellCenters = 36;
+                BlockPos lastAddedCell = data.getTangibleCellLocations().get(data.getTangibleCellLocations().size() - 1);
 
-            // 1 = North, 2 = East, 3 = South, 4 = West
-            boolean added = false;
-            if(!added){
+                BlockPos potentialNorthCell = lastAddedCell.north(distanceBetweenCellCenters);
+                BlockPos potentialEastCell = lastAddedCell.east(distanceBetweenCellCenters);
+                BlockPos potentialSouthCell = lastAddedCell.south(distanceBetweenCellCenters);
+                BlockPos potentialWestCell = lastAddedCell.west(distanceBetweenCellCenters);
 
+
+                // 1 = North, 2 = East, 3 = South, 4 = West
+                boolean added = false;
+                int iteration = 0;
+                while(!added) {
+                    if (iteration > 4) {
+                        boolean success = false;
+                        int forcedSuccessIteration = 2;
+                        while (!success) {
+                            if (!data.getTangibleCellLocations().contains(lastAddedCell.north(distanceBetweenCellCenters * forcedSuccessIteration))) {
+                                success = true;
+                                added = true;
+
+                                List<BlockPos> tempLi = data.getTangibleCellLocations();
+                                List<UUID> list = data.getPlayersWithCells();
+                                tempLi.add(lastAddedCell.north(distanceBetweenCellCenters * forcedSuccessIteration));
+                                list.add(entity.getUUID());
+                                data.setTangibleCellLocations(tempLi);
+                                data.setPlayersWithCells(list);
+                                entity.getCapability(PocketCellProvider.POCKET_CELL_DATA).ifPresent(pData -> {
+                                    pData.setHasPocketCell(true);
+                                    pData.setPocketCellIndex(data.getTangibleCellLocations().size() - 1);
+                                });
+                                forceBuildCell(buildingBlock, pocketCellLevel, pocketDimension, lastAddedCell.north(distanceBetweenCellCenters * forcedSuccessIteration));
+                            }
+                            forcedSuccessIteration++;
+                        }
+                    } else {
+                        int random = (int) ((Math.random() * 4) + 1);
+                        if (random == 1 && !data.getTangibleCellLocations().contains(potentialNorthCell)) {
+                            added = true;
+                            List<BlockPos> tempLi = data.getTangibleCellLocations();
+                            List<UUID> list = data.getPlayersWithCells();
+                            tempLi.add(potentialNorthCell);
+                            list.add(entity.getUUID());
+                            data.setTangibleCellLocations(tempLi);
+                            data.setPlayersWithCells(list);
+                            entity.getCapability(PocketCellProvider.POCKET_CELL_DATA).ifPresent(pData -> {
+                                pData.setHasPocketCell(true);
+                                pData.setPocketCellIndex(data.getTangibleCellLocations().size() - 1);
+                            });
+                            forceBuildCell(buildingBlock, pocketCellLevel, pocketDimension, potentialNorthCell);
+                        } else if (random == 2 && !data.getTangibleCellLocations().contains(potentialEastCell)) {
+                            added = true;
+                            List<BlockPos> tempLi = data.getTangibleCellLocations();
+                            List<UUID> list = data.getPlayersWithCells();
+                            tempLi.add(potentialEastCell);
+                            list.add(entity.getUUID());
+                            data.setTangibleCellLocations(tempLi);
+                            data.setPlayersWithCells(list);
+                            entity.getCapability(PocketCellProvider.POCKET_CELL_DATA).ifPresent(pData -> {
+                                pData.setHasPocketCell(true);
+                                pData.setPocketCellIndex(data.getTangibleCellLocations().size() - 1);
+                            });
+                            forceBuildCell(buildingBlock, pocketCellLevel, pocketDimension, potentialEastCell);
+                        } else if (random == 3 && !data.getTangibleCellLocations().contains(potentialSouthCell)) {
+                            added = true;
+                            List<BlockPos> tempLi = data.getTangibleCellLocations();
+                            List<UUID> list = data.getPlayersWithCells();
+                            tempLi.add(potentialSouthCell);
+                            list.add(entity.getUUID());
+                            data.setTangibleCellLocations(tempLi);
+                            data.setPlayersWithCells(list);
+                            entity.getCapability(PocketCellProvider.POCKET_CELL_DATA).ifPresent(pData -> {
+                                pData.setHasPocketCell(true);
+                                pData.setPocketCellIndex(data.getTangibleCellLocations().size() - 1);
+                            });
+                            forceBuildCell(buildingBlock, pocketCellLevel, pocketDimension, potentialSouthCell);
+                        } else if (random == 4 && !data.getTangibleCellLocations().contains(potentialWestCell)) {
+                            added = true;
+                            List<BlockPos> tempLi = data.getTangibleCellLocations();
+                            List<UUID> list = data.getPlayersWithCells();
+                            tempLi.add(potentialWestCell);
+                            list.add(entity.getUUID());
+                            data.setTangibleCellLocations(tempLi);
+                            data.setPlayersWithCells(list);
+                            entity.getCapability(PocketCellProvider.POCKET_CELL_DATA).ifPresent(pData -> {
+                                pData.setHasPocketCell(true);
+                                pData.setPocketCellIndex(data.getTangibleCellLocations().size() - 1);
+                            });
+                            forceBuildCell(buildingBlock, pocketCellLevel, pocketDimension, potentialWestCell);
+                        }
+                        iteration++;
+                    }
+                }
             }
         });
     }

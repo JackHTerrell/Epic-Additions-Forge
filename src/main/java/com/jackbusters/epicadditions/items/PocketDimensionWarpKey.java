@@ -2,8 +2,10 @@ package com.jackbusters.epicadditions.items;
 
 import com.jackbusters.epicadditions.EpicAdditions;
 import com.jackbusters.epicadditions.EpicRegistry;
+import com.jackbusters.epicadditions.capabilities.pocketcells.PocketCellLevelDataProvider;
 import com.jackbusters.epicadditions.capabilities.pocketcells.PocketCellProvider;
 import com.jackbusters.epicadditions.constructs.PocketCell;
+import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
@@ -11,9 +13,11 @@ import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.MoverType;
 import net.minecraft.world.item.BowItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.util.ITeleporter;
 import org.jetbrains.annotations.NotNull;
 
@@ -54,6 +58,9 @@ public class PocketDimensionWarpKey extends BowItem {
         entityUsing.changeDimension(overworld, new ITeleporter() {
             @Override
             public Entity placeEntity(Entity entity, ServerLevel currentWorld, ServerLevel destWorld, float yaw, Function<Boolean, Entity> repositionEntity) {
+                entity.getCapability(PocketCellProvider.POCKET_CELL_DATA).ifPresent(data -> {
+//                    data.setHasPocketCell(false); //TODO dont forget to remove this.
+                });
                 return ITeleporter.super.placeEntity(entity, currentWorld, destWorld, yaw, repositionEntity);
             }
         });
@@ -65,9 +72,13 @@ public class PocketDimensionWarpKey extends BowItem {
             public Entity placeEntity(Entity entity, ServerLevel currentWorld, ServerLevel destWorld, float yaw, Function<Boolean, Entity> repositionEntity) {
                 entity.getCapability(PocketCellProvider.POCKET_CELL_DATA).ifPresent(data -> {
                     if(!data.doesHavePocketCell()) {
-//                        PocketCell.buildNewPocketCell(EpicRegistry.CELL_BLOCK.get(), data.getPocketCellLevel(), destWorld, entity);
-//                        data.setHasPocketCell(true);
+                        PocketCell.buildNewPocketCell(EpicRegistry.CELL_BLOCK.get(), data.getPocketCellLevel(), destWorld, entity);
                     }
+                    pocketDimension.getCapability(PocketCellLevelDataProvider.POCKET_CELL_LEVEL_DATA).ifPresent(levelData -> {
+                        BlockPos posOfCell = levelData.getTangibleCellLocations().get(data.getPocketCellIndex());
+                        System.out.println("Position of your cell is: "+posOfCell);
+                        entityUsing.moveTo(posOfCell.getX(), posOfCell.getY()+1, posOfCell.getZ(), entity.getYRot(), entity.getXRot());
+                    });
                 });
                 return ITeleporter.super.placeEntity(entity, currentWorld, destWorld, yaw, repositionEntity);
             }
