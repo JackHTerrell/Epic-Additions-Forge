@@ -2,6 +2,7 @@ package com.jackbusters.epicadditions;
 
 import com.jackbusters.epicadditions.blocks.CellBlock;
 import com.jackbusters.epicadditions.glm.EpicLootModifier;
+import com.jackbusters.epicadditions.items.PocketCellAssignmentSelfRemover;
 import com.jackbusters.epicadditions.items.PocketCellGenerator;
 import com.jackbusters.epicadditions.items.PocketDimensionWarpKey;
 import com.mojang.serialization.Codec;
@@ -38,6 +39,10 @@ public class EpicRegistry {
     // Items
     public static final RegistryObject<Item> POCKET_DIMENSION_KEY = ITEMS.register("pocket_dimension_key", ()->
             new PocketDimensionWarpKey(new Item.Properties()));
+
+    public static final RegistryObject<Item> POCKET_CELL_ASSIGNMENT_REMOVER = ITEMS.register("pocket_cell_assignment_remover", ()->
+            new PocketCellAssignmentSelfRemover(new Item.Properties()));
+
 
     public static final RegistryObject<Item> POCKET_CELL_GENERATOR = ITEMS.register("pocket_cell_generator", ()->
             new PocketCellGenerator(new Item.Properties()));
@@ -77,7 +82,9 @@ public class EpicRegistry {
     }
 
     public static void addToExistingTabs(BuildCreativeModeTabContentsEvent event){
-        if(event.getTabKey().equals(CreativeModeTabs.OP_BLOCKS))
+        if(event.getTabKey().equals(CreativeModeTabs.OP_BLOCKS)) {
             event.accept(POCKET_CELL_GENERATOR.get());
+            event.accept(POCKET_CELL_ASSIGNMENT_REMOVER.get());
+        }
     }
 }

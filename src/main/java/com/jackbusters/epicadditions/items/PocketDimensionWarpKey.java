@@ -64,7 +64,6 @@ public class PocketDimensionWarpKey extends BowItem {
             @Override
             public Entity placeEntity(Entity entity, ServerLevel currentWorld, ServerLevel destWorld, float yaw, Function<Boolean, Entity> repositionEntity) {
                 entity.getCapability(PocketCellProvider.POCKET_CELL_DATA).ifPresent(data -> {
-                    data.setHasPocketCell(false); //TODO dont forget to remove this.
                 });
                 return ITeleporter.super.placeEntity(entity, currentWorld, destWorld, yaw, repositionEntity);
             }
@@ -81,7 +80,6 @@ public class PocketDimensionWarpKey extends BowItem {
                     }
                     pocketDimension.getCapability(PocketCellLevelDataProvider.POCKET_CELL_LEVEL_DATA).ifPresent(levelData -> {
                         BlockPos posOfCell = levelData.getTangibleCellLocations().get(data.getPocketCellIndex());
-                        System.out.println("Position of your cell is: "+posOfCell+". Your PC level is: "+data.getPocketCellLevel());
                         Entity toPosEntity = repositionEntity.apply(false);
                         if(toPosEntity instanceof ServerPlayer serverPlayer){
                             serverPlayer.teleportTo(posOfCell.getX(), posOfCell.getY()+1, posOfCell.getZ());
