@@ -74,19 +74,19 @@ public class PocketDimensionWarpKey extends BowItem {
         entityUsing.changeDimension(pocketDimension, new ITeleporter() {
             @Override
             public Entity placeEntity(Entity entity, ServerLevel currentWorld, ServerLevel destWorld, float yaw, Function<Boolean, Entity> repositionEntity) {
-                entity.getCapability(PocketCellProvider.POCKET_CELL_DATA).ifPresent(data -> {
+                Entity toPosEntity = repositionEntity.apply(false);
+                toPosEntity.getCapability(PocketCellProvider.POCKET_CELL_DATA).ifPresent(data -> {
                     if(!data.doesHavePocketCell()) {
-                        PocketCell.buildNewPocketCell(EpicRegistry.CELL_BLOCK.get(), data.getPocketCellLevel(), destWorld, entity);
+                        PocketCell.buildNewPocketCell(EpicRegistry.CELL_BLOCK.get(), data.getPocketCellLevel(), destWorld, toPosEntity);
                     }
                     pocketDimension.getCapability(PocketCellLevelDataProvider.POCKET_CELL_LEVEL_DATA).ifPresent(levelData -> {
                         BlockPos posOfCell = levelData.getTangibleCellLocations().get(data.getPocketCellIndex());
-                        Entity toPosEntity = repositionEntity.apply(false);
                         if(toPosEntity instanceof ServerPlayer serverPlayer){
                             serverPlayer.teleportTo(posOfCell.getX(), posOfCell.getY()+1, posOfCell.getZ());
                         }
                     });
                 });
-                return ITeleporter.super.placeEntity(entity, currentWorld, destWorld, yaw, repositionEntity);
+                return toPosEntity;
             }
         });
     }
