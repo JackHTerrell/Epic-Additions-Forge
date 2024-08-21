@@ -39,14 +39,9 @@ public class PocketCellEvents {
         originalPlayer.reviveCaps();
         Player newPlayer = event.getEntity();
         if (event.isWasDeath()) {
-            System.out.println("OnDeathEvent");
             originalPlayer.getCapability(PocketCellProvider.POCKET_CELL_DATA).
                     ifPresent(oldData -> newPlayer.getCapability(PocketCellProvider.POCKET_CELL_DATA).
-                            ifPresent(newData -> {
-                                System.out.println("Old Data: " + oldData.doesHavePocketCell());
-                                newData.copyFrom(oldData);
-                                System.out.println("New Data: " + newData.doesHavePocketCell());
-                            }));
+                            ifPresent(newData -> newData.copyFrom(oldData)));
         }
         originalPlayer.invalidateCaps();
     }
