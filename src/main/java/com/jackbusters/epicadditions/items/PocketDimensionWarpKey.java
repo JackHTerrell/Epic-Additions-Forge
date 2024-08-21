@@ -17,11 +17,11 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.BowItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.util.ITeleporter;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -76,8 +76,10 @@ public class PocketDimensionWarpKey extends BowItem {
                 entityUsing.changeDimension(fromDim, new ITeleporter() {
                     @Override
                     public Entity placeEntity(Entity entity, ServerLevel currentWorld, ServerLevel destWorld, float yaw, Function<Boolean, Entity> repositionEntity) {
-                        Entity toPosEntity = repositionEntity.apply(false);
-                        toPosEntity.teleportTo(data.getLeftPos().x, data.getLeftPos().y, data.getLeftPos().z);
+                        ServerPlayer toPosEntity = (ServerPlayer) repositionEntity.apply(false);
+                        toPosEntity.teleportTo(fromDim ,data.getLeftPos().x, data.getLeftPos().y, data.getLeftPos().z, data.getLeftYaw(), data.getLeftPitch());
+                        toPosEntity.fallDistance = data.getWasFallingDistance(); // Assures fall distance is not lost if leaving and going back from pocket dimension
+                        toPosEntity.setDeltaMovement(data.getWasDeltaMovement()); // Assures momentum is maintained if leaving and coming back from pocket dimension.
                         return toPosEntity;
                     }
                 });
@@ -99,7 +101,7 @@ public class PocketDimensionWarpKey extends BowItem {
                                 respawnPoint = finalRespawnDimension.getSharedSpawnPos(); // If the player doesn't have a respawn point, send him to world spawn.
                             }
                             toPosEntity.teleportTo(respawnPoint.getX(), respawnPoint.getY(), respawnPoint.getZ());
-                            logger.warn("Epic Additions: A player was respawned at their set spawn point, rather than their previous position. This should never happen and was included as a precaution. " +
+                            logger.warn("Epic Additions: A player was respawned at their set spawn point, rather than their previous position. This should never happen and was included as a precaution against being stuck in the Pocket Cell. " +
                                     "Please let the mod developer know the context so he can fix the bug.");
                             return toPosEntity;
                         }
@@ -120,10 +122,16 @@ public class PocketDimensionWarpKey extends BowItem {
                         PocketCell.buildNewPocketCell(EpicRegistry.CELL_BLOCK.get(), data.getPocketCellLevel(), destWorld, toPosEntity);
                     }
                     data.setLeftDimensionId(currentWorld.dimension());
-                    data.setLeftPos(entity.position());
+                    data.setLeftPos(toPosEntity.position());
+                    data.setLeftYaw(toPosEntity.getYRot());
+                    data.setLeftPitch(toPosEntity.getXRot());
+                    data.setWasFallingDistance(toPosEntity.fallDistance);
+                    data.setWasDeltaMovement(toPosEntity.getDeltaMovement());
                     pocketDimension.getCapability(PocketCellLevelDataProvider.POCKET_CELL_LEVEL_DATA).ifPresent(levelData -> {
                         BlockPos posOfCell = levelData.getTangibleCellLocations().get(data.getPocketCellIndex());
                         if(toPosEntity instanceof ServerPlayer serverPlayer){
+                            serverPlayer.setDeltaMovement(Vec3.ZERO);
+                            serverPlayer.fallDistance=0;
                             serverPlayer.teleportTo(posOfCell.getX(), posOfCell.getY()+1, posOfCell.getZ());
                         }
                     });

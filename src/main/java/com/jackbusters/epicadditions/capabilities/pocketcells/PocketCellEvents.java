@@ -34,12 +34,20 @@ public class PocketCellEvents {
     }
 
     @SubscribeEvent
-    public static void keepPocketDataOnDeath(PlayerEvent.Clone event){
+    public static void keepPocketDataOnDeath(PlayerEvent.Clone event) {
         Player originalPlayer = event.getOriginal();
+        originalPlayer.reviveCaps();
         Player newPlayer = event.getEntity();
-        if(event.isWasDeath())
+        if (event.isWasDeath()) {
+            System.out.println("OnDeathEvent");
             originalPlayer.getCapability(PocketCellProvider.POCKET_CELL_DATA).
                     ifPresent(oldData -> newPlayer.getCapability(PocketCellProvider.POCKET_CELL_DATA).
-                            ifPresent(newData -> newData.copyFrom(oldData)));
+                            ifPresent(newData -> {
+                                System.out.println("Old Data: " + oldData.doesHavePocketCell());
+                                newData.copyFrom(oldData);
+                                System.out.println("New Data: " + newData.doesHavePocketCell());
+                            }));
+        }
+        originalPlayer.invalidateCaps();
     }
 }
