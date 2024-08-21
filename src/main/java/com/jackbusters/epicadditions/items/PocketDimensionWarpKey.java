@@ -5,6 +5,7 @@ import com.jackbusters.epicadditions.EpicRegistry;
 import com.jackbusters.epicadditions.capabilities.pocketcells.PocketCellLevelDataProvider;
 import com.jackbusters.epicadditions.capabilities.pocketcells.PocketCellProvider;
 import com.jackbusters.epicadditions.constructs.PocketCell;
+import com.mojang.logging.LogUtils;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.Registries;
@@ -16,6 +17,7 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.BowItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
@@ -23,13 +25,16 @@ import net.minecraft.world.level.Level;
 import net.minecraftforge.common.util.ITeleporter;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import org.slf4j.Logger;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.function.Function;
 import java.util.function.Predicate;
 
 public class PocketDimensionWarpKey extends BowItem {
     private final Predicate<ItemStack> EVERYTHING = (itemStack) -> true;
+    Logger logger = LogUtils.getLogger();
 
 
     public PocketDimensionWarpKey(Properties properties) {
@@ -65,12 +70,42 @@ public class PocketDimensionWarpKey extends BowItem {
     }
 
     public void teleportFromPocketCell(LivingEntity entityUsing, ServerLevel overworld) {
-        entityUsing.changeDimension(overworld, new ITeleporter() {
-            @Override
-            public Entity placeEntity(Entity entity, ServerLevel currentWorld, ServerLevel destWorld, float yaw, Function<Boolean, Entity> repositionEntity) {
-                entity.getCapability(PocketCellProvider.POCKET_CELL_DATA).ifPresent(data -> {
+        entityUsing.getCapability(PocketCellProvider.POCKET_CELL_DATA).ifPresent(data -> {
+            ServerLevel fromDim = Objects.requireNonNull(entityUsing.getServer()).getLevel(data.getLeftDimensionId());
+            if (data.getLeftPos() != null && fromDim != null) { // Respawn the player at their previous spot
+                entityUsing.changeDimension(fromDim, new ITeleporter() {
+                    @Override
+                    public Entity placeEntity(Entity entity, ServerLevel currentWorld, ServerLevel destWorld, float yaw, Function<Boolean, Entity> repositionEntity) {
+                        Entity toPosEntity = repositionEntity.apply(false);
+                        toPosEntity.teleportTo(data.getLeftPos().x, data.getLeftPos().y, data.getLeftPos().z);
+                        return toPosEntity;
+                    }
                 });
-                return ITeleporter.super.placeEntity(entity, currentWorld, destWorld, yaw, repositionEntity);
+            }
+            else { // If for some reason there is a failure to respawn the player at their previous location, they should instead spawn at their spawnpoint
+                if(entityUsing instanceof ServerPlayer serverPlayer) {
+                    ServerLevel respawnDimension = serverPlayer.server.getLevel(serverPlayer.getRespawnDimension());
+
+                    if(respawnDimension == null){
+                        respawnDimension = overworld; // Assures player will always have a place to spawn
+                    }
+                    ServerLevel finalRespawnDimension = respawnDimension; // For use in placeEntity.
+                    serverPlayer.changeDimension(respawnDimension, new ITeleporter() {
+                        @Override
+                        public Entity placeEntity(Entity entity, ServerLevel currentWorld, ServerLevel destWorld, float yaw, Function<Boolean, Entity> repositionEntity) {
+                            ServerPlayer toPosEntity = (ServerPlayer) repositionEntity.apply(false);
+                            BlockPos respawnPoint = toPosEntity.getRespawnPosition();
+                            if(respawnPoint == null){
+                                respawnPoint = finalRespawnDimension.getSharedSpawnPos(); // If the player doesn't have a respawn point, send him to world spawn.
+                            }
+                            toPosEntity.teleportTo(respawnPoint.getX(), respawnPoint.getY(), respawnPoint.getZ());
+                            logger.warn("Epic Additions: A player was respawned at their set spawn point, rather than their previous position. This should never happen and was included as a precaution. " +
+                                    "Please let the mod developer know the context so he can fix the bug.");
+                            return toPosEntity;
+                        }
+                    });
+
+                }
             }
         });
     }
@@ -84,6 +119,8 @@ public class PocketDimensionWarpKey extends BowItem {
                     if(!data.doesHavePocketCell()) {
                         PocketCell.buildNewPocketCell(EpicRegistry.CELL_BLOCK.get(), data.getPocketCellLevel(), destWorld, toPosEntity);
                     }
+                    data.setLeftDimensionId(currentWorld.dimension());
+                    data.setLeftPos(entity.position());
                     pocketDimension.getCapability(PocketCellLevelDataProvider.POCKET_CELL_LEVEL_DATA).ifPresent(levelData -> {
                         BlockPos posOfCell = levelData.getTangibleCellLocations().get(data.getPocketCellIndex());
                         if(toPosEntity instanceof ServerPlayer serverPlayer){
