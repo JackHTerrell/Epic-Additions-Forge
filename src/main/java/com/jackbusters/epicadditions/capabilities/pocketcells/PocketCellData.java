@@ -4,7 +4,6 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.server.MinecraftServer;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 
@@ -14,12 +13,23 @@ public class PocketCellData {
     private int pocketCellLevel; // The pocket cell level of the player. Each level expands the height by 17.
     private int pocketCellIndex; // The index will denote which pocket cell is associated with this player.
     private Vec3 leftPos = Vec3.ZERO;// The position the player left before warping to their cell.
+    private Vec3 leftPocketCellPos = Vec3.ZERO;
     private ResourceKey<Level> leftDimensionId = Level.OVERWORLD; // The Resource Key for the dimension the player left before warping to their cell.
     private float leftYaw;
     private float leftPitch;
+    private float leftPocketCellYaw;
+    private float leftPocketCellPitch;
     private float wasFallingDistance;
     private Vec3 wasDeltaMovement = Vec3.ZERO;
     private final int MAX_CELL_LEVEL = 100; // The max cell level allowed.
+
+    public void setLeftPocketCellPos(Vec3 leftPocketCellPos){
+        this.leftPocketCellPos = leftPocketCellPos;
+    }
+
+    public Vec3 getLeftPocketCellPos(){
+        return this.leftPocketCellPos;
+    }
 
     public void setWasDeltaMovement(Vec3 wasDeltaMovement){
         this.wasDeltaMovement = wasDeltaMovement;
@@ -35,6 +45,22 @@ public class PocketCellData {
 
     public float getWasFallingDistance(){
         return this.wasFallingDistance;
+    }
+
+    public void setLeftPocketCellYaw(float leftPocketCellYaw){
+        this.leftPocketCellYaw=leftPocketCellYaw;
+    }
+
+    public float getLeftPocketCellYaw(){
+        return this.leftPocketCellYaw;
+    }
+
+    public void setLeftPocketCellPitch(float leftPocketCellPitch){
+        this.leftPocketCellPitch=leftPocketCellPitch;
+    }
+
+    public float getLeftPocketCellPitch(){
+        return this.leftPocketCellPitch;
     }
 
     public void setLeftYaw(float leftYaw){
@@ -107,6 +133,9 @@ public class PocketCellData {
         this.leftYaw = source.leftYaw;
         this.wasFallingDistance = source.wasFallingDistance;
         this.wasDeltaMovement = source.wasDeltaMovement;
+        this.leftPocketCellPos = source.leftPocketCellPos;
+        this.leftPocketCellPitch = source.leftPocketCellPitch;
+        this.leftPocketCellYaw = source.leftPocketCellYaw;
     }
 
     public void saveCompoundData(CompoundTag compoundTag){
@@ -115,6 +144,8 @@ public class PocketCellData {
         compoundTag.putInt("pocket_cell_level", getPocketCellLevel());
         compoundTag.putFloat("from_left_pitch", getLeftPitch());
         compoundTag.putFloat("from_left_yaw", getLeftYaw());
+        compoundTag.putFloat("from_cell_pitch", getLeftPocketCellPitch());
+        compoundTag.putFloat("from_cell_yaw", getLeftPocketCellYaw());
         compoundTag.putFloat("was_falling_distance", getWasFallingDistance());
 
         // Vec3 data
@@ -124,6 +155,9 @@ public class PocketCellData {
         compoundTag.putDouble("was_delta_movement_x", getWasDeltaMovement().x());
         compoundTag.putDouble("was_delta_movement_y", getWasDeltaMovement().y());
         compoundTag.putDouble("was_delta_movement_z", getWasDeltaMovement().z());
+        compoundTag.putDouble("from_cell_pos_x", getLeftPocketCellPos().x());
+        compoundTag.putDouble("from_cell_pos_y", getLeftPocketCellPos().y());
+        compoundTag.putDouble("from_cell_pos_z", getLeftPocketCellPos().z());
 
         // Resource Key data
         compoundTag.putString("left_dimension_resource_location", getLeftDimensionId().location().toString());
@@ -139,5 +173,8 @@ public class PocketCellData {
         setLeftYaw(compoundTag.getFloat("from_left_yaw"));
         setWasFallingDistance(compoundTag.getFloat("was_falling_distance"));
         setWasDeltaMovement(new Vec3(compoundTag.getDouble("was_delta_movement_x"), compoundTag.getDouble("was_delta_movement_y"), compoundTag.getDouble("was_delta_movement_z")));
+        setLeftPocketCellPos(new Vec3(compoundTag.getDouble("from_cell_pos_x"), compoundTag.getDouble("from_cell_pos_y"), compoundTag.getDouble("from_cell_pos_z")));
+        setLeftPocketCellPitch(compoundTag.getFloat("from_cell_pitch"));
+        setLeftPocketCellYaw(compoundTag.getFloat("from_cell_yaw"));
     }
 }

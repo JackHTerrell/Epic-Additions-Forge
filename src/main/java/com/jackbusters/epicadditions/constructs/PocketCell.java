@@ -2,7 +2,6 @@ package com.jackbusters.epicadditions.constructs;
 
 import com.jackbusters.epicadditions.capabilities.pocketcells.PocketCellLevelDataProvider;
 import com.jackbusters.epicadditions.capabilities.pocketcells.PocketCellProvider;
-import com.jackbusters.epicadditions.configurations.EpicServerConfig;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Vec3i;
 import net.minecraft.server.level.ServerLevel;
@@ -15,7 +14,7 @@ import java.util.UUID;
 
 public class PocketCell {
 
-    private static final int commonDimension = EpicServerConfig.pocketCellDimensions.get().get(0);
+    private static final int commonDimension = 17;
     /*
         Constructs a pocket cell in the correct location. Returns false if pocket cell fails to build. Theoretically, should never happen.
      */

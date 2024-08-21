@@ -77,9 +77,12 @@ public class PocketDimensionWarpKey extends BowItem {
                     @Override
                     public Entity placeEntity(Entity entity, ServerLevel currentWorld, ServerLevel destWorld, float yaw, Function<Boolean, Entity> repositionEntity) {
                         ServerPlayer toPosEntity = (ServerPlayer) repositionEntity.apply(false);
-                        toPosEntity.teleportTo(fromDim ,data.getLeftPos().x, data.getLeftPos().y, data.getLeftPos().z, data.getLeftYaw(), data.getLeftPitch());
+                        data.setLeftPocketCellPos(new Vec3(toPosEntity.getX(), toPosEntity.getY(), toPosEntity.getZ()));
+                        data.setLeftPocketCellYaw(toPosEntity.getYRot());
+                        data.setLeftPocketCellPitch(toPosEntity.getXRot());
                         toPosEntity.fallDistance = data.getWasFallingDistance(); // Assures fall distance is not lost if leaving and going back from pocket dimension
                         toPosEntity.setDeltaMovement(data.getWasDeltaMovement()); // Assures momentum is maintained if leaving and coming back from pocket dimension.
+                        toPosEntity.teleportTo(fromDim ,data.getLeftPos().x, data.getLeftPos().y, data.getLeftPos().z, data.getLeftYaw(), data.getLeftPitch());
                         return toPosEntity;
                     }
                 });
@@ -120,6 +123,11 @@ public class PocketDimensionWarpKey extends BowItem {
                 toPosEntity.getCapability(PocketCellProvider.POCKET_CELL_DATA).ifPresent(data -> {
                     if(!data.doesHavePocketCell()) {
                         PocketCell.buildNewPocketCell(EpicRegistry.CELL_BLOCK.get(), data.getPocketCellLevel(), destWorld, toPosEntity);
+                        pocketDimension.getCapability(PocketCellLevelDataProvider.POCKET_CELL_LEVEL_DATA).ifPresent(levelData -> {
+                            BlockPos posOfCell = levelData.getTangibleCellLocations().get(data.getPocketCellIndex());
+                            data.setLeftPocketCellPos(new Vec3(posOfCell.getX(), posOfCell.getY()+1, posOfCell.getZ()));
+                        });
+
                     }
                     data.setLeftDimensionId(currentWorld.dimension());
                     data.setLeftPos(toPosEntity.position());
@@ -128,11 +136,17 @@ public class PocketDimensionWarpKey extends BowItem {
                     data.setWasFallingDistance(toPosEntity.fallDistance);
                     data.setWasDeltaMovement(toPosEntity.getDeltaMovement());
                     pocketDimension.getCapability(PocketCellLevelDataProvider.POCKET_CELL_LEVEL_DATA).ifPresent(levelData -> {
+                        Vec3 posInPocket = data.getLeftPocketCellPos();
                         BlockPos posOfCell = levelData.getTangibleCellLocations().get(data.getPocketCellIndex());
+                        int universalPocketSides = 17;
+                        int distance = (int) posInPocket.distanceTo(new Vec3(posOfCell.getX(), posInPocket.y(), posOfCell.getZ()));
+                        if(distance > ((universalPocketSides /2)+1)){
+                            posInPocket = new Vec3(posOfCell.getX(), posOfCell.getY()+1, posOfCell.getZ());
+                        }
                         if(toPosEntity instanceof ServerPlayer serverPlayer){
                             serverPlayer.setDeltaMovement(Vec3.ZERO);
                             serverPlayer.fallDistance=0;
-                            serverPlayer.teleportTo(posOfCell.getX(), posOfCell.getY()+1, posOfCell.getZ());
+                            serverPlayer.teleportTo(pocketDimension, posInPocket.x(), posInPocket.y(), posInPocket.z(), data.getLeftPocketCellYaw(), data.getLeftPocketCellPitch());
                         }
                     });
                 });
