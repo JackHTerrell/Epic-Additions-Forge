@@ -38,7 +38,7 @@ public class EpicRegistry {
 
     // Items
     public static final RegistryObject<Item> POCKET_DIMENSION_KEY = ITEMS.register("pocket_dimension_key", ()->
-            new PocketDimensionWarpKey(new Item.Properties()));
+            new PocketDimensionWarpKey(new Item.Properties().stacksTo(1)));
 
     public static final RegistryObject<Item> POCKET_CELL_ASSIGNMENT_REMOVER = ITEMS.register("pocket_cell_assignment_remover", ()->
             new PocketCellAssignmentSelfRemover(new Item.Properties()));
