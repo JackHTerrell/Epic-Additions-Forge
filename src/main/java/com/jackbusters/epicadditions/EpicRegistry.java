@@ -41,11 +41,11 @@ public class EpicRegistry {
             new PocketDimensionWarpKey(new Item.Properties().stacksTo(1)));
 
     public static final RegistryObject<Item> POCKET_CELL_ASSIGNMENT_REMOVER = ITEMS.register("pocket_cell_assignment_remover", ()->
-            new PocketCellAssignmentSelfRemover(new Item.Properties()));
+            new PocketCellAssignmentSelfRemover(new Item.Properties().stacksTo(1)));
 
 
     public static final RegistryObject<Item> POCKET_CELL_GENERATOR = ITEMS.register("pocket_cell_generator", ()->
-            new PocketCellGenerator(new Item.Properties()));
+            new PocketCellGenerator(new Item.Properties().stacksTo(1)));
 
     public static final RegistryObject<BlockItem> CELL_BLOCK_ITEM = ITEMS.register("cell_block", ()->
             new BlockItem(CELL_BLOCK.get(), new Item.Properties()));
