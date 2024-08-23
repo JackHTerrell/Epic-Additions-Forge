@@ -85,6 +85,11 @@ public class PocketDimensionWarpKey extends BowItem {
                         toPosEntity.teleportTo(fromDim ,data.getLeftPos().x, data.getLeftPos().y, data.getLeftPos().z, data.getLeftYaw(), data.getLeftPitch());
                         return toPosEntity;
                     }
+
+                    @Override
+                    public boolean playTeleportSound(ServerPlayer player, ServerLevel sourceWorld, ServerLevel destWorld) {
+                        return false;
+                    }
                 });
             }
             else { // If for some reason there is a failure to respawn the player at their previous location, they should instead spawn at their spawnpoint
@@ -107,6 +112,11 @@ public class PocketDimensionWarpKey extends BowItem {
                             logger.warn("Epic Additions: A player was respawned at their set spawn point, rather than their previous position. This should never happen and was included as a precaution against being stuck in the Pocket Cell. " +
                                     "Please let the mod developer know the context so he can fix the bug.");
                             return toPosEntity;
+                        }
+
+                        @Override
+                        public boolean playTeleportSound(ServerPlayer player, ServerLevel sourceWorld, ServerLevel destWorld) {
+                            return false;
                         }
                     });
 
@@ -151,6 +161,11 @@ public class PocketDimensionWarpKey extends BowItem {
                     });
                 });
                 return toPosEntity;
+            }
+
+            @Override
+            public boolean playTeleportSound(ServerPlayer player, ServerLevel sourceWorld, ServerLevel destWorld) {
+                return false;
             }
         });
     }
