@@ -1,0 +1,7 @@
+{
+  "type": "epicadditions:add_drop",
+  "conditions": [],
+  "item": "epicadditions:wither_head_launcher",
+  "amount": 1,
+  "loot_table": "minecraft:entities/wither"
+}
