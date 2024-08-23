@@ -5,6 +5,7 @@ import com.jackbusters.epicadditions.glm.EpicLootModifier;
 import com.jackbusters.epicadditions.items.PocketCellAssignmentSelfRemover;
 import com.jackbusters.epicadditions.items.PocketCellGenerator;
 import com.jackbusters.epicadditions.items.PocketDimensionWarpKey;
+import com.jackbusters.epicadditions.items.WitherHeadLauncher;
 import com.mojang.serialization.Codec;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
@@ -47,6 +48,9 @@ public class EpicRegistry {
     public static final RegistryObject<Item> POCKET_CELL_GENERATOR = ITEMS.register("pocket_cell_generator", ()->
             new PocketCellGenerator(new Item.Properties().stacksTo(1)));
 
+    public static final RegistryObject<Item> WITHER_HEAD_LAUNCHER = ITEMS.register("wither_head_launcher", ()->
+            new WitherHeadLauncher(new Item.Properties().stacksTo(1).rarity(Rarity.EPIC)));
+
     public static final RegistryObject<BlockItem> CELL_BLOCK_ITEM = ITEMS.register("cell_block", ()->
             new BlockItem(CELL_BLOCK.get(), new Item.Properties()));
 
@@ -59,6 +63,7 @@ public class EpicRegistry {
                     .displayItems((enabledFeatures, output) -> {
                         output.accept(POCKET_DIMENSION_KEY.get());
                         output.accept(CELL_BLOCK_ITEM.get());
+                        output.accept(WITHER_HEAD_LAUNCHER.get());
                     })
                     .build());
 

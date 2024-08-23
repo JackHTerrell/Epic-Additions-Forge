@@ -4,6 +4,7 @@
     "item.epicadditions.cell_block": "Cell Block",
     "item.epicadditions.pocket_cell_generator": "Pocket Cell Generator",
     "item.epicadditions.pocket_cell_assignment_remover": "Pocket Cell Self Assignment Remover",
+    "item.epicadditions.wither_head_launcher": "Wither Skull of Power",
     "block.epicadditions.cell_block": "Cell Block",
 
     "hovertext.item.pocket_cell_generator": "Debug Item for testing pocket cell generation. Dev Purposes, cells will not be assigned to any player.",
