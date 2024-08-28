@@ -1,5 +1,6 @@
 package com.jackbusters.epicadditions.items;
 
+import com.jackbusters.epicadditions.configurations.EpicServerConfig;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.player.Player;
@@ -32,5 +33,7 @@ public class SeveredWitherSkull extends Item {
         witherskull.setOwner(player);
 
         level.addFreshEntity(witherskull);
+
+        player.getCooldowns().addCooldown(this, EpicServerConfig.severedWitherSkullCoolDown.get()*20);
     }
 }

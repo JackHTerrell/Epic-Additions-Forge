@@ -1,5 +1,6 @@
 package com.jackbusters.epicadditions.items;
 
+import com.jackbusters.epicadditions.configurations.EpicServerConfig;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.player.Player;
@@ -25,5 +26,7 @@ public class MasteredDragonHead extends Item {
         dragonFireball.setOwner(player);
         dragonFireball.setPosRaw(player.getEyePosition().x(), player.getEyePosition().y(), player.getEyePosition().z());
         level.addFreshEntity(dragonFireball);
+
+        player.getCooldowns().addCooldown(this, EpicServerConfig.masteredDragonHeadCoolDown.get()*20);
     }
 }
