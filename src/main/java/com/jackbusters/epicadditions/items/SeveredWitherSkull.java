@@ -3,15 +3,14 @@ package com.jackbusters.epicadditions.items;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.entity.projectile.ProjectileUtil;
 import net.minecraft.world.entity.projectile.WitherSkull;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
 
-public class WitherHeadLauncher extends Item {
-    public WitherHeadLauncher(Properties pProperties) {
+public class SeveredWitherSkull extends Item {
+    public SeveredWitherSkull(Properties pProperties) {
         super(pProperties);
     }
 

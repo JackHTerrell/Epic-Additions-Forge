@@ -2,10 +2,7 @@ package com.jackbusters.epicadditions;
 
 import com.jackbusters.epicadditions.blocks.CellBlock;
 import com.jackbusters.epicadditions.glm.EpicLootModifier;
-import com.jackbusters.epicadditions.items.PocketCellAssignmentSelfRemover;
-import com.jackbusters.epicadditions.items.PocketCellGenerator;
-import com.jackbusters.epicadditions.items.PocketDimensionWarpKey;
-import com.jackbusters.epicadditions.items.WitherHeadLauncher;
+import com.jackbusters.epicadditions.items.*;
 import com.mojang.serialization.Codec;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
@@ -48,11 +45,19 @@ public class EpicRegistry {
     public static final RegistryObject<Item> POCKET_CELL_GENERATOR = ITEMS.register("pocket_cell_generator", ()->
             new PocketCellGenerator(new Item.Properties().stacksTo(1)));
 
-    public static final RegistryObject<Item> WITHER_HEAD_LAUNCHER = ITEMS.register("wither_head_launcher", ()->
-            new WitherHeadLauncher(new Item.Properties().stacksTo(1).rarity(Rarity.EPIC)));
+    public static final RegistryObject<Item> SEVERED_WITHER_SKULL = ITEMS.register("severed_wither_skull", ()->
+            new SeveredWitherSkull(new Item.Properties().stacksTo(1).rarity(Rarity.EPIC)));
 
+    public static final RegistryObject<Item> MASTERED_DRAGON_HEAD = ITEMS.register("mastered_dragon_head", ()->
+            new MasteredDragonHead(new Item.Properties().stacksTo(1).rarity(Rarity.EPIC)));
+
+    public static final RegistryObject<Item> DIMENSIONAL_GEL = ITEMS.register("dimensional_gel", ()->
+            new Item(new Item.Properties().rarity(Rarity.UNCOMMON)));
+
+    // Block Items
     public static final RegistryObject<BlockItem> CELL_BLOCK_ITEM = ITEMS.register("cell_block", ()->
             new BlockItem(CELL_BLOCK.get(), new Item.Properties()));
+
 
     // Creative Mode Tabs
     public static final RegistryObject<CreativeModeTab> MAIN_TAB = CREATIVE_MODE_TABS.register("main_tab", ()->
@@ -63,7 +68,9 @@ public class EpicRegistry {
                     .displayItems((enabledFeatures, output) -> {
                         output.accept(POCKET_DIMENSION_KEY.get());
                         output.accept(CELL_BLOCK_ITEM.get());
-                        output.accept(WITHER_HEAD_LAUNCHER.get());
+                        output.accept(DIMENSIONAL_GEL.get());
+                        output.accept(SEVERED_WITHER_SKULL.get());
+                        output.accept(MASTERED_DRAGON_HEAD.get());
                     })
                     .build());
 
