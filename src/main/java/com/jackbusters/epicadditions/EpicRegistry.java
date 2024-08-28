@@ -1,13 +1,17 @@
 package com.jackbusters.epicadditions;
 
 import com.jackbusters.epicadditions.blocks.CellBlock;
+import com.jackbusters.epicadditions.enchantments.SoulTiedEnchantment;
 import com.jackbusters.epicadditions.glm.EpicLootModifier;
 import com.jackbusters.epicadditions.items.*;
 import com.mojang.serialization.Codec;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.*;
+import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.item.enchantment.EnchantmentCategory;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockBehaviour;
@@ -25,6 +29,7 @@ public class EpicRegistry {
     public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, EpicAdditions.MOD_ID);
     public static final DeferredRegister<EntityType<?>> ENTITIES = DeferredRegister.create(ForgeRegistries.ENTITY_TYPES, EpicAdditions.MOD_ID);
     public static final DeferredRegister<CreativeModeTab> CREATIVE_MODE_TABS = DeferredRegister.create(BuiltInRegistries.CREATIVE_MODE_TAB.key(), EpicAdditions.MOD_ID);
+    public static final DeferredRegister<Enchantment> ENCHANTMENTS = DeferredRegister.create(ForgeRegistries.ENCHANTMENTS, EpicAdditions.MOD_ID);
     public static final DeferredRegister<Codec<? extends IGlobalLootModifier>> LOOT_MODIFIERS = DeferredRegister.create(ForgeRegistries.Keys.GLOBAL_LOOT_MODIFIER_SERIALIZERS, EpicAdditions.MOD_ID);
 
     // Blocks
@@ -74,6 +79,10 @@ public class EpicRegistry {
                     })
                     .build());
 
+    // Enchantments
+    public static final RegistryObject<Enchantment> SOUL_TIED = ENCHANTMENTS.register("soul_tied", ()-> new
+            SoulTiedEnchantment(Enchantment.Rarity.RARE, EnchantmentCategory.create("epicadditions_all", (item -> true)), EquipmentSlot.values()));
+
     // GLM
     public static final RegistryObject<Codec<? extends IGlobalLootModifier>> ADD_DROP = LOOT_MODIFIERS.register("add_drop", EpicLootModifier.CODEC);
 
@@ -91,6 +100,9 @@ public class EpicRegistry {
     }
     public static void registerBlocks(){
         BLOCKS.register(FMLJavaModLoadingContext.get().getModEventBus());
+    }
+    public static void registerEnchantments(){
+        ENCHANTMENTS.register(FMLJavaModLoadingContext.get().getModEventBus());
     }
 
     public static void addToExistingTabs(BuildCreativeModeTabContentsEvent event){

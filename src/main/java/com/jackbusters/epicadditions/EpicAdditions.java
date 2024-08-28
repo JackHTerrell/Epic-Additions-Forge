@@ -23,5 +23,6 @@ public class EpicAdditions {
         EpicRegistry.registerCreativeModeTabs();
         EpicRegistry.registerLootModifiers();
         EpicRegistry.registerBlocks();
+        EpicRegistry.registerEnchantments();
     }
 }
