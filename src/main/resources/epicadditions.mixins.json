@@ -1,0 +1,14 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "com.jackbusters.epicadditions.mixins",
+  "compatibilityLevel": "JAVA_17",
+  "refmap": "epicadditions.mixins.refmap.json",
+  "mixins": [
+    "PlayerDropEquipment"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+  }
+  
