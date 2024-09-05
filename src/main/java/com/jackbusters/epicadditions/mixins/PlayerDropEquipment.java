@@ -37,6 +37,10 @@ public abstract class PlayerDropEquipment extends LivingEntity {
     }
     @Inject(method = "dropEquipment", at = @At("TAIL"))
     private void onDropEquipmentBottom(CallbackInfo ci){
-        inventory.replaceWith(oldInventory);
+        for(int i = 0; i < oldInventory.getContainerSize(); ++i) {
+            ItemStack item = oldInventory.getItem(i);
+            if(!item.isEmpty())
+                inventory.setItem(i, item);
+        }
     }
 }
