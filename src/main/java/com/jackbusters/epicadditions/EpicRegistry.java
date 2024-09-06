@@ -12,6 +12,7 @@ import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.*;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentCategory;
+import net.minecraft.world.item.enchantment.EnchantmentInstance;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockBehaviour;
@@ -76,6 +77,9 @@ public class EpicRegistry {
                         output.accept(DIMENSIONAL_GEL.get());
                         output.accept(SEVERED_WITHER_SKULL.get());
                         output.accept(MASTERED_DRAGON_HEAD.get());
+                        ItemStack soulTiedBook = new ItemStack(Items.ENCHANTED_BOOK);
+                        EnchantedBookItem.addEnchantment(soulTiedBook, new EnchantmentInstance(EpicRegistry.SOUL_TIED.get(), 1));
+                        output.accept(soulTiedBook);
                     })
                     .build());
 
