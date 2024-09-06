@@ -8,4 +8,9 @@ public class SoulTiedEnchantment extends Enchantment {
     public SoulTiedEnchantment(Rarity pRarity, EnchantmentCategory pCategory, EquipmentSlot[] pApplicableSlots) {
         super(pRarity, pCategory, pApplicableSlots);
     }
+
+    @Override
+    public boolean isTradeable() {
+        return true;
+    }
 }
