@@ -31,7 +31,7 @@ public abstract class PlayerDropEquipment extends LivingEntity {
     @Shadow
     private Inventory inventory;
     @Unique
-    private final Inventory oldInventory = new Inventory((Player) (Object) this);
+    private final Inventory oldInventory = new Inventory((Player) (Object) this); // Uses a type-casting trick to pass this player object.
 
     protected PlayerDropEquipment(EntityType<? extends LivingEntity> pEntityType, Level pLevel) {
         super(pEntityType, pLevel);
