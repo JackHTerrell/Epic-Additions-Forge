@@ -1,7 +1,8 @@
 {
   "type": "epicadditions:add_drop",
   "conditions": [],
-  "item": "epicadditions:wither_head_launcher",
+  "item": "epicadditions:severed_wither_skull",
   "amount": 1,
-  "loot_table": "minecraft:entities/wither"
+  "loot_table": "minecraft:entities/wither",
+  "chance": 1
 }
