@@ -22,6 +22,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
  *<br><br>
  * The remaining functionality is done in {@link SoulTiedEnchantmentEvents} <br><br>
  * These mixins are necessary so that the Player Clone event has proper access to the player's inventory before he died.
+ * Additionally, this maintains a similar-in-appearance functionality to the keepInventory game rule.
  * There simply was not a Forge event to accomplish this action.
  */
 @Mixin(Player.class)
