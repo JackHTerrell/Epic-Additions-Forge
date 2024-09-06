@@ -31,7 +31,7 @@ public class EpicLootModifier extends LootModifier {
 
     private final Item item; // The item to generate
     private final int amount; // the number of items
-    private final String lootTable; // the loot table to generate the loot in
+    private final String lootTable; // the loot table to generate the loot in (i.e. "minecraft:entities/wither").
     private final double chance; // The chance of the loot generating 0 being no chance, 1 being guaranteed.
 
     protected EpicLootModifier(LootItemCondition[] conditionsIn, Item item, int amount, String lootTable, double chance) {
