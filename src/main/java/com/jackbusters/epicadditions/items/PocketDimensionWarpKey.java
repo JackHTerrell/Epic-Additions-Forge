@@ -4,6 +4,7 @@ import com.jackbusters.epicadditions.EpicAdditions;
 import com.jackbusters.epicadditions.EpicRegistry;
 import com.jackbusters.epicadditions.capabilities.pocketcells.PocketCellLevelDataProvider;
 import com.jackbusters.epicadditions.capabilities.pocketcells.PocketCellProvider;
+import com.jackbusters.epicadditions.configurations.EpicServerConfig;
 import com.jackbusters.epicadditions.constructs.PocketCell;
 import com.mojang.logging.LogUtils;
 import net.minecraft.ChatFormatting;
@@ -36,11 +37,9 @@ public class PocketDimensionWarpKey extends BowItem {
     private final Predicate<ItemStack> EVERYTHING = (itemStack) -> true;
     Logger logger = LogUtils.getLogger();
 
-
     public PocketDimensionWarpKey(Properties properties) {
         super(properties);
     }
-
 
     @Override
     public void releaseUsing(@NotNull ItemStack pStack, @NotNull Level level, @NotNull LivingEntity playerUsing, int timeCharged) {
@@ -77,6 +76,7 @@ public class PocketDimensionWarpKey extends BowItem {
                     @Override
                     public Entity placeEntity(Entity entity, ServerLevel currentWorld, ServerLevel destWorld, float yaw, Function<Boolean, Entity> repositionEntity) {
                         ServerPlayer toPosEntity = (ServerPlayer) repositionEntity.apply(false);
+                        toPosEntity.getCooldowns().addCooldown(EpicRegistry.POCKET_DIMENSION_KEY.get(), EpicServerConfig.pocketCellKeyCoolDown.get()*20); // Prevent pocket cell spamming with a cooldown
                         data.setLeftPocketCellPos(new Vec3(toPosEntity.getX(), toPosEntity.getY(), toPosEntity.getZ()));
                         data.setLeftPocketCellYaw(toPosEntity.getYRot());
                         data.setLeftPocketCellPitch(toPosEntity.getXRot());
@@ -104,6 +104,7 @@ public class PocketDimensionWarpKey extends BowItem {
                         @Override
                         public Entity placeEntity(Entity entity, ServerLevel currentWorld, ServerLevel destWorld, float yaw, Function<Boolean, Entity> repositionEntity) {
                             ServerPlayer toPosEntity = (ServerPlayer) repositionEntity.apply(false);
+                            toPosEntity.getCooldowns().addCooldown(EpicRegistry.POCKET_DIMENSION_KEY.get(), EpicServerConfig.pocketCellKeyCoolDown.get()*20); // Prevent pocket cell spamming with a cooldown
                             BlockPos respawnPoint = toPosEntity.getRespawnPosition();
                             if(respawnPoint == null){
                                 respawnPoint = finalRespawnDimension.getSharedSpawnPos(); // If the player doesn't have a respawn point, send him to world spawn.
@@ -130,6 +131,8 @@ public class PocketDimensionWarpKey extends BowItem {
             @Override
             public Entity placeEntity(Entity entity, ServerLevel currentWorld, ServerLevel destWorld, float yaw, Function<Boolean, Entity> repositionEntity) {
                 Entity toPosEntity = repositionEntity.apply(false);
+                if (toPosEntity instanceof ServerPlayer serverPlayer)
+                    serverPlayer.getCooldowns().addCooldown(EpicRegistry.POCKET_DIMENSION_KEY.get(), EpicServerConfig.pocketCellKeyCoolDown.get()*20); // Prevent pocket cell spamming with a cooldown
                 toPosEntity.getCapability(PocketCellProvider.POCKET_CELL_DATA).ifPresent(data -> {
                     if(!data.doesHavePocketCell()) {
                         PocketCell.buildNewPocketCell(EpicRegistry.CELL_BLOCK.get(), data.getPocketCellLevel(), destWorld, toPosEntity);
