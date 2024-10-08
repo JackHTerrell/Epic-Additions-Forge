@@ -1,0 +1,76 @@
+{
+  "parent": "minecraft:block/cube_all",
+  "render_type": "minecraft:cutout_mipped",
+  "textures": {
+    "all": "minecraft:block/acacia_leaves"
+  },
+
+  "faces": {
+    "down": {
+      "uv": [
+        0,
+        0,
+        16,
+        16
+      ],
+      "texture": "#all",
+      "tintindex": 0,
+      "cullface": "down"
+    },
+    "up": {
+      "uv": [
+        0,
+        0,
+        16,
+        16
+      ],
+      "texture": "#all",
+      "tintindex": 0,
+      "cullface": "up"
+    },
+    "north": {
+      "uv": [
+        0,
+        0,
+        16,
+        16
+      ],
+      "texture": "#all",
+      "tintindex": 0,
+      "cullface": "north"
+    },
+    "south": {
+      "uv": [
+        0,
+        0,
+        16,
+        16
+      ],
+      "texture": "#all",
+      "tintindex": 0,
+      "cullface": "south"
+    },
+    "west": {
+      "uv": [
+        0,
+        0,
+        16,
+        16
+      ],
+      "texture": "#all",
+      "tintindex": 0,
+      "cullface": "west"
+    },
+    "east": {
+      "uv": [
+        0,
+        0,
+        16,
+        16
+      ],
+      "texture": "#all",
+      "tintindex": 0,
+      "cullface": "east"
+    }
+  }
+}

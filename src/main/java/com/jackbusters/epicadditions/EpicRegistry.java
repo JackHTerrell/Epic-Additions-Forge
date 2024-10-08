@@ -15,9 +15,12 @@ import net.minecraft.world.item.enchantment.EnchantmentCategory;
 import net.minecraft.world.item.enchantment.EnchantmentInstance;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.LeavesBlock;
+import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.properties.NoteBlockInstrument;
 import net.minecraft.world.level.material.MapColor;
+import net.minecraft.world.level.material.PushReaction;
 import net.minecraftforge.common.loot.IGlobalLootModifier;
 import net.minecraftforge.event.BuildCreativeModeTabContentsEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
@@ -39,6 +42,16 @@ public class EpicRegistry {
                     .instrument(NoteBlockInstrument.BASEDRUM).strength(-1.0F, 3600000.0F)
                     .noLootTable().isValidSpawn(Blocks::never).isRedstoneConductor(Blocks::never)
                     .isSuffocating(Blocks::never).isViewBlocking(Blocks::never).noOcclusion()));
+
+    public static final RegistryObject<Block> OAK_DIMENSIONAL_LEAVES = BLOCKS.register("oak_dimensional_leaves", () -> EpicRegistry.leaves(MapColor.COLOR_LIGHT_BLUE, SoundType.GRASS));
+    public static final RegistryObject<Block> SPRUCE_DIMENSIONAL_LEAVES = BLOCKS.register("spruce_dimensional_leaves", () -> EpicRegistry.leaves(MapColor.COLOR_LIGHT_BLUE, SoundType.GRASS));
+    public static final RegistryObject<Block> BIRCH_DIMENSIONAL_LEAVES = BLOCKS.register("birch_dimensional_leaves", () -> EpicRegistry.leaves(MapColor.COLOR_LIGHT_BLUE, SoundType.GRASS));
+    public static final RegistryObject<Block> JUNGLE_DIMENSIONAL_LEAVES = BLOCKS.register("jungle_dimensional_leaves", () -> EpicRegistry.leaves(MapColor.COLOR_LIGHT_BLUE, SoundType.GRASS));
+    public static final RegistryObject<Block> ACACIA_DIMENSIONAL_LEAVES = BLOCKS.register("acacia_dimensional_leaves", () -> EpicRegistry.leaves(MapColor.COLOR_LIGHT_BLUE, SoundType.GRASS));
+    public static final RegistryObject<Block> CHERRY_DIMENSIONAL_LEAVES = BLOCKS.register("cherry_dimensional_leaves", () -> EpicRegistry.leaves(MapColor.COLOR_LIGHT_BLUE, SoundType.CHERRY_LEAVES));
+    public static final RegistryObject<Block> DARK_OAK_DIMENSIONAL_LEAVES = BLOCKS.register("dark_oak_dimensional_leaves", () -> EpicRegistry.leaves(MapColor.COLOR_LIGHT_BLUE, SoundType.GRASS));
+    public static final RegistryObject<Block> AZALEA_DIMENSIONAL_LEAVES = BLOCKS.register("azalea_dimensional_leaves", () -> EpicRegistry.leaves(MapColor.COLOR_LIGHT_BLUE, SoundType.AZALEA_LEAVES));
+    public static final RegistryObject<Block> FLOWERING_AZALEA_DIMENSIONAL_LEAVES = BLOCKS.register("flowering_azalea_dimensional_leaves", () -> EpicRegistry.leaves(MapColor.COLOR_LIGHT_BLUE, SoundType.AZALEA_LEAVES));
 
     // Items
     public static final RegistryObject<Item> POCKET_DIMENSION_KEY = ITEMS.register("pocket_dimension_key", ()->
@@ -64,6 +77,32 @@ public class EpicRegistry {
     public static final RegistryObject<BlockItem> CELL_BLOCK_ITEM = ITEMS.register("cell_block", ()->
             new BlockItem(CELL_BLOCK.get(), new Item.Properties()));
 
+    public static final RegistryObject<BlockItem> OAK_DIMENSIONAL_LEAVES_ITEM = ITEMS.register("oak_dimensional_leaves", ()->
+            new BlockItem(OAK_DIMENSIONAL_LEAVES.get(), new Item.Properties()));
+
+    public static final RegistryObject<BlockItem> SPRUCE_DIMENSIONAL_LEAVES_ITEM = ITEMS.register("spruce_dimensional_leaves", ()->
+            new BlockItem(SPRUCE_DIMENSIONAL_LEAVES.get(), new Item.Properties()));
+
+    public static final RegistryObject<BlockItem> BIRCH_DIMENSIONAL_LEAVES_ITEM = ITEMS.register("birch_dimensional_leaves", ()->
+            new BlockItem(BIRCH_DIMENSIONAL_LEAVES.get(), new Item.Properties()));
+
+    public static final RegistryObject<BlockItem> JUNGLE_DIMENSIONAL_LEAVES_ITEM = ITEMS.register("jungle_dimensional_leaves", ()->
+            new BlockItem(JUNGLE_DIMENSIONAL_LEAVES.get(), new Item.Properties()));
+
+    public static final RegistryObject<BlockItem> ACACIA_DIMENSIONAL_LEAVES_ITEM = ITEMS.register("acacia_dimensional_leaves", ()->
+            new BlockItem(ACACIA_DIMENSIONAL_LEAVES.get(), new Item.Properties()));
+
+    public static final RegistryObject<BlockItem> CHERRY_DIMENSIONAL_LEAVES_ITEM = ITEMS.register("cherry_dimensional_leaves", ()->
+            new BlockItem(CHERRY_DIMENSIONAL_LEAVES.get(), new Item.Properties()));
+
+    public static final RegistryObject<BlockItem> DARK_OAK_DIMENSIONAL_LEAVES_ITEM = ITEMS.register("dark_oak_dimensional_leaves", ()->
+            new BlockItem(DARK_OAK_DIMENSIONAL_LEAVES.get(), new Item.Properties()));
+
+    public static final RegistryObject<BlockItem> AZALEA_DIMENSIONAL_LEAVES_ITEM = ITEMS.register("azalea_dimensional_leaves", ()->
+            new BlockItem(AZALEA_DIMENSIONAL_LEAVES.get(), new Item.Properties()));
+
+    public static final RegistryObject<BlockItem> FLOWERING_AZALEA_DIMENSIONAL_LEAVES_ITEM = ITEMS.register("flowering_azalea_dimensional_leaves", ()->
+            new BlockItem(FLOWERING_AZALEA_DIMENSIONAL_LEAVES.get(), new Item.Properties()));
 
     // Creative Mode Tabs
     public static final RegistryObject<CreativeModeTab> MAIN_TAB = CREATIVE_MODE_TABS.register("main_tab", ()->
@@ -74,6 +113,15 @@ public class EpicRegistry {
                     .displayItems((enabledFeatures, output) -> {
                         output.accept(POCKET_DIMENSION_KEY.get());
                         output.accept(CELL_BLOCK_ITEM.get());
+                        output.accept(OAK_DIMENSIONAL_LEAVES_ITEM.get());
+                        output.accept(SPRUCE_DIMENSIONAL_LEAVES_ITEM.get());
+                        output.accept(BIRCH_DIMENSIONAL_LEAVES_ITEM.get());
+                        output.accept(JUNGLE_DIMENSIONAL_LEAVES_ITEM.get());
+                        output.accept(ACACIA_DIMENSIONAL_LEAVES_ITEM.get());
+                        output.accept(CHERRY_DIMENSIONAL_LEAVES_ITEM.get());
+                        output.accept(DARK_OAK_DIMENSIONAL_LEAVES_ITEM.get());
+                        output.accept(AZALEA_DIMENSIONAL_LEAVES_ITEM.get());
+                        output.accept(FLOWERING_AZALEA_DIMENSIONAL_LEAVES_ITEM.get());
                         output.accept(DIMENSIONAL_GEL.get());
                         output.accept(SEVERED_WITHER_SKULL.get());
                         output.accept(MASTERED_DRAGON_HEAD.get());
@@ -114,5 +162,9 @@ public class EpicRegistry {
             event.accept(POCKET_CELL_GENERATOR.get());
             event.accept(POCKET_CELL_ASSIGNMENT_REMOVER.get());
         }
+    }
+
+    public static LeavesBlock leaves(MapColor mapColor, SoundType pType) {
+        return new LeavesBlock(BlockBehaviour.Properties.of().mapColor(mapColor).strength(0.2F).randomTicks().sound(pType).noOcclusion().isValidSpawn(Blocks::ocelotOrParrot).isSuffocating(Blocks::never).isViewBlocking(Blocks::never).ignitedByLava().pushReaction(PushReaction.DESTROY).isRedstoneConductor(Blocks::never));
     }
 }
