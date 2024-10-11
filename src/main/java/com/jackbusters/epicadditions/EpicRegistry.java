@@ -43,15 +43,7 @@ public class EpicRegistry {
                     .noLootTable().isValidSpawn(Blocks::never).isRedstoneConductor(Blocks::never)
                     .isSuffocating(Blocks::never).isViewBlocking(Blocks::never).noOcclusion()));
 
-    public static final RegistryObject<Block> OAK_DIMENSIONAL_LEAVES = BLOCKS.register("oak_dimensional_leaves", () -> EpicRegistry.leaves(MapColor.COLOR_LIGHT_BLUE, SoundType.GRASS));
-    public static final RegistryObject<Block> SPRUCE_DIMENSIONAL_LEAVES = BLOCKS.register("spruce_dimensional_leaves", () -> EpicRegistry.leaves(MapColor.COLOR_LIGHT_BLUE, SoundType.GRASS));
-    public static final RegistryObject<Block> BIRCH_DIMENSIONAL_LEAVES = BLOCKS.register("birch_dimensional_leaves", () -> EpicRegistry.leaves(MapColor.COLOR_LIGHT_BLUE, SoundType.GRASS));
-    public static final RegistryObject<Block> JUNGLE_DIMENSIONAL_LEAVES = BLOCKS.register("jungle_dimensional_leaves", () -> EpicRegistry.leaves(MapColor.COLOR_LIGHT_BLUE, SoundType.GRASS));
-    public static final RegistryObject<Block> ACACIA_DIMENSIONAL_LEAVES = BLOCKS.register("acacia_dimensional_leaves", () -> EpicRegistry.leaves(MapColor.COLOR_LIGHT_BLUE, SoundType.GRASS));
-    public static final RegistryObject<Block> CHERRY_DIMENSIONAL_LEAVES = BLOCKS.register("cherry_dimensional_leaves", () -> EpicRegistry.leaves(MapColor.COLOR_LIGHT_BLUE, SoundType.CHERRY_LEAVES));
-    public static final RegistryObject<Block> DARK_OAK_DIMENSIONAL_LEAVES = BLOCKS.register("dark_oak_dimensional_leaves", () -> EpicRegistry.leaves(MapColor.COLOR_LIGHT_BLUE, SoundType.GRASS));
-    public static final RegistryObject<Block> AZALEA_DIMENSIONAL_LEAVES = BLOCKS.register("azalea_dimensional_leaves", () -> EpicRegistry.leaves(MapColor.COLOR_LIGHT_BLUE, SoundType.AZALEA_LEAVES));
-    public static final RegistryObject<Block> FLOWERING_AZALEA_DIMENSIONAL_LEAVES = BLOCKS.register("flowering_azalea_dimensional_leaves", () -> EpicRegistry.leaves(MapColor.COLOR_LIGHT_BLUE, SoundType.AZALEA_LEAVES));
+    public static final RegistryObject<Block> DIMENSIONAL_LEAVES = BLOCKS.register("dimensional_leaves", () -> EpicRegistry.leaves(MapColor.COLOR_LIGHT_BLUE, SoundType.GRASS));
 
     // Items
     public static final RegistryObject<Item> POCKET_DIMENSION_KEY = ITEMS.register("pocket_dimension_key", ()->
@@ -77,32 +69,8 @@ public class EpicRegistry {
     public static final RegistryObject<BlockItem> CELL_BLOCK_ITEM = ITEMS.register("cell_block", ()->
             new BlockItem(CELL_BLOCK.get(), new Item.Properties()));
 
-    public static final RegistryObject<BlockItem> OAK_DIMENSIONAL_LEAVES_ITEM = ITEMS.register("oak_dimensional_leaves", ()->
-            new BlockItem(OAK_DIMENSIONAL_LEAVES.get(), new Item.Properties()));
-
-    public static final RegistryObject<BlockItem> SPRUCE_DIMENSIONAL_LEAVES_ITEM = ITEMS.register("spruce_dimensional_leaves", ()->
-            new BlockItem(SPRUCE_DIMENSIONAL_LEAVES.get(), new Item.Properties()));
-
-    public static final RegistryObject<BlockItem> BIRCH_DIMENSIONAL_LEAVES_ITEM = ITEMS.register("birch_dimensional_leaves", ()->
-            new BlockItem(BIRCH_DIMENSIONAL_LEAVES.get(), new Item.Properties()));
-
-    public static final RegistryObject<BlockItem> JUNGLE_DIMENSIONAL_LEAVES_ITEM = ITEMS.register("jungle_dimensional_leaves", ()->
-            new BlockItem(JUNGLE_DIMENSIONAL_LEAVES.get(), new Item.Properties()));
-
-    public static final RegistryObject<BlockItem> ACACIA_DIMENSIONAL_LEAVES_ITEM = ITEMS.register("acacia_dimensional_leaves", ()->
-            new BlockItem(ACACIA_DIMENSIONAL_LEAVES.get(), new Item.Properties()));
-
-    public static final RegistryObject<BlockItem> CHERRY_DIMENSIONAL_LEAVES_ITEM = ITEMS.register("cherry_dimensional_leaves", ()->
-            new BlockItem(CHERRY_DIMENSIONAL_LEAVES.get(), new Item.Properties()));
-
-    public static final RegistryObject<BlockItem> DARK_OAK_DIMENSIONAL_LEAVES_ITEM = ITEMS.register("dark_oak_dimensional_leaves", ()->
-            new BlockItem(DARK_OAK_DIMENSIONAL_LEAVES.get(), new Item.Properties()));
-
-    public static final RegistryObject<BlockItem> AZALEA_DIMENSIONAL_LEAVES_ITEM = ITEMS.register("azalea_dimensional_leaves", ()->
-            new BlockItem(AZALEA_DIMENSIONAL_LEAVES.get(), new Item.Properties()));
-
-    public static final RegistryObject<BlockItem> FLOWERING_AZALEA_DIMENSIONAL_LEAVES_ITEM = ITEMS.register("flowering_azalea_dimensional_leaves", ()->
-            new BlockItem(FLOWERING_AZALEA_DIMENSIONAL_LEAVES.get(), new Item.Properties()));
+    public static final RegistryObject<BlockItem> DIMENSIONAL_LEAVES_ITEM = ITEMS.register("dimensional_leaves", ()->
+            new BlockItem(DIMENSIONAL_LEAVES.get(), new Item.Properties()));
 
     // Creative Mode Tabs
     public static final RegistryObject<CreativeModeTab> MAIN_TAB = CREATIVE_MODE_TABS.register("main_tab", ()->
@@ -113,15 +81,7 @@ public class EpicRegistry {
                     .displayItems((enabledFeatures, output) -> {
                         output.accept(POCKET_DIMENSION_KEY.get());
                         output.accept(CELL_BLOCK_ITEM.get());
-                        output.accept(OAK_DIMENSIONAL_LEAVES_ITEM.get());
-                        output.accept(SPRUCE_DIMENSIONAL_LEAVES_ITEM.get());
-                        output.accept(BIRCH_DIMENSIONAL_LEAVES_ITEM.get());
-                        output.accept(JUNGLE_DIMENSIONAL_LEAVES_ITEM.get());
-                        output.accept(ACACIA_DIMENSIONAL_LEAVES_ITEM.get());
-                        output.accept(CHERRY_DIMENSIONAL_LEAVES_ITEM.get());
-                        output.accept(DARK_OAK_DIMENSIONAL_LEAVES_ITEM.get());
-                        output.accept(AZALEA_DIMENSIONAL_LEAVES_ITEM.get());
-                        output.accept(FLOWERING_AZALEA_DIMENSIONAL_LEAVES_ITEM.get());
+                        output.accept(DIMENSIONAL_LEAVES_ITEM.get());
                         output.accept(DIMENSIONAL_GEL.get());
                         output.accept(SEVERED_WITHER_SKULL.get());
                         output.accept(MASTERED_DRAGON_HEAD.get());
@@ -138,23 +98,23 @@ public class EpicRegistry {
     // GLM
     public static final RegistryObject<Codec<? extends IGlobalLootModifier>> ADD_DROP = LOOT_MODIFIERS.register("add_drop", EpicLootModifier.CODEC);
 
-    public static void registerItems(){
-        ITEMS.register(FMLJavaModLoadingContext.get().getModEventBus());
+    public static void registerItems(FMLJavaModLoadingContext modLoadingContext){
+        ITEMS.register(modLoadingContext.getModEventBus());
     }
-    public static void registerEntities(){
-        ENTITIES.register(FMLJavaModLoadingContext.get().getModEventBus());
+    public static void registerEntities(FMLJavaModLoadingContext modLoadingContext){
+        ENTITIES.register(modLoadingContext.getModEventBus());
     }
-    public static void registerCreativeModeTabs(){
-        CREATIVE_MODE_TABS.register(FMLJavaModLoadingContext.get().getModEventBus());
+    public static void registerCreativeModeTabs(FMLJavaModLoadingContext modLoadingContext){
+        CREATIVE_MODE_TABS.register(modLoadingContext.getModEventBus());
     }
-    public static void registerLootModifiers(){
-        LOOT_MODIFIERS.register(FMLJavaModLoadingContext.get().getModEventBus());
+    public static void registerLootModifiers(FMLJavaModLoadingContext modLoadingContext){
+        LOOT_MODIFIERS.register(modLoadingContext.getModEventBus());
     }
-    public static void registerBlocks(){
-        BLOCKS.register(FMLJavaModLoadingContext.get().getModEventBus());
+    public static void registerBlocks(FMLJavaModLoadingContext modLoadingContext){
+        BLOCKS.register(modLoadingContext.getModEventBus());
     }
-    public static void registerEnchantments(){
-        ENCHANTMENTS.register(FMLJavaModLoadingContext.get().getModEventBus());
+    public static void registerEnchantments(FMLJavaModLoadingContext modLoadingContext){
+        ENCHANTMENTS.register(modLoadingContext.getModEventBus());
     }
 
     public static void addToExistingTabs(BuildCreativeModeTabContentsEvent event){
