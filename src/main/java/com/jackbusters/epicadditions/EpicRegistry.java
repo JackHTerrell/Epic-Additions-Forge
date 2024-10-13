@@ -13,10 +13,7 @@ import net.minecraft.world.item.*;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentCategory;
 import net.minecraft.world.item.enchantment.EnchantmentInstance;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.LeavesBlock;
-import net.minecraft.world.level.block.SoundType;
+import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.properties.NoteBlockInstrument;
 import net.minecraft.world.level.material.MapColor;
@@ -43,8 +40,8 @@ public class EpicRegistry {
                     .noLootTable().isValidSpawn(Blocks::never).isRedstoneConductor(Blocks::never)
                     .isSuffocating(Blocks::never).isViewBlocking(Blocks::never).noOcclusion()));
 
-    public static final RegistryObject<Block> DIMENSIONAL_LEAVES = BLOCKS.register("dimensional_leaves", () -> EpicRegistry.leaves(MapColor.COLOR_LIGHT_BLUE, SoundType.GRASS));
-    public static final RegistryObject<Block> DIMENSIONAL_LOG = BLOCKS.register("dimensional_log", () -> EpicRegistry.leaves(MapColor.COLOR_BLUE, SoundType.WOOD));
+    public static final RegistryObject<Block> DIMENSIONAL_ORE = BLOCKS.register("dimensional_ore", () -> new DropExperienceBlock(BlockBehaviour.Properties.of().mapColor(MapColor.STONE).instrument(NoteBlockInstrument.BASEDRUM).requiresCorrectToolForDrops().strength(3.0F, 3.0F)));
+    public static final RegistryObject<Block> DEEPSLATE_DIMENSIONAL_ORE = BLOCKS.register("deepslate_dimensional_ore", () -> new DropExperienceBlock(BlockBehaviour.Properties.copy(DIMENSIONAL_ORE.get()).mapColor(MapColor.DEEPSLATE).strength(4.5F, 3.0F).sound(SoundType.DEEPSLATE)));
 
     // Items
     public static final RegistryObject<Item> POCKET_DIMENSION_KEY = ITEMS.register("pocket_dimension_key", ()->
@@ -70,11 +67,11 @@ public class EpicRegistry {
     public static final RegistryObject<BlockItem> CELL_BLOCK_ITEM = ITEMS.register("cell_block", ()->
             new BlockItem(CELL_BLOCK.get(), new Item.Properties()));
 
-    public static final RegistryObject<BlockItem> DIMENSIONAL_LEAVES_ITEM = ITEMS.register("dimensional_leaves", ()->
-            new BlockItem(DIMENSIONAL_LEAVES.get(), new Item.Properties()));
+    public static final RegistryObject<BlockItem> DIMENSIONAL_ORE_ITEM = ITEMS.register("dimensional_ore", ()->
+            new BlockItem(DIMENSIONAL_ORE.get(), new Item.Properties()));
 
-    public static final RegistryObject<BlockItem> DIMENSIONAL_LOG_ITEM = ITEMS.register("dimensional_log", ()->
-            new BlockItem(DIMENSIONAL_LOG.get(), new Item.Properties()));
+    public static final RegistryObject<BlockItem> DEEPSLATE_DIMENSIONAL_ORE_ITEM = ITEMS.register("deepslate_dimensional_ore", ()->
+            new BlockItem(DEEPSLATE_DIMENSIONAL_ORE.get(), new Item.Properties()));
 
     // Creative Mode Tabs
     public static final RegistryObject<CreativeModeTab> MAIN_TAB = CREATIVE_MODE_TABS.register("main_tab", ()->
@@ -85,8 +82,8 @@ public class EpicRegistry {
                     .displayItems((enabledFeatures, output) -> {
                         output.accept(POCKET_DIMENSION_KEY.get());
                         output.accept(CELL_BLOCK_ITEM.get());
-                        output.accept(DIMENSIONAL_LEAVES_ITEM.get());
-                        output.accept(DIMENSIONAL_LOG_ITEM.get());
+                        output.accept(DIMENSIONAL_ORE_ITEM.get());
+                        output.accept(DEEPSLATE_DIMENSIONAL_ORE_ITEM.get());
                         output.accept(DIMENSIONAL_GEL.get());
                         output.accept(SEVERED_WITHER_SKULL.get());
                         output.accept(MASTERED_DRAGON_HEAD.get());
@@ -123,13 +120,9 @@ public class EpicRegistry {
     }
 
     public static void addToExistingTabs(BuildCreativeModeTabContentsEvent event){
-        if(event.getTabKey().equals(CreativeModeTabs.OP_BLOCKS)) {
+        if(event.getTabKey().equals(CreativeModeTabs.OP_BLOCKS) && event.hasPermissions()) {
             event.accept(POCKET_CELL_GENERATOR.get());
             event.accept(POCKET_CELL_ASSIGNMENT_REMOVER.get());
         }
-    }
-
-    public static LeavesBlock leaves(MapColor mapColor, SoundType pType) {
-        return new LeavesBlock(BlockBehaviour.Properties.of().mapColor(mapColor).strength(0.2F).randomTicks().sound(pType).noOcclusion().isValidSpawn(Blocks::ocelotOrParrot).isSuffocating(Blocks::never).isViewBlocking(Blocks::never).ignitedByLava().pushReaction(PushReaction.DESTROY).isRedstoneConductor(Blocks::never));
     }
 }
