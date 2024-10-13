@@ -44,6 +44,7 @@ public class EpicRegistry {
                     .isSuffocating(Blocks::never).isViewBlocking(Blocks::never).noOcclusion()));
 
     public static final RegistryObject<Block> DIMENSIONAL_LEAVES = BLOCKS.register("dimensional_leaves", () -> EpicRegistry.leaves(MapColor.COLOR_LIGHT_BLUE, SoundType.GRASS));
+    public static final RegistryObject<Block> DIMENSIONAL_LOG = BLOCKS.register("dimensional_log", () -> EpicRegistry.leaves(MapColor.COLOR_BLUE, SoundType.WOOD));
 
     // Items
     public static final RegistryObject<Item> POCKET_DIMENSION_KEY = ITEMS.register("pocket_dimension_key", ()->
@@ -72,6 +73,9 @@ public class EpicRegistry {
     public static final RegistryObject<BlockItem> DIMENSIONAL_LEAVES_ITEM = ITEMS.register("dimensional_leaves", ()->
             new BlockItem(DIMENSIONAL_LEAVES.get(), new Item.Properties()));
 
+    public static final RegistryObject<BlockItem> DIMENSIONAL_LOG_ITEM = ITEMS.register("dimensional_log", ()->
+            new BlockItem(DIMENSIONAL_LOG.get(), new Item.Properties()));
+
     // Creative Mode Tabs
     public static final RegistryObject<CreativeModeTab> MAIN_TAB = CREATIVE_MODE_TABS.register("main_tab", ()->
             CreativeModeTab.builder()
@@ -82,6 +86,7 @@ public class EpicRegistry {
                         output.accept(POCKET_DIMENSION_KEY.get());
                         output.accept(CELL_BLOCK_ITEM.get());
                         output.accept(DIMENSIONAL_LEAVES_ITEM.get());
+                        output.accept(DIMENSIONAL_LOG_ITEM.get());
                         output.accept(DIMENSIONAL_GEL.get());
                         output.accept(SEVERED_WITHER_SKULL.get());
                         output.accept(MASTERED_DRAGON_HEAD.get());
