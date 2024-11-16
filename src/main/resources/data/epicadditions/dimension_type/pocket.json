@@ -12,8 +12,9 @@
   "ambient_light": 0,
   "logical_height": 256,
   "infiniburn": "#minecraft:infiniburn_overworld",
-  "min_y": -64,
-  "height": 2032,
+  "effects" : "epicadditions:pocket",
+  "min_y": -2032,
+  "height": 4064,
   "monster_spawn_light_level": {
     "type": "minecraft:uniform",
     "value": {
