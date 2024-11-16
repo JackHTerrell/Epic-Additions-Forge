@@ -17,7 +17,6 @@ import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.properties.NoteBlockInstrument;
 import net.minecraft.world.level.material.MapColor;
-import net.minecraft.world.level.material.PushReaction;
 import net.minecraftforge.common.loot.IGlobalLootModifier;
 import net.minecraftforge.event.BuildCreativeModeTabContentsEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
@@ -60,7 +59,7 @@ public class EpicRegistry {
     public static final RegistryObject<Item> MASTERED_DRAGON_HEAD = ITEMS.register("mastered_dragon_head", ()->
             new MasteredDragonHead(new Item.Properties().stacksTo(1).rarity(Rarity.EPIC)));
 
-    public static final RegistryObject<Item> DIMENSIONAL_GEL = ITEMS.register("dimensional_gel", ()->
+    public static final RegistryObject<Item> DIMENSIONAL_GEM = ITEMS.register("dimensional_gem", ()->
             new Item(new Item.Properties().rarity(Rarity.UNCOMMON)));
 
     // Block Items
@@ -84,7 +83,7 @@ public class EpicRegistry {
                         output.accept(CELL_BLOCK_ITEM.get());
                         output.accept(DIMENSIONAL_ORE_ITEM.get());
                         output.accept(DEEPSLATE_DIMENSIONAL_ORE_ITEM.get());
-                        output.accept(DIMENSIONAL_GEL.get());
+                        output.accept(DIMENSIONAL_GEM.get());
                         output.accept(SEVERED_WITHER_SKULL.get());
                         output.accept(MASTERED_DRAGON_HEAD.get());
                         ItemStack soulTiedBook = new ItemStack(Items.ENCHANTED_BOOK);
