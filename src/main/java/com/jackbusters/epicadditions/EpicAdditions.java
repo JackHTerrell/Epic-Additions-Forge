@@ -1,6 +1,9 @@
 package com.jackbusters.epicadditions;
 
 import com.jackbusters.epicadditions.configurations.EpicServerConfig;
+import com.jackbusters.epicadditions.dimensioneffects.PocketDimensionEffect;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraftforge.client.event.RegisterDimensionSpecialEffectsEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
@@ -14,6 +17,7 @@ public class EpicAdditions {
     public EpicAdditions(FMLJavaModLoadingContext modLoadingContext){
         this.modLoadingContext=modLoadingContext;
         modLoadingContext.getModEventBus().addListener(this::registerRegistries);
+        modLoadingContext.getModEventBus().addListener(this::registerDimensionEffectsEvent);
         modLoadingContext.getModEventBus().addListener(EpicRegistry::addToExistingTabs);
         modLoadingContext.registerConfig(ModConfig.Type.SERVER, EpicServerConfig.SPEC);
     }
@@ -25,5 +29,9 @@ public class EpicAdditions {
         EpicRegistry.registerLootModifiers(modLoadingContext);
         EpicRegistry.registerBlocks(modLoadingContext);
         EpicRegistry.registerEnchantments(modLoadingContext);
+    }
+
+    public void registerDimensionEffectsEvent(final RegisterDimensionSpecialEffectsEvent event){
+        event.register(new ResourceLocation(MOD_ID, "pocket"),new PocketDimensionEffect());
     }
 }
