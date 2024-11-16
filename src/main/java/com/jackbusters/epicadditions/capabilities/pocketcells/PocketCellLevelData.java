@@ -10,19 +10,19 @@ import java.util.List;
 import java.util.UUID;
 
 public class PocketCellLevelData {
-    private List<BlockPos> tangibleCellLocations = new ArrayList<>();
+    private List<BlockPos> occupiedCellLocations = new ArrayList<>();
     private List<UUID> playersWithCells = new ArrayList<>();
 
-    public List<BlockPos> getTangibleCellLocations(){
-        return this.tangibleCellLocations;
+    public List<BlockPos> getOccupiedCellLocations(){
+        return this.occupiedCellLocations;
     }
 
     public List<UUID> getPlayersWithCells(){
         return this.playersWithCells;
     }
 
-    public void setTangibleCellLocations(List<BlockPos> tangibleCellLocations){
-        this.tangibleCellLocations=tangibleCellLocations;
+    public void setOccupiedCellLocations(List<BlockPos> occupiedCellLocations){
+        this.occupiedCellLocations=occupiedCellLocations;
     }
 
     public void setPlayersWithCells(List<UUID> playersWithCells){
@@ -30,12 +30,12 @@ public class PocketCellLevelData {
     }
 
     public void saveCompoundData(CompoundTag compoundTag){
-        saveBlockPosList(getTangibleCellLocations(), new ListTag(), compoundTag);
+        saveBlockPosList(getOccupiedCellLocations(), new ListTag(), compoundTag);
         saveUUIDList(getPlayersWithCells(), new ListTag(), compoundTag);
     }
 
     public void loadCompoundData(CompoundTag compoundTag){
-        setTangibleCellLocations(loadedBlockPosList(compoundTag));
+        setOccupiedCellLocations(loadedBlockPosList(compoundTag));
         setPlayersWithCells(loadedUUIDList(compoundTag));
     }
 

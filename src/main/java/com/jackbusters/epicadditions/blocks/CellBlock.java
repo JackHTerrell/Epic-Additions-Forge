@@ -37,7 +37,7 @@ public class CellBlock extends HalfTransparentBlock {
     public void entityInside(@NotNull BlockState pState, @NotNull Level pLevel, @NotNull BlockPos pPos, @NotNull Entity pEntity) {
         pEntity.getCapability(PocketCellProvider.POCKET_CELL_DATA).ifPresent(data -> {
             pLevel.getCapability(PocketCellLevelDataProvider.POCKET_CELL_LEVEL_DATA).ifPresent(lData -> {
-               BlockPos pos = lData.getTangibleCellLocations().get(data.getPocketCellIndex());
+               BlockPos pos = lData.getOccupiedCellLocations().get(data.getPocketCellIndex());
                pEntity.teleportTo(pos.getX(), pos.getY()+1, pos.getZ());
             });
         });
