@@ -4,11 +4,16 @@ import com.jackbusters.epicadditions.blocks.CellBlock;
 import com.jackbusters.epicadditions.enchantments.SoulTiedEnchantment;
 import com.jackbusters.epicadditions.glm.EpicLootModifier;
 import com.jackbusters.epicadditions.items.*;
+import com.jackbusters.epicadditions.statuseffects.UpgradePocketCellEffect;
 import com.mojang.serialization.Codec;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
+import net.minecraft.world.effect.MobEffect;
+import net.minecraft.world.effect.MobEffectCategory;
+import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.*;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentCategory;
@@ -27,10 +32,14 @@ import net.minecraftforge.registries.RegistryObject;
 public class EpicRegistry {
     public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, EpicAdditions.MOD_ID);
     public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, EpicAdditions.MOD_ID);
+    public static final DeferredRegister<MobEffect> MOB_EFFECTS = DeferredRegister.create(ForgeRegistries.MOB_EFFECTS, EpicAdditions.MOD_ID);
     public static final DeferredRegister<EntityType<?>> ENTITIES = DeferredRegister.create(ForgeRegistries.ENTITY_TYPES, EpicAdditions.MOD_ID);
     public static final DeferredRegister<CreativeModeTab> CREATIVE_MODE_TABS = DeferredRegister.create(BuiltInRegistries.CREATIVE_MODE_TAB.key(), EpicAdditions.MOD_ID);
     public static final DeferredRegister<Enchantment> ENCHANTMENTS = DeferredRegister.create(ForgeRegistries.ENCHANTMENTS, EpicAdditions.MOD_ID);
     public static final DeferredRegister<Codec<? extends IGlobalLootModifier>> LOOT_MODIFIERS = DeferredRegister.create(ForgeRegistries.Keys.GLOBAL_LOOT_MODIFIER_SERIALIZERS, EpicAdditions.MOD_ID);
+
+    // Mob Effects
+    public static final RegistryObject<MobEffect> UPGRADE_POCKET_CELL = MOB_EFFECTS.register("upgrade_pocket_cell", ()-> new UpgradePocketCellEffect(MobEffectCategory.BENEFICIAL, 0x000000));
 
     // Blocks
     public static final RegistryObject<Block> CELL_BLOCK = BLOCKS.register("cell_block",
@@ -44,7 +53,7 @@ public class EpicRegistry {
 
     // Items
     public static final RegistryObject<Item> POCKET_DIMENSION_KEY = ITEMS.register("pocket_dimension_key", ()->
-            new PocketDimensionWarpKey(new Item.Properties().stacksTo(1)));
+            new PocketDimensionWarpKey(new Item.Properties().stacksTo(1).rarity(Rarity.UNCOMMON)));
 
     public static final RegistryObject<Item> POCKET_CELL_ASSIGNMENT_REMOVER = ITEMS.register("pocket_cell_assignment_remover", ()->
             new PocketCellAssignmentSelfRemover(new Item.Properties().stacksTo(1)));
@@ -61,6 +70,9 @@ public class EpicRegistry {
 
     public static final RegistryObject<Item> DIMENSIONAL_GEM = ITEMS.register("dimensional_gem", ()->
             new Item(new Item.Properties().rarity(Rarity.UNCOMMON)));
+
+    public static final RegistryObject<Item> DIMENSIONAL_APPLE = ITEMS.register("dimensional_apple", ()->
+            new DimensionalAppleItem(new Item.Properties().rarity(Rarity.RARE).food(new FoodProperties.Builder().alwaysEat().nutrition(4).saturationMod(0.3F).effect(()->new MobEffectInstance(UPGRADE_POCKET_CELL.get(), 1, 1, false, false, false), 1).build())));
 
     // Block Items
     public static final RegistryObject<BlockItem> CELL_BLOCK_ITEM = ITEMS.register("cell_block", ()->
@@ -84,6 +96,7 @@ public class EpicRegistry {
                         output.accept(DIMENSIONAL_ORE_ITEM.get());
                         output.accept(DEEPSLATE_DIMENSIONAL_ORE_ITEM.get());
                         output.accept(DIMENSIONAL_GEM.get());
+                        output.accept(DIMENSIONAL_APPLE.get());
                         output.accept(SEVERED_WITHER_SKULL.get());
                         output.accept(MASTERED_DRAGON_HEAD.get());
                         ItemStack soulTiedBook = new ItemStack(Items.ENCHANTED_BOOK);
@@ -116,6 +129,9 @@ public class EpicRegistry {
     }
     public static void registerEnchantments(FMLJavaModLoadingContext modLoadingContext){
         ENCHANTMENTS.register(modLoadingContext.getModEventBus());
+    }
+    public static void registerMobEffects(FMLJavaModLoadingContext modLoadingContext){
+        MOB_EFFECTS.register(modLoadingContext.getModEventBus());
     }
 
     public static void addToExistingTabs(BuildCreativeModeTabContentsEvent event){

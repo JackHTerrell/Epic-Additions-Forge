@@ -18,12 +18,16 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.BowItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.util.ITeleporter;
+import net.minecraftforge.event.entity.player.ItemTooltipEvent;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.common.Mod;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
@@ -33,6 +37,7 @@ import java.util.Objects;
 import java.util.function.Function;
 import java.util.function.Predicate;
 
+@Mod.EventBusSubscriber(modid = EpicAdditions.MOD_ID)
 public class PocketDimensionWarpKey extends BowItem {
     private final Predicate<ItemStack> EVERYTHING = (itemStack) -> true;
     Logger logger = LogUtils.getLogger();
@@ -57,6 +62,17 @@ public class PocketDimensionWarpKey extends BowItem {
     public void appendHoverText(@NotNull ItemStack pStack, @Nullable Level pLevel, List<Component> tooltip, @NotNull TooltipFlag pIsAdvanced) {
         tooltip.add(Component.translatable("hovertext.item.pocket_key").withStyle(ChatFormatting.AQUA).withStyle(ChatFormatting.ITALIC));
         super.appendHoverText(pStack, pLevel, tooltip, pIsAdvanced);
+    }
+
+    /*
+    Tooltip for displaying level of player's Pocket Cell
+    */
+    @SubscribeEvent
+    public static void tooltipEvent(final ItemTooltipEvent event){
+        Player player = event.getEntity();
+        if(player!=null && event.getItemStack().is(EpicRegistry.POCKET_DIMENSION_KEY.get())) {
+            player.getCapability(PocketCellProvider.POCKET_CELL_DATA).ifPresent(data -> event.getToolTip().add(2, Component.translatable("hovertext.item.pocket_key.current_level", data.getPocketCellLevel())));
+        }
     }
 
     /*

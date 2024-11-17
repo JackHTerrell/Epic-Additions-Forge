@@ -7,6 +7,7 @@
     "item.epicadditions.severed_wither_skull": "Severed Wither Skull",
     "item.epicadditions.mastered_dragon_head": "Mastered Dragon Head",
     "item.epicadditions.dimensional_gem": "Dimensional Gem",
+    "item.epicadditions.dimensional_apple": "Dimensional Apple",
     "block.epicadditions.cell_block": "Cell Block",
     "block.epicadditions.dimensional_ore": "Dimensional Ore",
     "block.epicadditions.deepslate_dimensional_ore": "Deepslate Dimensional Ore",
@@ -18,5 +19,8 @@
     "hovertext.item.pocket_cell_assignment_remover.status": "Cell Assignment Removed.",
     "hovertext.item.cell_index.status": "You have Pocket Cell #%d on this server.",
     "hovertext.item.player_level.status": "Your Pocket Cell is level: %d",
-    "hovertext.item.pocket_key": "Used to travel to the Pocket Dimension"
+    "hovertext.item.pocket_key": "Used to travel to the Pocket Dimension",
+    "hovertext.item.pocket_key.current_level": "Current Pocket Cell level is: %d",
+    "hovertext.item.upgrade_level": "Pocket Cell Level has been upgraded to level %d!",
+    "hovertext.item.dimensional_apple": "Eat to increase Pocket Cell level. Each level increases height of cell by one block."
 }

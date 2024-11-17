@@ -16,13 +16,14 @@ public class EpicAdditions {
 
     public EpicAdditions(FMLJavaModLoadingContext modLoadingContext){
         this.modLoadingContext=modLoadingContext;
-        modLoadingContext.getModEventBus().addListener(this::registerRegistries);
+        modLoadingContext.getModEventBus().addListener(this::registerRegistriesEvent);
         modLoadingContext.getModEventBus().addListener(this::registerDimensionEffectsEvent);
         modLoadingContext.getModEventBus().addListener(EpicRegistry::addToExistingTabs);
         modLoadingContext.registerConfig(ModConfig.Type.SERVER, EpicServerConfig.SPEC);
     }
 
-    public void registerRegistries(final NewRegistryEvent event){
+    public void registerRegistriesEvent(final NewRegistryEvent event){
+        EpicRegistry.registerMobEffects(modLoadingContext);
         EpicRegistry.registerItems(modLoadingContext);
         EpicRegistry.registerEntities(modLoadingContext);
         EpicRegistry.registerCreativeModeTabs(modLoadingContext);
