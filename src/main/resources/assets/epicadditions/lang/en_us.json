@@ -20,7 +20,7 @@
     "hovertext.item.cell_index.status": "You have Pocket Cell #%d on this server.",
     "hovertext.item.player_level.status": "Your Pocket Cell is level: %d",
     "hovertext.item.pocket_key": "Used to travel to the Pocket Dimension",
-    "hovertext.item.pocket_key.current_level": "Current Pocket Cell level is: %d",
+    "hovertext.item.pocket_key.current_level": "Pocket Cell Level: %d",
     "hovertext.item.upgrade_level": "Pocket Cell Level has been upgraded to level %d!",
     "hovertext.item.dimensional_apple": "Eat to increase Pocket Cell level. Each level increases height of cell by one block."
 }
