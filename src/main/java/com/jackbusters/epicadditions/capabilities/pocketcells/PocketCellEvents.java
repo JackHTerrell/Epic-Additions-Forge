@@ -31,7 +31,7 @@ public class PocketCellEvents {
         Synchronizes the Pocket Cell level data so that the Pocket Dimension Key can properly display the level in the tooltip.
      */
     @SubscribeEvent
-    public static void SynchronizePocketLevelEvent(PlayerEvent.PlayerLoggedInEvent event){
+    public static void SynchronizePocketLevelOnLoginEvent(PlayerEvent.PlayerLoggedInEvent event){
         Player player = event.getEntity();
 
         if(player instanceof ServerPlayer serverPlayer){
