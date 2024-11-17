@@ -31,7 +31,35 @@ public class PocketCellEvents {
         Synchronizes the Pocket Cell level data so that the Pocket Dimension Key can properly display the level in the tooltip.
      */
     @SubscribeEvent
-    public static void SynchronizePocketLevelOnLoginEvent(PlayerEvent.PlayerLoggedInEvent event){
+    public static void synchronizePocketLevelOnLogin(PlayerEvent.PlayerLoggedInEvent event){
+        Player player = event.getEntity();
+
+        if(player instanceof ServerPlayer serverPlayer){
+            player.getCapability(PocketCellProvider.POCKET_CELL_DATA).ifPresent(data ->
+                    EpicPacketHandler.INSTANCE.send(PacketDistributor.PLAYER.with(() -> serverPlayer), new S2CSyncPocketData(data.getPocketCellLevel()))
+            );
+        }
+    }
+
+    /*
+        Synchronizes the Pocket Cell level data so that the Pocket Dimension Key can properly display the level in the tooltip.
+    */
+    @SubscribeEvent
+    public static void synchronizePocketLevelOnRespawn(PlayerEvent.PlayerRespawnEvent event){
+        Player player = event.getEntity();
+
+        if(player instanceof ServerPlayer serverPlayer){
+            player.getCapability(PocketCellProvider.POCKET_CELL_DATA).ifPresent(data ->
+                    EpicPacketHandler.INSTANCE.send(PacketDistributor.PLAYER.with(() -> serverPlayer), new S2CSyncPocketData(data.getPocketCellLevel()))
+            );
+        }
+    }
+
+    /*
+    Synchronizes the Pocket Cell level data so that the Pocket Dimension Key can properly display the level in the tooltip.
+*/
+    @SubscribeEvent
+    public static void synchronizePocketLevelOnChangeDimension(PlayerEvent.PlayerChangedDimensionEvent event){
         Player player = event.getEntity();
 
         if(player instanceof ServerPlayer serverPlayer){
