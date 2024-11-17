@@ -1,11 +1,16 @@
 package com.jackbusters.epicadditions.capabilities.pocketcells;
 
+import com.jackbusters.epicadditions.packets.EpicPacketHandler;
+import com.jackbusters.epicadditions.packets.S2CSyncPocketData;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
+import net.minecraftforge.network.PacketDistributor;
 
 
 public class PocketCellData {
@@ -115,8 +120,17 @@ public class PocketCellData {
         return pocketCellLevel;
     }
 
-    public void addPocketCellLevel(){
+    public void addPocketCellLevel(LivingEntity player){
         pocketCellLevel = Math.min(pocketCellLevel+1, MAX_CELL_LEVEL);
+        if(player instanceof ServerPlayer serverPlayer){
+            player.getCapability(PocketCellProvider.POCKET_CELL_DATA).ifPresent(data ->
+                    EpicPacketHandler.INSTANCE.send(PacketDistributor.PLAYER.with(() -> serverPlayer), new S2CSyncPocketData(data.getPocketCellLevel()))
+            );
+        }
+    }
+
+    public void setPocketCellLevel(int pocketCellLevel){
+        this.pocketCellLevel=pocketCellLevel;
     }
 
     public int getMaxCellLevel(){

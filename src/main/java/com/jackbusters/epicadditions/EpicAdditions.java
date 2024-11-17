@@ -2,10 +2,12 @@ package com.jackbusters.epicadditions;
 
 import com.jackbusters.epicadditions.configurations.EpicServerConfig;
 import com.jackbusters.epicadditions.dimensioneffects.PocketDimensionEffect;
+import com.jackbusters.epicadditions.packets.EpicPacketHandler;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.client.event.RegisterDimensionSpecialEffectsEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
+import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.registries.NewRegistryEvent;
 
@@ -16,10 +18,15 @@ public class EpicAdditions {
 
     public EpicAdditions(FMLJavaModLoadingContext modLoadingContext){
         this.modLoadingContext=modLoadingContext;
+        modLoadingContext.getModEventBus().addListener(this::commonSetupEvent);
         modLoadingContext.getModEventBus().addListener(this::registerRegistriesEvent);
         modLoadingContext.getModEventBus().addListener(this::registerDimensionEffectsEvent);
         modLoadingContext.getModEventBus().addListener(EpicRegistry::addToExistingTabs);
         modLoadingContext.registerConfig(ModConfig.Type.SERVER, EpicServerConfig.SPEC);
+    }
+
+    public void commonSetupEvent(final FMLCommonSetupEvent event) {
+        event.enqueueWork(EpicPacketHandler::registerPackets);
     }
 
     public void registerRegistriesEvent(final NewRegistryEvent event){

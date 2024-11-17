@@ -6,6 +6,7 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
 import org.jetbrains.annotations.NotNull;
 
 public class UpgradePocketCellEffect extends MobEffect {
@@ -17,7 +18,7 @@ public class UpgradePocketCellEffect extends MobEffect {
     @Override
     public void applyEffectTick(@NotNull LivingEntity pLivingEntity, int pAmplifier) {
         pLivingEntity.getCapability(PocketCellProvider.POCKET_CELL_DATA).ifPresent(data -> {
-            data.addPocketCellLevel();
+            data.addPocketCellLevel(pLivingEntity);
             if(pLivingEntity.level instanceof ServerLevel)
                 pLivingEntity.sendSystemMessage(Component.translatable("hovertext.item.upgrade_level", data.getPocketCellLevel()));
         });
