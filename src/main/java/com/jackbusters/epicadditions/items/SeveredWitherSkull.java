@@ -17,14 +17,16 @@ public class SeveredWitherSkull extends Item {
 
     @Override
     public @NotNull InteractionResultHolder<ItemStack> use(@NotNull Level level, @NotNull Player player, @NotNull InteractionHand usedHand) {
-        shootHead(level, player);
+        shootHead(level, player, usedHand);
         return super.use(level, player, usedHand);
     }
 
-    private void shootHead(Level level, Player player){
+    private void shootHead(Level level, Player player, InteractionHand usedHand){
         if (!player.isSilent()) {
             level.levelEvent(player, 1024, player.blockPosition(), 0);
         }
+
+        player.swing(usedHand);
 
         WitherSkull witherskull = new WitherSkull(level, player, player.getLookAngle().x(), player.getLookAngle().y(), player.getLookAngle().z());
         witherskull.setXRot(player.getXRot());
