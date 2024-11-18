@@ -26,7 +26,7 @@ public class PocketCellData {
     private float leftPocketCellPitch;
     private float wasFallingDistance;
     private Vec3 wasDeltaMovement = Vec3.ZERO;
-    private final int MAX_CELL_LEVEL = 100; // The max cell level allowed.
+    private final int MAX_CELL_LEVEL = 6000; // The max cell level allowed.
 
     public void setLeftPocketCellPos(Vec3 leftPocketCellPos){
         this.leftPocketCellPos = leftPocketCellPos;
