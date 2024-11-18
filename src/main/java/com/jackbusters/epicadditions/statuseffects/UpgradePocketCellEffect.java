@@ -8,6 +8,10 @@ import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.entity.LivingEntity;
 import org.jetbrains.annotations.NotNull;
 
+/**
+ * A hidden status effect given after eating the Dimensional Apple.<br>
+ * Upgrades the cell level and sends a system message to user.
+ */
 public class UpgradePocketCellEffect extends MobEffect {
     public UpgradePocketCellEffect(MobEffectCategory pCategory, int pColor) {
         super(pCategory, pColor);
