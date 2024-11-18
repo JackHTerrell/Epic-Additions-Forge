@@ -1,5 +1,6 @@
 package com.jackbusters.epicadditions.constructs;
 
+import com.jackbusters.epicadditions.EpicRegistry;
 import com.jackbusters.epicadditions.capabilities.pocketcells.PocketCellLevelDataProvider;
 import com.jackbusters.epicadditions.capabilities.pocketcells.PocketCellProvider;
 import net.minecraft.core.BlockPos;
@@ -7,6 +8,8 @@ import net.minecraft.core.Vec3i;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.structure.BoundingBox;
 
 import java.util.ArrayList;
@@ -154,6 +157,34 @@ public class PocketCell {
         generateWallsNorthSouth(buildingBlock, pocketCellLevel, pocketDimension, builtCenterSouth);
         generateFloor(buildingBlock, pocketDimension, center);
         generateRoof(buildingBlock, pocketCellLevel, pocketDimension, center);
+    }
+
+    public static void updateRoofAndWallHeight(Block buildingBlock, int pocketCellLevel, ServerLevel pocketDimension, BlockPos center){
+        BlockPos builtCenterEast = center.east(commonDimension/2);
+        BlockPos builtCenterWest = center.west(commonDimension/2);
+        BlockPos builtCenterNorth = center.north(commonDimension/2);
+        BlockPos builtCenterSouth = center.south(commonDimension/2);
+        removePreviousRoof(pocketCellLevel, pocketDimension, center);
+        generateWallsEastWest(buildingBlock, pocketCellLevel, pocketDimension, builtCenterEast);
+        generateWallsEastWest(buildingBlock, pocketCellLevel, pocketDimension, builtCenterWest);
+        generateWallsNorthSouth(buildingBlock, pocketCellLevel, pocketDimension, builtCenterNorth);
+        generateWallsNorthSouth(buildingBlock, pocketCellLevel, pocketDimension, builtCenterSouth);
+        generateRoof(buildingBlock, pocketCellLevel, pocketDimension, center);
+    }
+
+    private static void removePreviousRoof(int pocketCellLevel, ServerLevel pocketDimension, BlockPos builtCenter){
+        BlockPos builtCenterEast = builtCenter.east((commonDimension / 2) - 1);
+        BlockPos builtCenterWest = builtCenter.west((commonDimension / 2) - 1);
+
+        int height = (builtCenter.getY()+((pocketCellLevel)+commonDimension))-2;
+
+        BoundingBox boundingBox = BoundingBox.fromCorners(new Vec3i(builtCenterEast.getX(), height, builtCenterEast.north(commonDimension / 2).getZ()+1),
+                new Vec3i(builtCenterWest.getX(), (builtCenter.getY()+(pocketCellLevel+commonDimension))-1, builtCenterWest.south(commonDimension / 2).getZ()-1));
+
+        Iterable<BlockPos> iteratable = BlockPos.betweenClosed(boundingBox.minX(), boundingBox.minY(), boundingBox.minZ(), boundingBox.maxX(), boundingBox.maxY(), boundingBox.maxZ());
+        for (BlockPos currentBlockPos : iteratable) {
+            pocketDimension.setBlockAndUpdate(currentBlockPos, Blocks.AIR.defaultBlockState());
+        }
     }
 
     private static void generateWallsEastWest(Block buildingBlock, int pocketCellLevel, ServerLevel pocketDimension, BlockPos builtCenter){
