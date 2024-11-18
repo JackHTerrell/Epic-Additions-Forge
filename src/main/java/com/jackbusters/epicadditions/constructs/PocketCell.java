@@ -23,7 +23,7 @@ public class PocketCell {
         pocketDimension.getCapability(PocketCellLevelDataProvider.POCKET_CELL_LEVEL_DATA).ifPresent(data -> {
             if(data.getOccupiedCellLocations().isEmpty()) {
 
-                BlockPos initialStartPos = new BlockPos(0, -60, 0);
+                BlockPos initialStartPos = new BlockPos(0, -2000, 0);
 
                 List<BlockPos> startBlock = new ArrayList<>();
                 startBlock.add(initialStartPos);
