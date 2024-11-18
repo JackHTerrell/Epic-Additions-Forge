@@ -10,18 +10,19 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
 
-public class MasteredDragonHead extends Item {
-    public MasteredDragonHead(Properties pProperties) {
+public class StaffOfDragon extends Item {
+    public StaffOfDragon(Properties pProperties) {
         super(pProperties);
     }
 
     @Override
     public @NotNull InteractionResultHolder<ItemStack> use(@NotNull Level level, @NotNull Player player, @NotNull InteractionHand usedHand) {
-        sprayFire(level, player);
+        sprayFire(level, player, usedHand);
         return super.use(level, player, usedHand);
     }
 
-    private void sprayFire(Level level, Player player){
+    private void sprayFire(Level level, Player player, InteractionHand usedHand){
+        player.swing(usedHand);
         DragonFireball dragonFireball = new DragonFireball(level, player, player.getLookAngle().x(), player.getLookAngle().y(), player.getLookAngle().z());
         dragonFireball.setOwner(player);
         dragonFireball.setPosRaw(player.getEyePosition().x(), player.getEyePosition().y(), player.getEyePosition().z());

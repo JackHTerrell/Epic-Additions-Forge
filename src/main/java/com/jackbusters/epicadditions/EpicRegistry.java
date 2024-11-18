@@ -65,8 +65,8 @@ public class EpicRegistry {
     public static final RegistryObject<Item> SEVERED_WITHER_SKULL = ITEMS.register("severed_wither_skull", ()->
             new SeveredWitherSkull(new Item.Properties().stacksTo(1).rarity(Rarity.EPIC)));
 
-    public static final RegistryObject<Item> MASTERED_DRAGON_HEAD = ITEMS.register("mastered_dragon_head", ()->
-            new MasteredDragonHead(new Item.Properties().stacksTo(1).rarity(Rarity.EPIC)));
+    public static final RegistryObject<Item> STAFF_OF_DRAGON = ITEMS.register("staff_of_dragon", ()->
+            new StaffOfDragon(new Item.Properties().stacksTo(1).rarity(Rarity.EPIC)));
 
     public static final RegistryObject<Item> DIMENSIONAL_GEM = ITEMS.register("dimensional_gem", ()->
             new Item(new Item.Properties().rarity(Rarity.UNCOMMON)));
@@ -98,7 +98,7 @@ public class EpicRegistry {
                         output.accept(DIMENSIONAL_GEM.get());
                         output.accept(DIMENSIONAL_APPLE.get());
                         output.accept(SEVERED_WITHER_SKULL.get());
-                        output.accept(MASTERED_DRAGON_HEAD.get());
+                        output.accept(STAFF_OF_DRAGON.get());
                         ItemStack soulTiedBook = new ItemStack(Items.ENCHANTED_BOOK);
                         EnchantedBookItem.addEnchantment(soulTiedBook, new EnchantmentInstance(EpicRegistry.SOUL_TIED.get(), 1));
                         output.accept(soulTiedBook);
