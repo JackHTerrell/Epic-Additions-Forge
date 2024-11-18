@@ -164,6 +164,7 @@ public class PocketCell {
         BlockPos builtCenterWest = center.west(commonDimension/2);
         BlockPos builtCenterNorth = center.north(commonDimension/2);
         BlockPos builtCenterSouth = center.south(commonDimension/2);
+        
         removePreviousRoof(pocketCellLevel, pocketDimension, center);
         generateWallsEastWest(buildingBlock, pocketCellLevel, pocketDimension, builtCenterEast);
         generateWallsEastWest(buildingBlock, pocketCellLevel, pocketDimension, builtCenterWest);
