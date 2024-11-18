@@ -158,7 +158,7 @@ public class PocketCell {
 
     private static void generateWallsEastWest(Block buildingBlock, int pocketCellLevel, ServerLevel pocketDimension, BlockPos builtCenter){
         int dis = commonDimension/2;
-        BoundingBox boundingBox = BoundingBox.fromCorners(new Vec3i(builtCenter.getX(), (builtCenter.getY()+((commonDimension*pocketCellLevel)+commonDimension))-1, builtCenter.north(dis).getZ()),
+        BoundingBox boundingBox = BoundingBox.fromCorners(new Vec3i(builtCenter.getX(), (builtCenter.getY()+(pocketCellLevel+commonDimension))-1, builtCenter.north(dis).getZ()),
                 new Vec3i(builtCenter.getX(), builtCenter.getY(), builtCenter.south(dis).getZ()));
 
         Iterable<BlockPos> iteratable = BlockPos.betweenClosed(boundingBox.minX(), boundingBox.minY(), boundingBox.minZ(), boundingBox.maxX(), boundingBox.maxY(), boundingBox.maxZ());
@@ -169,7 +169,7 @@ public class PocketCell {
 
     private static void generateWallsNorthSouth(Block buildingBlock, int pocketCellLevel, ServerLevel pocketDimension, BlockPos builtCenter){
         int dis = commonDimension/2;
-        BoundingBox boundingBox = BoundingBox.fromCorners(new Vec3i(builtCenter.east(dis).getX(), (builtCenter.getY()+((commonDimension*pocketCellLevel)+commonDimension))-1, builtCenter.getZ()),
+        BoundingBox boundingBox = BoundingBox.fromCorners(new Vec3i(builtCenter.east(dis).getX(), (builtCenter.getY()+(pocketCellLevel+commonDimension))-1, builtCenter.getZ()),
                 new Vec3i(builtCenter.west(dis).getX(), builtCenter.getY(), builtCenter.getZ()));
 
         Iterable<BlockPos> iteratable = BlockPos.betweenClosed(boundingBox.minX(), boundingBox.minY(), boundingBox.minZ(), boundingBox.maxX(), boundingBox.maxY(), boundingBox.maxZ());
@@ -193,8 +193,8 @@ public class PocketCell {
     private static void generateRoof(Block buildingBlock, int pocketCellLevel, ServerLevel pocketDimension, BlockPos builtCenter) {
         BlockPos builtCenterEast = builtCenter.east((commonDimension / 2) - 1);
         BlockPos builtCenterWest = builtCenter.west((commonDimension / 2) - 1);
-        BoundingBox boundingBox = BoundingBox.fromCorners(new Vec3i(builtCenterEast.getX(), (builtCenter.getY()+((commonDimension*pocketCellLevel)+commonDimension))-1, builtCenterEast.north(commonDimension / 2).getZ()+1),
-                new Vec3i(builtCenterWest.getX(), (builtCenter.getY()+((commonDimension*pocketCellLevel)+commonDimension))-1, builtCenterWest.south(commonDimension / 2).getZ()-1));
+        BoundingBox boundingBox = BoundingBox.fromCorners(new Vec3i(builtCenterEast.getX(), (builtCenter.getY()+((pocketCellLevel)+commonDimension))-1, builtCenterEast.north(commonDimension / 2).getZ()+1),
+                new Vec3i(builtCenterWest.getX(), (builtCenter.getY()+(pocketCellLevel+commonDimension))-1, builtCenterWest.south(commonDimension / 2).getZ()-1));
 
         Iterable<BlockPos> iteratable = BlockPos.betweenClosed(boundingBox.minX(), boundingBox.minY(), boundingBox.minZ(), boundingBox.maxX(), boundingBox.maxY(), boundingBox.maxZ());
         for (BlockPos currentBlockPos : iteratable) {
