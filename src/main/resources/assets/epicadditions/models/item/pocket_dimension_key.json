@@ -1,7 +1,7 @@
 {
   "parent": "item/generated",
   "textures": {
-    "layer0": "epicadditions:items/pocket_dimension_key"
+    "layer0": "epicadditions:item/pocket_dimension_key"
   }
 }
 

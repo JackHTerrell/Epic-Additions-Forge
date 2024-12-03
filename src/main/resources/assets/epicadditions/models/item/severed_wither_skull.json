@@ -8,8 +8,8 @@
 			32
 		],
 		"textures": {
-			"0": "epicadditions:items/severed_wither_skull",
-			"particle": "epicadditions:items/severed_wither_skull"
+			"0": "epicadditions:item/severed_wither_skull",
+			"particle": "epicadditions:item/severed_wither_skull"
 		},
 		"elements": [
 			{

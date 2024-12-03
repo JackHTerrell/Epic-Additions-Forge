@@ -2,6 +2,6 @@
   "parent": "minecraft:block/cube_all",
   "render_type": "minecraft:translucent",
   "textures": {
-    "all": "epicadditions:blocks/cell_block"
+    "all": "epicadditions:block/cell_block"
   }
 }

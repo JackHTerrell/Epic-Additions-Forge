@@ -8,8 +8,8 @@
 			32
 		],
 		"textures": {
-			"0": "epicadditions:items/staff_of_dragon",
-			"particle": "epicadditions:items/staff_of_dragon"
+			"0": "epicadditions:item/staff_of_dragon",
+			"particle": "epicadditions:item/staff_of_dragon"
 		},
 		"elements": [
 			{

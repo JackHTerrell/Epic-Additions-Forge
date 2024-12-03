@@ -1,7 +1,7 @@
 {
   "parent": "item/generated",
   "textures": {
-    "layer0": "epicadditions:items/dimensional_gem"
+    "layer0": "epicadditions:item/dimensional_gem"
   }
 }
 

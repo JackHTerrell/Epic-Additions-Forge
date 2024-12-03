@@ -1,7 +1,7 @@
 {
   "parent": "item/generated",
   "textures": {
-    "layer0": "epicadditions:items/pocket_cell_assignment_remover"
+    "layer0": "epicadditions:item/pocket_cell_assignment_remover"
   }
 }
 
