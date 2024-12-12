@@ -5,7 +5,10 @@
   "compatibilityLevel": "JAVA_17",
   "refmap": "epicadditions.mixins.refmap.json",
   "mixins": [
-    "PlayerDropEquipment"
+    "PlayerDropEquipment",
+    "softstepping.SculkSensorEdits",
+    "softstepping.SculkShriekerEdits",
+    "softstepping.VibrationAcceptorEdits"
   ],
   "injectors": {
     "defaultRequire": 1

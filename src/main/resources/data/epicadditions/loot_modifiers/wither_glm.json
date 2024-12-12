@@ -3,6 +3,7 @@
   "conditions": [],
   "item": "epicadditions:severed_wither_skull",
   "soul_tied": false,
+  "soft_stepped": false,
   "amount": 1,
   "loot_table": "minecraft:entities/wither",
   "chance": 1

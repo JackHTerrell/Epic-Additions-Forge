@@ -1,0 +1,10 @@
+{
+  "type": "epicadditions:add_drop",
+  "conditions": [],
+  "item": "minecraft:enchanted_book",
+  "soul_tied": false,
+  "soft_stepped": true,
+  "amount": 1,
+  "loot_table": "minecraft:chests/ancient_city",
+  "chance": 0.1
+}

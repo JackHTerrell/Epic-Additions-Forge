@@ -28,22 +28,25 @@ public class EpicLootModifier extends LootModifier {
     public static final Supplier<Codec<EpicLootModifier>> CODEC = Suppliers.memoize(() ->
             RecordCodecBuilder.create(instance -> codecStart(instance).and(ForgeRegistries.ITEMS.getCodec()
                     .fieldOf("item").forGetter(a -> a.item)).and(Codec.BOOL
-                    .fieldOf("soul_tied").forGetter(b -> b.soulTied)).and(Codec.INT
-                    .fieldOf("amount").forGetter(c -> c.amount)).and(Codec.STRING
-                    .fieldOf("loot_table").forGetter(d -> d.lootTable)).and(Codec.DOUBLE
-                    .fieldOf("chance").forGetter(e -> e.chance))
+                    .fieldOf("soul_tied").forGetter(b -> b.soulTied)).and(Codec.BOOL
+                    .fieldOf("soft_stepped").forGetter(c -> c.soft_stepped)).and(Codec.INT
+                    .fieldOf("amount").forGetter(d -> d.amount)).and(Codec.STRING
+                    .fieldOf("loot_table").forGetter(e -> e.lootTable)).and(Codec.DOUBLE
+                    .fieldOf("chance").forGetter(f -> f.chance))
                     .apply(instance, EpicLootModifier::new)));
 
     private final Item item; // The item to generate
     private final boolean soulTied; // If true, loot will be soul tied.
+    private final boolean soft_stepped; // If true, loot will have the soft stepping enchantment.
     private final int amount; // the number of items
     private final String lootTable; // the loot table to generate the loot in (i.e. "minecraft:entities/wither").
     private final double chance; // The chance of the loot generating 0 being no chance, 1 being guaranteed.
 
-    protected EpicLootModifier(LootItemCondition[] conditionsIn, Item item, boolean soulTied, int amount, String lootTable, double chance) {
+    protected EpicLootModifier(LootItemCondition[] conditionsIn, Item item, boolean soulTied, boolean soft_stepped, int amount, String lootTable, double chance) {
         super(conditionsIn);
         this.item = item;
         this.soulTied = soulTied;
+        this.soft_stepped = soft_stepped;
         this.amount = amount;
         this.lootTable = lootTable;
         this.chance = chance;
@@ -77,10 +80,17 @@ public class EpicLootModifier extends LootModifier {
      */
     private ItemStack getItemStackWithEnchantments(){
         ItemStack itemStack = new ItemStack(item, amount);
+
         if(soulTied && item != Items.ENCHANTED_BOOK)
             itemStack.enchant(EpicRegistry.SOUL_TIED.get(), 1);
         else if(soulTied)
-            EnchantedBookItem.addEnchantment(itemStack, new EnchantmentInstance(EpicRegistry.SOUL_TIED.get(), 1));
+            EnchantedBookItem.addEnchantment(itemStack, new EnchantmentInstance(EpicRegistry.SOFT_STEPPING.get(), 1));
+
+        if(soft_stepped && item != Items.ENCHANTED_BOOK)
+            itemStack.enchant(EpicRegistry.SOFT_STEPPING.get(), 1);
+        else if(soft_stepped)
+            EnchantedBookItem.addEnchantment(itemStack, new EnchantmentInstance(EpicRegistry.SOFT_STEPPING.get(), 1));
+
         return itemStack;
     }
 }

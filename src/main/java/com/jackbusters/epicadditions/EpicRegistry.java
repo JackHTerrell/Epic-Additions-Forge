@@ -1,6 +1,7 @@
 package com.jackbusters.epicadditions;
 
 import com.jackbusters.epicadditions.blocks.CellBlock;
+import com.jackbusters.epicadditions.enchantments.SoftSteppingEnchantment;
 import com.jackbusters.epicadditions.enchantments.SoulTiedEnchantment;
 import com.jackbusters.epicadditions.glm.EpicLootModifier;
 import com.jackbusters.epicadditions.items.*;
@@ -28,6 +29,9 @@ import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class EpicRegistry {
     public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, EpicAdditions.MOD_ID);
@@ -102,12 +106,20 @@ public class EpicRegistry {
                         ItemStack soulTiedBook = new ItemStack(Items.ENCHANTED_BOOK);
                         EnchantedBookItem.addEnchantment(soulTiedBook, new EnchantmentInstance(EpicRegistry.SOUL_TIED.get(), 1));
                         output.accept(soulTiedBook);
+                        ItemStack softSteppingBook = new ItemStack(Items.ENCHANTED_BOOK);
+                        EnchantedBookItem.addEnchantment(softSteppingBook, new EnchantmentInstance(EpicRegistry.SOFT_STEPPING.get(), 1));
+                        output.accept(softSteppingBook);
                     })
                     .build());
 
     // Enchantments
+    private final static EquipmentSlot[] FEET_ONLY = {EquipmentSlot.FEET}; // Equipment Slot list of one value, feet. For use as a parameter in enchantments.
+
     public static final RegistryObject<Enchantment> SOUL_TIED = ENCHANTMENTS.register("soul_tied", ()-> new
             SoulTiedEnchantment(Enchantment.Rarity.RARE, EnchantmentCategory.create("epicadditions_all", (item -> true)), EquipmentSlot.values()));
+
+    public static final RegistryObject<Enchantment> SOFT_STEPPING = ENCHANTMENTS.register("soft_stepping", ()-> new
+            SoftSteppingEnchantment(Enchantment.Rarity.RARE, EnchantmentCategory.ARMOR_FEET, FEET_ONLY));
 
     // GLM
     public static final RegistryObject<Codec<? extends IGlobalLootModifier>> ADD_DROP = LOOT_MODIFIERS.register("add_drop", EpicLootModifier.CODEC);

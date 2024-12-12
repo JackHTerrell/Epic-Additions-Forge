@@ -1,6 +1,7 @@
 {
   "replace": false,
   "entries": [
-    "epicadditions:wither_glm"
+    "epicadditions:wither_glm",
+    "epicadditions:ancient_city_glm"
   ]
 }
