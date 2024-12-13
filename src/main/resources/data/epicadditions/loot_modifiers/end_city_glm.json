@@ -1,0 +1,10 @@
+{
+  "type": "epicadditions:add_drop",
+  "conditions": [],
+  "item": "epicadditions:staff_of_dragon",
+  "soul_tied": false,
+  "soft_stepped": false,
+  "amount": 1,
+  "loot_table": "minecraft:chests/end_city_treasure",
+  "chance": 0.05
+}

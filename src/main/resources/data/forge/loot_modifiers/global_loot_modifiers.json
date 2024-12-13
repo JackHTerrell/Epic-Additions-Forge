@@ -2,6 +2,7 @@
   "replace": false,
   "entries": [
     "epicadditions:wither_glm",
-    "epicadditions:ancient_city_glm"
+    "epicadditions:ancient_city_glm",
+    "epicadditions:end_city_glm"
   ]
 }
