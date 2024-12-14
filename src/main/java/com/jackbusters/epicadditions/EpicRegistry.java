@@ -52,8 +52,13 @@ public class EpicRegistry {
                     .noLootTable().isValidSpawn(Blocks::never).isRedstoneConductor(Blocks::never)
                     .isSuffocating(Blocks::never).isViewBlocking(Blocks::never).noOcclusion()));
 
-    public static final RegistryObject<Block> DIMENSIONAL_ORE = BLOCKS.register("dimensional_ore", () -> new DropExperienceBlock(BlockBehaviour.Properties.of().mapColor(MapColor.STONE).instrument(NoteBlockInstrument.BASEDRUM).requiresCorrectToolForDrops().strength(3.0F, 3.0F)));
-    public static final RegistryObject<Block> DEEPSLATE_DIMENSIONAL_ORE = BLOCKS.register("deepslate_dimensional_ore", () -> new DropExperienceBlock(BlockBehaviour.Properties.copy(DIMENSIONAL_ORE.get()).mapColor(MapColor.DEEPSLATE).strength(4.5F, 3.0F).sound(SoundType.DEEPSLATE)));
+    public static final RegistryObject<Block> DIMENSIONAL_ORE = BLOCKS.register("dimensional_ore", () ->
+            new DropExperienceBlock(BlockBehaviour.Properties.of().mapColor(MapColor.STONE)
+                    .instrument(NoteBlockInstrument.BASEDRUM).requiresCorrectToolForDrops()
+                    .strength(3.0F, 3.0F)));
+    public static final RegistryObject<Block> DEEPSLATE_DIMENSIONAL_ORE = BLOCKS.register("deepslate_dimensional_ore", () ->
+            new DropExperienceBlock(BlockBehaviour.Properties.copy(DIMENSIONAL_ORE.get()).mapColor(MapColor.DEEPSLATE)
+                    .strength(4.5F, 3.0F).sound(SoundType.DEEPSLATE)));
 
     // Items
     public static final RegistryObject<Item> POCKET_DIMENSION_KEY = ITEMS.register("pocket_dimension_key", ()->
