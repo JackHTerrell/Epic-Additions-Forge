@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "group": "pocket_dimension_apple",
+  "pattern": [
+    "ggg",
+    "gag",
+    "ggg"
+
+  ],
+  "key": {
+    "g": {
+      "item": "epicadditions:dimensional_gem"
+    },
+    "a": {
+      "item": "minecraft:apple"
+    }
+  },
+  "result": {
+    "item": "epicadditions:dimensional_apple",
+    "count": 1
+  }
+}

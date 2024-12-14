@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "group": "pocket_dimension_key",
+  "pattern": [
+    " g ",
+    "g  "
+
+  ],
+  "key": {
+    "g": {
+      "item": "epicadditions:dimensional_gem"
+    }
+  },
+  "result": {
+    "item": "epicadditions:pocket_dimension_key",
+    "count": 1
+  }
+}
