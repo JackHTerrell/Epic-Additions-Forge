@@ -4,7 +4,9 @@ import com.jackbusters.epicadditions.configurations.EpicServerConfig;
 import com.jackbusters.epicadditions.dimensioneffects.PocketDimensionEffect;
 import com.jackbusters.epicadditions.packets.EpicPacketHandler;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.RegisterDimensionSpecialEffectsEvent;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
@@ -20,7 +22,6 @@ public class EpicAdditions {
         this.modLoadingContext=modLoadingContext;
         modLoadingContext.getModEventBus().addListener(this::commonSetupEvent);
         modLoadingContext.getModEventBus().addListener(this::registerRegistriesEvent);
-        modLoadingContext.getModEventBus().addListener(this::registerDimensionEffectsEvent);
         modLoadingContext.getModEventBus().addListener(EpicRegistry::addToExistingTabs);
         modLoadingContext.registerConfig(ModConfig.Type.SERVER, EpicServerConfig.SPEC);
     }
@@ -38,8 +39,17 @@ public class EpicAdditions {
         EpicRegistry.registerBlocks(modLoadingContext);
         EpicRegistry.registerEnchantments(modLoadingContext);
     }
+}
 
-    public void registerDimensionEffectsEvent(final RegisterDimensionSpecialEffectsEvent event){
-        event.register(new ResourceLocation(MOD_ID, "pocket"),new PocketDimensionEffect());
+/**
+ * <h1>Client-only Registries</h1>
+ * <p>Some register events must only occur on the client, as they handle client-only code.</p>
+ * <p>If an event like {@link RegisterDimensionSpecialEffectsEvent} occurred on the server, the server would crash.</p>
+ */
+@Mod.EventBusSubscriber(modid = EpicAdditions.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
+class ClientOnlyRegistries {
+    @SubscribeEvent
+    public static void registerDimensionEffectsEvent(final RegisterDimensionSpecialEffectsEvent event){
+        event.register(new ResourceLocation(EpicAdditions.MOD_ID, "pocket"),new PocketDimensionEffect());
     }
 }
