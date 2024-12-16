@@ -1,12 +1,13 @@
 {
   "parent": "minecraft:recipes/root",
   "criteria": {
-    "has_gem": {
+    "has_ore": {
       "conditions": {
         "items": [
           {
             "items": [
-              "epicadditions:dimensional_gem"
+              "epicadditions:dimensional_ore",
+              "epicadditions:deepslate_dimensional_ore"
             ]
           }
         ]
@@ -16,13 +17,13 @@
   },
   "requirements": [
     [
-      "has_gem"
+      "has_ore"
     ]
   ],
   "rewards": {
     "recipes": [
-      "epicadditions:pocket_dimension_key",
-      "epicadditions:dimensional_apple"
+      "epicadditions:dimensional_gem_furnace",
+      "epicadditions:dimensional_gem_furnace1"
     ]
   }
 }

@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:smelting",
+  "category": "misc",
+  "cookingtime": 200,
+  "experience": 1.0,
+  "group": "dimensional_gem",
+  "ingredient": {
+    "item": "epicadditions:deepslate_dimensional_ore"
+  },
+  "result": "epicadditions:dimensional_gem"
+}
