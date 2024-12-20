@@ -3,6 +3,7 @@ package com.jackbusters.epicadditions.blocks;
 import com.jackbusters.epicadditions.capabilities.pocketcells.PocketCellLevelDataProvider;
 import com.jackbusters.epicadditions.capabilities.pocketcells.PocketCellProvider;
 import net.minecraft.core.BlockPos;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
@@ -35,12 +36,14 @@ public class CellBlock extends HalfTransparentBlock {
 
     @Override
     public void entityInside(@NotNull BlockState pState, @NotNull Level pLevel, @NotNull BlockPos pPos, @NotNull Entity pEntity) {
-        pEntity.getCapability(PocketCellProvider.POCKET_CELL_DATA).ifPresent(data -> {
-            pLevel.getCapability(PocketCellLevelDataProvider.POCKET_CELL_LEVEL_DATA).ifPresent(lData -> {
-               BlockPos pos = lData.getOccupiedCellLocations().get(data.getPocketCellIndex());
-               pEntity.teleportTo(pos.getX(), pos.getY()+1, pos.getZ());
+        if(pLevel instanceof ServerLevel serverLevel) {
+            pEntity.getCapability(PocketCellProvider.POCKET_CELL_DATA).ifPresent(data -> {
+                serverLevel.getCapability(PocketCellLevelDataProvider.POCKET_CELL_LEVEL_DATA).ifPresent(lData -> {
+                    BlockPos pos = lData.getOccupiedCellLocations().get(data.getPocketCellIndex());
+                    pEntity.teleportTo(pos.getX(), pos.getY() + 1, pos.getZ());
+                });
             });
-        });
+        }
         super.entityInside(pState, pLevel, pPos, pEntity);
     }
 }
