@@ -24,5 +24,10 @@
     "hovertext.item.pocket_key": "Used to travel to the Pocket Dimension",
     "hovertext.item.pocket_key.current_level": "Pocket Cell Level: %d",
     "hovertext.item.upgrade_level": "Pocket Cell Level has been upgraded to level %d!",
-    "hovertext.item.dimensional_apple": "Eat to increase Pocket Cell level. Each level increases height of cell by one block."
+    "hovertext.item.dimensional_apple": "Eat to increase Pocket Cell level. Each level increases height of cell by one block.",
+
+    "advancements.epicadditions.progression.root.title": "Epic Additions",
+    "advancements.epicadditions.progression.root.description": "Where boring ends.",
+    "advancements.epicadditions.progression.pocket_key.title": "Access Granted",
+    "advancements.epicadditions.progression.pocket_key.description": "Obtain a key to your very own cell in the Pocket Dimension."
 }

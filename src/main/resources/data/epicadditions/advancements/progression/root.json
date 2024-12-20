@@ -1,0 +1,38 @@
+{
+  "criteria": {
+    "crafting_table": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "minecraft:crafting_table"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": false,
+    "background": "epicadditions:textures/block/dimensional_ore.png",
+    "description": {
+      "translate": "advancements.epicadditions.progression.root.description"
+    },
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "epicadditions:cell_block"
+    },
+    "show_toast": false,
+    "title": {
+      "translate": "advancements.epicadditions.progression.root.title"
+    }
+  },
+  "requirements": [
+    [
+      "crafting_table"
+    ]
+  ],
+  "sends_telemetry_event": true
+}
