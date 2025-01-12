@@ -169,7 +169,7 @@ public class PocketDimensionWarpKey extends BowItem {
                         BlockPos posOfCell = levelData.getOccupiedCellLocations().get(data.getPocketCellIndex());
                         int universalPocketSides = 17;
                         int distance = (int) posInPocket.distanceTo(new Vec3(posOfCell.getX(), posInPocket.y(), posOfCell.getZ()));
-                        if(distance > ((universalPocketSides /2)+1)){
+                        if(distance > ((universalPocketSides /2)+2) || (posInPocket.y() < posOfCell.getY())){
                             posInPocket = new Vec3(posOfCell.getX(), posOfCell.getY()+1, posOfCell.getZ());
                         }
                         if(toPosEntity instanceof ServerPlayer serverPlayer){
