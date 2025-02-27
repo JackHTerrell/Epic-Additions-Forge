@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "redstone",
+  "group": "pocket_dimension_door",
+  "pattern": [
+    "ggg",
+    "gag",
+    "ggg"
+
+  ],
+  "key": {
+    "g": {
+      "item": "epicadditions:dimensional_gem"
+    },
+    "a": {
+      "tag": "minecraft:doors"
+    }
+  },
+  "result": {
+    "item": "epicadditions:dimensional_door",
+    "count": 1
+  }
+}

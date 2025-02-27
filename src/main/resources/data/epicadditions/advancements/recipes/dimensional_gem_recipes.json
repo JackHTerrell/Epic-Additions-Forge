@@ -22,7 +22,8 @@
   "rewards": {
     "recipes": [
       "epicadditions:pocket_dimension_key",
-      "epicadditions:dimensional_apple"
+      "epicadditions:dimensional_apple",
+      "epicadditions:dimensional_door"
     ]
   }
 }
