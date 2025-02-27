@@ -27,14 +27,14 @@ public class PocketCellAssignmentSelfRemover extends Item {
         if(pLevel instanceof ServerLevel)
             pPlayer.getCapability(PocketCellProvider.POCKET_CELL_DATA).ifPresent(data -> {
                 data.setHasPocketCell(false);
-                pPlayer.sendSystemMessage(Component.translatable("hovertext.item.pocket_cell_assignment_remover.status"));
+                pPlayer.sendSystemMessage(Component.translatable("hovertext.epicadditions.item.pocket_cell_assignment_remover.status"));
             });
         return super.use(pLevel, pPlayer, pUsedHand);
     }
 
     @Override
     public void appendHoverText(@NotNull ItemStack pStack, @Nullable Level pLevel, @NotNull List<Component> tooltip, @NotNull TooltipFlag pIsAdvanced) {
-        tooltip.add(Component.translatable("hovertext.item.pocket_cell_assignment_remover"));
+        tooltip.add(Component.translatable("hovertext.epicadditions.item.pocket_cell_assignment_remover"));
         super.appendHoverText(pStack, pLevel, tooltip, pIsAdvanced);
     }
 }

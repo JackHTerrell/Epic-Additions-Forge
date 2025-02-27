@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/door_bottom_left_open",
+  "textures": {
+    "bottom": "epicadditions:block/pocket_dimension_door_bottom",
+    "top": "epicadditions:block/pocket_dimension_door_top"
+  }
+}

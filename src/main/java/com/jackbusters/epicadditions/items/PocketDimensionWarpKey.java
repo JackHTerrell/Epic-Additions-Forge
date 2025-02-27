@@ -60,7 +60,7 @@ public class PocketDimensionWarpKey extends BowItem {
 
     @Override
     public void appendHoverText(@NotNull ItemStack pStack, @Nullable Level pLevel, List<Component> tooltip, @NotNull TooltipFlag pIsAdvanced) {
-        tooltip.add(Component.translatable("hovertext.item.pocket_key").withStyle(ChatFormatting.AQUA).withStyle(ChatFormatting.ITALIC));
+        tooltip.add(Component.translatable("hovertext.epicadditions.item.pocket_key").withStyle(ChatFormatting.AQUA).withStyle(ChatFormatting.ITALIC));
         super.appendHoverText(pStack, pLevel, tooltip, pIsAdvanced);
     }
 
@@ -71,7 +71,7 @@ public class PocketDimensionWarpKey extends BowItem {
     public static void tooltipEvent(final ItemTooltipEvent event){
         Player player = event.getEntity();
         if(player!=null && event.getItemStack().is(EpicRegistry.POCKET_DIMENSION_KEY.get())) {
-            player.getCapability(PocketCellProvider.POCKET_CELL_DATA).ifPresent(data -> event.getToolTip().add(2, Component.translatable("hovertext.item.pocket_key.current_level", data.getPocketCellLevel())));
+            player.getCapability(PocketCellProvider.POCKET_CELL_DATA).ifPresent(data -> event.getToolTip().add(2, Component.translatable("hovertext.epicadditions.item.pocket_key.current_level", data.getPocketCellLevel())));
         }
     }
 

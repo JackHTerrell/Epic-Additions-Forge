@@ -1,6 +1,7 @@
 package com.jackbusters.epicadditions;
 
 import com.jackbusters.epicadditions.blocks.CellBlock;
+import com.jackbusters.epicadditions.blocks.DimensionalDoorBlock;
 import com.jackbusters.epicadditions.enchantments.SoftSteppingEnchantment;
 import com.jackbusters.epicadditions.enchantments.SoulTiedEnchantment;
 import com.jackbusters.epicadditions.glm.EpicLootModifier;
@@ -8,7 +9,9 @@ import com.jackbusters.epicadditions.items.*;
 import com.jackbusters.epicadditions.statuseffects.UpgradePocketCellEffect;
 import com.mojang.serialization.Codec;
 import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
+import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.effect.MobEffectInstance;
@@ -21,6 +24,7 @@ import net.minecraft.world.item.enchantment.EnchantmentCategory;
 import net.minecraft.world.item.enchantment.EnchantmentInstance;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.minecraft.world.level.block.state.properties.BlockSetType;
 import net.minecraft.world.level.block.state.properties.NoteBlockInstrument;
 import net.minecraft.world.level.material.MapColor;
 import net.minecraftforge.common.loot.IGlobalLootModifier;
@@ -57,6 +61,13 @@ public class EpicRegistry {
             new DropExperienceBlock(BlockBehaviour.Properties.copy(DIMENSIONAL_ORE.get()).mapColor(MapColor.DEEPSLATE)
                     .strength(4.5F, 3.0F).sound(SoundType.DEEPSLATE)));
 
+    public static final RegistryObject<Block> DIMENSIONAL_DOOR = BLOCKS.register("dimensional_door", () -> {
+            BlockSetType POCKET_TYPE = new BlockSetType("epicadditions:pocket", true, SoundType.CHERRY_WOOD, SoundEvents.CHERRY_WOOD_DOOR_CLOSE, SoundEvents.CHERRY_WOOD_DOOR_OPEN, SoundEvents.CHERRY_WOOD_TRAPDOOR_CLOSE, SoundEvents.CHERRY_WOOD_TRAPDOOR_OPEN, SoundEvents.CHERRY_WOOD_PRESSURE_PLATE_CLICK_OFF, SoundEvents.CHERRY_WOOD_PRESSURE_PLATE_CLICK_ON, SoundEvents.CHERRY_WOOD_BUTTON_CLICK_OFF, SoundEvents.CHERRY_WOOD_BUTTON_CLICK_ON);
+            BlockSetType.register(POCKET_TYPE);
+            return new DimensionalDoorBlock(BlockBehaviour.Properties.of(), POCKET_TYPE);
+    }
+);
+
     // Items
     public static final RegistryObject<Item> POCKET_DIMENSION_KEY = ITEMS.register("pocket_dimension_key", ()->
             new PocketDimensionWarpKey(new Item.Properties().stacksTo(1).rarity(Rarity.UNCOMMON)));
@@ -90,6 +101,9 @@ public class EpicRegistry {
     public static final RegistryObject<BlockItem> DEEPSLATE_DIMENSIONAL_ORE_ITEM = ITEMS.register("deepslate_dimensional_ore", ()->
             new BlockItem(DEEPSLATE_DIMENSIONAL_ORE.get(), new Item.Properties()));
 
+    public static final RegistryObject<BlockItem> DIMENSIONAL_DOOR_ITEM = ITEMS.register("dimensional_door", ()->
+            new DimensionalDoorItem(DIMENSIONAL_DOOR.get(), new Item.Properties().rarity(Rarity.UNCOMMON)));
+
     // Creative Mode Tabs
     public static final RegistryObject<CreativeModeTab> MAIN_TAB = CREATIVE_MODE_TABS.register("main_tab", ()->
             CreativeModeTab.builder()
@@ -103,6 +117,7 @@ public class EpicRegistry {
                         output.accept(DEEPSLATE_DIMENSIONAL_ORE_ITEM.get());
                         output.accept(DIMENSIONAL_GEM.get());
                         output.accept(DIMENSIONAL_APPLE.get());
+                        output.accept(DIMENSIONAL_DOOR_ITEM.get());
                         output.accept(SEVERED_WITHER_SKULL.get());
                         output.accept(STAFF_OF_DRAGON.get());
                         ItemStack soulTiedBook = new ItemStack(Items.ENCHANTED_BOOK);

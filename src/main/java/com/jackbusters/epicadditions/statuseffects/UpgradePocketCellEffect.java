@@ -34,7 +34,7 @@ public class UpgradePocketCellEffect extends MobEffect {
         pLivingEntity.getCapability(PocketCellProvider.POCKET_CELL_DATA).ifPresent(data -> {
             data.addPocketCellLevel(pLivingEntity);
             if(pLivingEntity.level instanceof ServerLevel serverLevel) {
-                pLivingEntity.sendSystemMessage(Component.translatable("hovertext.item.upgrade_level", data.getPocketCellLevel()));
+                pLivingEntity.sendSystemMessage(Component.translatable("hovertext.epicadditions.item.upgrade_level", data.getPocketCellLevel()));
                 if(pLivingEntity instanceof ServerPlayer && data.doesHavePocketCell()) {
                     MinecraftServer minecraftServer = serverLevel.getServer();
                     ResourceKey<Level> pocketDimensionKey = ResourceKey.create(Registries.DIMENSION, new ResourceLocation(EpicAdditions.MOD_ID, "pocket"));

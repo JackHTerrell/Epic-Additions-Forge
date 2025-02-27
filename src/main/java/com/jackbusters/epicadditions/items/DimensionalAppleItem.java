@@ -18,7 +18,7 @@ public class DimensionalAppleItem extends Item {
 
     @Override
     public void appendHoverText(@NotNull ItemStack pStack, @Nullable Level pLevel, @NotNull List<Component> tooltip, @NotNull TooltipFlag pIsAdvanced) {
-        tooltip.add(Component.translatable("hovertext.item.dimensional_apple").withStyle(ChatFormatting.GOLD));
+        tooltip.add(Component.translatable("hovertext.epicadditions.item.dimensional_apple").withStyle(ChatFormatting.GOLD));
         super.appendHoverText(pStack, pLevel, tooltip, pIsAdvanced);
     }
 

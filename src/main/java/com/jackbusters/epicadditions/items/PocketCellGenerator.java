@@ -30,7 +30,7 @@ public class PocketCellGenerator extends Item {
 
     @Override
     public void appendHoverText(@NotNull ItemStack pStack, @Nullable Level pLevel, @NotNull List<Component> tooltip, @NotNull TooltipFlag pIsAdvanced) {
-        tooltip.add(Component.translatable("hovertext.item.pocket_cell_generator"));
+        tooltip.add(Component.translatable("hovertext.epicadditions.item.pocket_cell_generator"));
         super.appendHoverText(pStack, pLevel, tooltip, pIsAdvanced);
     }
 }
