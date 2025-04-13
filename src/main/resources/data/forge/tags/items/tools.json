@@ -1,0 +1,10 @@
+{
+  "replace": false,
+  "values": [
+    "epicadditions:pocket_cell_generator",
+    "epicadditions:pocket_cell_assignment_remover",
+    "epicadditions:pocket_dimension_key",
+    "epicadditions:severed_wither_skull",
+    "epicadditions:staff_of_dragon"
+  ]
+}
