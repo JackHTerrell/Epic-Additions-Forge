@@ -21,7 +21,7 @@ public class SoulTiedEnchantmentEvents {
     public static void keepSoulTiedOnRespawn(PlayerEvent.Clone event){
         Player originalPlayer = event.getOriginal();
         Player newPlayer = event.getEntity();
-        if(event.isWasDeath() && !(newPlayer.level().getGameRules().getRule(GameRules.RULE_KEEPINVENTORY).get())){
+        if(event.isWasDeath() && !(newPlayer.level.getGameRules().getRule(GameRules.RULE_KEEPINVENTORY).get())){
              for(int i = 0; i < originalPlayer.getInventory().getContainerSize(); ++i){
                  ItemStack item = originalPlayer.getInventory().getItem(i);
                 if(item.getEnchantmentLevel(EpicRegistry.SOUL_TIED.get()) > 0){
