@@ -21,7 +21,12 @@ import org.jetbrains.annotations.NotNull;
 import java.util.function.Supplier;
 
 /**
- * A loot modifier built to easily modify any loot table at a whim.
+ * <h1>Global Loot Modifier (GLM)</h1>
+ * <p>A loot modifier system built to easily modify any loot table on a whim.</p>
+ * <p>Specific loot modifications are data-driven. This is simply the logic behind how the fields in each json are applied.</p>
+ * <p>Different Loot Table modifications are created and can be previewed in data/epicadditions/loot_modifiers.
+ * All must then be registered with Forge in data/forge/loot_modifiers/global_loot_modifers.json.</p>
+ * <p>Loot modifications should <strong>never</strong> be the result of replacing a loot table. Doing so would break other mods' loot.</p>
  */
 public class EpicLootModifier extends LootModifier {
 
