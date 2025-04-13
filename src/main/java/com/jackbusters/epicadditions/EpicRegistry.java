@@ -65,8 +65,8 @@ public class EpicRegistry {
             BlockSetType POCKET_TYPE = new BlockSetType("epicadditions:pocket", true, SoundType.CHERRY_WOOD, SoundEvents.CHERRY_WOOD_DOOR_CLOSE, SoundEvents.CHERRY_WOOD_DOOR_OPEN, SoundEvents.CHERRY_WOOD_TRAPDOOR_CLOSE, SoundEvents.CHERRY_WOOD_TRAPDOOR_OPEN, SoundEvents.CHERRY_WOOD_PRESSURE_PLATE_CLICK_OFF, SoundEvents.CHERRY_WOOD_PRESSURE_PLATE_CLICK_ON, SoundEvents.CHERRY_WOOD_BUTTON_CLICK_OFF, SoundEvents.CHERRY_WOOD_BUTTON_CLICK_ON);
             BlockSetType.register(POCKET_TYPE);
             return new DimensionalDoorBlock(BlockBehaviour.Properties.of(), POCKET_TYPE);
-    }
-);
+        }
+    );
 
     // Items
     public static final RegistryObject<Item> POCKET_DIMENSION_KEY = ITEMS.register("pocket_dimension_key", ()->
