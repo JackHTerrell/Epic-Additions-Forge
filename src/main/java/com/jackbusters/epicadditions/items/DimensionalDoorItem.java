@@ -20,6 +20,7 @@ public class DimensionalDoorItem extends BlockItem {
     @Override
     public void appendHoverText(@NotNull ItemStack pStack, @Nullable Level pLevel, List<Component> tooltip, @NotNull TooltipFlag pFlag) {
         tooltip.add(Component.translatable("hovertext.epicadditions.item.dimensional_door").withStyle(ChatFormatting.AQUA).withStyle(ChatFormatting.ITALIC));
+        tooltip.add(Component.translatable("hovertext.epicadditions.item.not_yet_functional").withStyle(ChatFormatting.RED));
         super.appendHoverText(pStack, pLevel, tooltip, pFlag);
     }
 }

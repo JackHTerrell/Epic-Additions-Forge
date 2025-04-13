@@ -28,6 +28,7 @@
     "hovertext.epicadditions.item.upgrade_level": "Pocket Cell Level has been upgraded to level %d!",
     "hovertext.epicadditions.item.dimensional_apple": "Eat to increase Pocket Cell level. Each level increases height of cell by one block.",
     "hovertext.epicadditions.item.dimensional_door": "Permits others access to your Pocket Cell",
+    "hovertext.epicadditions.item.not_yet_functional": "This item is not yet functional. It is currently in-development.",
 
     "advancements.epicadditions.progression.root.title": "Epic Additions",
     "advancements.epicadditions.progression.root.description": "Where boring ends.",
