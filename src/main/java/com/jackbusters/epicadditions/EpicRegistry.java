@@ -9,7 +9,6 @@ import com.jackbusters.epicadditions.items.*;
 import com.jackbusters.epicadditions.statuseffects.UpgradePocketCellEffect;
 import com.mojang.serialization.Codec;
 import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.effect.MobEffect;
@@ -164,6 +163,37 @@ public class EpicRegistry {
     }
 
     public static void addToExistingTabs(BuildCreativeModeTabContentsEvent event){
+        if(event.getTabKey().equals(CreativeModeTabs.TOOLS_AND_UTILITIES)) {
+            event.getEntries().putAfter(Items.RECOVERY_COMPASS.getDefaultInstance(), POCKET_DIMENSION_KEY.get().getDefaultInstance(), CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
+        }
+
+        if(event.getTabKey().equals(CreativeModeTabs.COMBAT)){
+            event.getEntries().putAfter(Items.TRIDENT.getDefaultInstance(), SEVERED_WITHER_SKULL.get().getDefaultInstance(), CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
+            event.getEntries().putAfter(Items.TRIDENT.getDefaultInstance(), STAFF_OF_DRAGON.get().getDefaultInstance(), CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
+        }
+
+        if(event.getTabKey().equals(CreativeModeTabs.REDSTONE_BLOCKS)){
+            event.getEntries().putAfter(Items.IRON_DOOR.getDefaultInstance(), DIMENSIONAL_DOOR_ITEM.get().getDefaultInstance(), CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
+        }
+
+        if(event.getTabKey().equals(CreativeModeTabs.INGREDIENTS)){
+            event.getEntries().putAfter(Items.AMETHYST_SHARD.getDefaultInstance(), DIMENSIONAL_GEM.get().getDefaultInstance(), CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
+        }
+
+        if(event.getTabKey().equals(CreativeModeTabs.BUILDING_BLOCKS)){
+            event.accept(CELL_BLOCK_ITEM.get().getDefaultInstance(), CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
+        }
+
+        if(event.getTabKey().equals(CreativeModeTabs.NATURAL_BLOCKS)){
+            event.getEntries().putAfter(Items.DIAMOND_BLOCK.getDefaultInstance(), DIMENSIONAL_ORE_ITEM.get().getDefaultInstance(), CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
+            event.getEntries().putAfter(DIMENSIONAL_ORE_ITEM.get().getDefaultInstance(), DEEPSLATE_DIMENSIONAL_ORE_ITEM.get().getDefaultInstance(), CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
+        }
+
+        if(event.getTabKey().equals(CreativeModeTabs.FOOD_AND_DRINKS)){
+            event.getEntries().putAfter(Items.ENCHANTED_GOLDEN_APPLE.getDefaultInstance(), DIMENSIONAL_APPLE.get().getDefaultInstance(), CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
+        }
+
+
         if(event.getTabKey().equals(CreativeModeTabs.OP_BLOCKS) && event.hasPermissions()) {
             event.accept(POCKET_CELL_GENERATOR.get());
             event.accept(POCKET_CELL_ASSIGNMENT_REMOVER.get());
