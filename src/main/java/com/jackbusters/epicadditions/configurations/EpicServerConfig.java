@@ -2,8 +2,6 @@ package com.jackbusters.epicadditions.configurations;
 
 import net.minecraftforge.common.ForgeConfigSpec;
 
-import java.util.List;
-
 public class EpicServerConfig {
     public static final ForgeConfigSpec.Builder BUILDER = new ForgeConfigSpec.Builder();
 
