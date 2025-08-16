@@ -182,7 +182,7 @@ public class PocketCellData {
         setPocketCellIndex(compoundTag.getInt("pocket_cell_index"));
         this.pocketCellLevel=compoundTag.getInt("pocket_cell_level");
         setLeftPos(new Vec3(compoundTag.getDouble("from_pos_x"), compoundTag.getDouble("from_pos_y"), compoundTag.getDouble("from_pos_z")));
-        setLeftDimensionId(ResourceKey.create(Registries.DIMENSION, ResourceLocation.withDefaultNamespace(compoundTag.getString("left_dimension_resource_location"))));
+        setLeftDimensionId(ResourceKey.create(Registries.DIMENSION, ResourceLocation.parse(compoundTag.getString("left_dimension_resource_location"))));
         setLeftPitch(compoundTag.getFloat("from_left_pitch"));
         setLeftYaw(compoundTag.getFloat("from_left_yaw"));
         setWasFallingDistance(compoundTag.getFloat("was_falling_distance"));
