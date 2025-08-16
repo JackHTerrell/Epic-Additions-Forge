@@ -50,7 +50,7 @@ public class PocketDimensionWarpKey extends BowItem {
     public void releaseUsing(@NotNull ItemStack pStack, @NotNull Level level, @NotNull LivingEntity playerUsing, int timeCharged) {
         if(level instanceof ServerLevel serverLevel) {
             MinecraftServer minecraftServer = serverLevel.getServer();
-            ResourceKey<Level> pocketDimensionKey = ResourceKey.create(Registries.DIMENSION, new ResourceLocation(EpicAdditions.MOD_ID, "pocket"));
+            ResourceKey<Level> pocketDimensionKey = ResourceKey.create(Registries.DIMENSION, ResourceLocation.fromNamespaceAndPath(EpicAdditions.MOD_ID, "pocket"));
             ServerLevel pocketDimension = minecraftServer.getLevel(pocketDimensionKey);
             ServerLevel playerDimension = minecraftServer.getLevel(serverLevel.dimension());
             ServerLevel overworld = minecraftServer.getLevel(Level.OVERWORLD);

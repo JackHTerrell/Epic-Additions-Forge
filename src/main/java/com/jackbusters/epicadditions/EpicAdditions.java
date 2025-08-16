@@ -50,6 +50,6 @@ public class EpicAdditions {
 class ClientOnlyRegistries {
     @SubscribeEvent
     public static void registerDimensionEffectsEvent(final RegisterDimensionSpecialEffectsEvent event){
-        event.register(new ResourceLocation(EpicAdditions.MOD_ID, "pocket"),new PocketDimensionEffect());
+        event.register(ResourceLocation.fromNamespaceAndPath(EpicAdditions.MOD_ID, "pocket"),new PocketDimensionEffect());
     }
 }

@@ -24,7 +24,7 @@ public class PocketCellEvents {
     public static void attachCapability(AttachCapabilitiesEvent<Entity> event){
         Entity entity = event.getObject();
         if(entity instanceof Player && !entity.getCapability(PocketCellProvider.POCKET_CELL_DATA).isPresent())
-            event.addCapability(new ResourceLocation(EpicAdditions.MOD_ID, "pocket_dimension_data"), new PocketCellProvider());
+            event.addCapability(ResourceLocation.fromNamespaceAndPath(EpicAdditions.MOD_ID, "pocket_dimension_data"), new PocketCellProvider());
     }
 
     /*
@@ -73,9 +73,9 @@ public class PocketCellEvents {
     @SubscribeEvent
     public static void attachLevelCapability(AttachCapabilitiesEvent<Level> event){
         if(event.getObject() instanceof ServerLevel level) {
-            ResourceKey<Level> pocketDimensionKey = ResourceKey.create(Registries.DIMENSION, new ResourceLocation(EpicAdditions.MOD_ID, "pocket"));
+            ResourceKey<Level> pocketDimensionKey = ResourceKey.create(Registries.DIMENSION, ResourceLocation.fromNamespaceAndPath(EpicAdditions.MOD_ID, "pocket"));
             if (level.dimension().equals(pocketDimensionKey)) {
-                event.addCapability(new ResourceLocation(EpicAdditions.MOD_ID, "pocket_dimension_data"), new PocketCellLevelDataProvider());
+                event.addCapability(ResourceLocation.fromNamespaceAndPath(EpicAdditions.MOD_ID, "pocket_dimension_data"), new PocketCellLevelDataProvider());
             }
         }
     }
