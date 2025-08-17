@@ -11,6 +11,9 @@ import net.minecraft.world.level.block.state.properties.BlockSetType;
 import net.minecraft.world.phys.BlockHitResult;
 import org.jetbrains.annotations.NotNull;
 
+/**
+ * Perhaps this can be done with Block States to save on resources. Converting to BlockEntity to use NBT would be more complex and take more memory.
+ */
 public class DimensionalDoorBlock extends DoorBlock {
     public DimensionalDoorBlock(Properties pProperties, BlockSetType pType) {
         super(pProperties, pType);
