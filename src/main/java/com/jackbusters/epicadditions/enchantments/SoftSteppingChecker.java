@@ -18,8 +18,10 @@ public class SoftSteppingChecker {
     private static final List<GameEvent> SILENCED_GAME_EVENTS =
             List.of(GameEvent.STEP, GameEvent.HIT_GROUND, GameEvent.PROJECTILE_SHOOT, GameEvent.EQUIP);
 
-    /*
-        Returns true if passed entity is wearing boots with the soft stepping enchantment.
+    /**
+     * Checks if Living Entity is wearing boots with the Soft Stepping Enchantment
+     * @param livingEntity The entity to check.
+     * @return True if passed entity is wearing boots with the soft stepping enchantment, false if not.
      */
     public static boolean isWearingSoftSteppers(LivingEntity livingEntity){
         return isItemStackSoftStepper(livingEntity.getItemBySlot(EquipmentSlot.FEET));
@@ -28,10 +30,21 @@ public class SoftSteppingChecker {
     /*
         Returns true if an item has the soft stepping enchantment.
      */
+
+    /**
+     * Checks if an item has the soft stepping enchantment.
+     * @param itemStack The ItemStack to check.
+     * @return True if an item has the soft stepping enchantment, false if not.
+     */
     public static boolean isItemStackSoftStepper(ItemStack itemStack){
         return EnchantmentHelper.getTagEnchantmentLevel(EpicRegistry.SOFT_STEPPING.get(), itemStack) > 0;
     }
 
+    /**
+     * Checks if a vibration is silenced.
+     * @param vibration The vibration to check.
+     * @return True if vibration is silenced, false if not.
+     */
     public static boolean isSilencedVibration(GameEvent vibration){
         return SILENCED_GAME_EVENTS.contains(vibration);
     }

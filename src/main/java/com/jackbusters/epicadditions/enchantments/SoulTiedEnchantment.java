@@ -15,16 +15,18 @@ public class SoulTiedEnchantment extends Enchantment {
         super(pRarity, pCategory, pApplicableSlots);
     }
 
-    /*
-        If true, Librarian villagers will generate trades for this item.
+    /**
+     * Determines Librarian trade-ability
+     * @return If true, Librarian villagers will generate trades for this item.
      */
     @Override
     public boolean isTradeable() {
         return true;
     }
 
-    /*
-        Returns the value of the max technical level of this enchantment.
+    /**
+     * Determines Max Level of enchantment.
+     * @return Max Level of Enchantment
      */
     @Override
     public int getMaxLevel() {

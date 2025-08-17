@@ -64,9 +64,12 @@ public class PocketDimensionWarpKey extends BowItem {
         super.appendHoverText(pStack, pLevel, tooltip, pIsAdvanced);
     }
 
-    /*
-        Tooltip for displaying level of player's Pocket Cell
-    */
+    /**
+     * Displays tooltip of Pocket Cell level on Pocket Dimension Key.
+     * This event is needed as the regular tooltip function cannot get the Player,
+     * which is necessary here to get his cell's level data.
+     * @param event Event passed by Forge.
+     */
     @SubscribeEvent
     public static void tooltipEvent(final ItemTooltipEvent event){
         Player player = event.getEntity();
@@ -75,15 +78,24 @@ public class PocketDimensionWarpKey extends BowItem {
         }
     }
 
-    /*
-                Will assure the key correctly teleports the player to and from their Pocket Dimension cell.
-             */
+    /**
+     * Ensures player's dimension and location are correct upon travel to and from Pocket Dimension.
+     * @param entityUsing The entity using the key.
+     * @param pocketDimension The Pocket Dimension.
+     * @param playerDimension The player's current dimension.
+     * @param overworld The Overworld dimension. Used as a backup if previous dimension data is not found.
+     */
     public void sendToProperDimension(LivingEntity entityUsing, ServerLevel pocketDimension, ServerLevel playerDimension, ServerLevel overworld){
         if(playerDimension != null && overworld != null && playerDimension.equals(pocketDimension))
             teleportFromPocketCell(entityUsing, overworld);
         else if(pocketDimension != null) teleportToPocketCell(entityUsing, pocketDimension);
     }
 
+    /**
+     * Teleports the player from his Pocket Cell. Includes safeguards against missing data so the player is not stuck.
+     * @param entityUsing The player using the key.
+     * @param overworld The Overworld dimension. Used as a backup if previous dimension data is not found.
+     */
     public void teleportFromPocketCell(LivingEntity entityUsing, ServerLevel overworld) {
         entityUsing.getCapability(PocketCellProvider.POCKET_CELL_DATA).ifPresent(data -> {
             ServerLevel fromDim = Objects.requireNonNull(entityUsing.getServer()).getLevel(data.getLeftDimensionId());
@@ -108,7 +120,7 @@ public class PocketDimensionWarpKey extends BowItem {
                     }
                 });
             }
-            else { // If for some reason there is a failure to respawn the player at their previous location, they should instead spawn at their spawnpoint
+            else { // If for some reason there is a failure to respawn the player at their previous location, they should instead spawn at their spawn point
                 if(entityUsing instanceof ServerPlayer serverPlayer) {
                     ServerLevel respawnDimension = serverPlayer.server.getLevel(serverPlayer.getRespawnDimension());
 
@@ -126,7 +138,7 @@ public class PocketDimensionWarpKey extends BowItem {
                                 respawnPoint = finalRespawnDimension.getSharedSpawnPos(); // If the player doesn't have a respawn point, send him to world spawn.
                             }
                             toPosEntity.teleportTo(respawnPoint.getX(), respawnPoint.getY(), respawnPoint.getZ());
-                            logger.warn("Epic Additions: A player was respawned at their set spawn point, rather than their previous position. This should never happen and was included as a precaution against being stuck in the Pocket Cell. " +
+                            logger.warn("A player was respawned at their set spawn point, rather than their previous position. This should never happen and was included as a precaution against being stuck in the Pocket Cell. " +
                                     "Please let the mod developer know the context so he can fix the bug.");
                             return toPosEntity;
                         }
@@ -142,6 +154,11 @@ public class PocketDimensionWarpKey extends BowItem {
         });
     }
 
+    /**
+     * Teleports the player to his Pocket Cell. Will assign a Pocket Cell if he does not have one.
+     * @param entityUsing Player using the key.
+     * @param pocketDimension The Pocket Dimension.
+     */
     public void teleportToPocketCell(LivingEntity entityUsing, ServerLevel pocketDimension){
         entityUsing.changeDimension(pocketDimension, new ITeleporter() {
             @Override
@@ -156,7 +173,6 @@ public class PocketDimensionWarpKey extends BowItem {
                             BlockPos posOfCell = levelData.getOccupiedCellLocations().get(data.getPocketCellIndex());
                             data.setLeftPocketCellPos(new Vec3(posOfCell.getX(), posOfCell.getY()+1, posOfCell.getZ()));
                         });
-
                     }
                     data.setLeftDimensionId(currentWorld.dimension());
                     data.setLeftPos(toPosEntity.position());
@@ -189,8 +205,9 @@ public class PocketDimensionWarpKey extends BowItem {
         });
     }
 
-    /*
-        Piggy-Backing off the bow to provide a useful "Random Things"-like animation to using the Pocket Dimension key
+    /**
+     * Piggy-Backing off the bow to provide a useful "Random Things"-like animation to using the Pocket Dimension key
+     * @return Everything, of course.
      */
     @Override
     public @NotNull Predicate<ItemStack> getAllSupportedProjectiles() {

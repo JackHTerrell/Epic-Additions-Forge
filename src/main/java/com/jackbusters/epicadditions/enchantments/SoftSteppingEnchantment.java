@@ -30,7 +30,12 @@ public class SoftSteppingEnchantment extends Enchantment {
     }
 
     /*
-        If true, will be capable of being found in Enchantment tables.
+
+     */
+
+    /**
+     * Determines Enchantment Table discoverability
+     * @return  If true, will be capable of being found in Enchantment Tables.
      */
     @Override
     public boolean isDiscoverable() {
@@ -38,8 +43,13 @@ public class SoftSteppingEnchantment extends Enchantment {
     }
 
     /*
-        If true, Librarian villagers will generate trades for this item.
+
     */
+
+    /**
+     * Determines Librarian trade-ability
+     * @return If true, Librarian villagers will generate trades for this item.
+     */
     @Override
     public boolean isTradeable() {
         return EpicServerConfig.isSoftSteppingEnchantmentTradeable.get();

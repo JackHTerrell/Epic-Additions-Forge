@@ -16,16 +16,4 @@ public class EpicPacketHandler {
         int id = 0;
         INSTANCE.registerMessage(id++, S2CSyncPocketData.class, S2CSyncPocketData::encode, S2CSyncPocketData::new, S2CSyncPocketData::handle);
     }
-
-//    public static void sendToServer(Object information){
-//        INSTANCE.send(PacketDistributor.SERVER.noArg(), information);
-//    }
-//
-//    public static void sendToAllClients(Object information){
-//        INSTANCE.send(PacketDistributor.ALL.noArg(), information);
-//    }
-//
-//    public static void sendToPlayer(Object information, ServerPlayer serverPlayer){
-//        INSTANCE.send(PacketDistributor.PLAYER.with(() -> serverPlayer), information);
-//    }
 }

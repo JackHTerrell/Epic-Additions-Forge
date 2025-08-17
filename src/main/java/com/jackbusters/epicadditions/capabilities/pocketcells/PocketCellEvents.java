@@ -20,6 +20,11 @@ import net.minecraftforge.network.PacketDistributor;
 
 @Mod.EventBusSubscriber(modid = EpicAdditions.MOD_ID)
 public class PocketCellEvents {
+
+    /**
+     * If a player does not already have Pocket Dimension Data capabilities, assign it to the player.
+     * @param event Event passed by Forge
+     */
     @SubscribeEvent
     public static void attachCapability(AttachCapabilitiesEvent<Entity> event){
         Entity entity = event.getObject();
@@ -27,8 +32,9 @@ public class PocketCellEvents {
             event.addCapability(ResourceLocation.fromNamespaceAndPath(EpicAdditions.MOD_ID, "pocket_dimension_data"), new PocketCellProvider());
     }
 
-    /*
-        Synchronizes the Pocket Cell level data so that the Pocket Dimension Key can properly display the level in the tooltip.
+    /**
+     * Synchronizes the Pocket Cell level data so that the Pocket Dimension Key can properly display the level in the tooltip.
+     * @param event Event passed by Forge
      */
     @SubscribeEvent
     public static void synchronizePocketLevelOnLogin(PlayerEvent.PlayerLoggedInEvent event){
@@ -41,9 +47,10 @@ public class PocketCellEvents {
         }
     }
 
-    /*
-        Synchronizes the Pocket Cell level data so that the Pocket Dimension Key can properly display the level in the tooltip.
-    */
+    /**
+     * Synchronizes the Pocket Cell level data so that the Pocket Dimension Key can properly display the level in the tooltip.
+     * @param event Event passed by Forge
+     */
     @SubscribeEvent
     public static void synchronizePocketLevelOnRespawn(PlayerEvent.PlayerRespawnEvent event){
         Player player = event.getEntity();
@@ -55,9 +62,10 @@ public class PocketCellEvents {
         }
     }
 
-    /*
-    Synchronizes the Pocket Cell level data so that the Pocket Dimension Key can properly display the level in the tooltip.
-*/
+    /**
+     * Synchronizes the Pocket Cell level data so that the Pocket Dimension Key can properly display the level in the tooltip.
+     * @param event Event passed by Forge
+     */
     @SubscribeEvent
     public static void synchronizePocketLevelOnChangeDimension(PlayerEvent.PlayerChangedDimensionEvent event){
         Player player = event.getEntity();
@@ -69,7 +77,10 @@ public class PocketCellEvents {
         }
     }
 
-
+    /**
+     * If a dimension is the Pocket Dimension, assign it Pocket Dimension capabilities.
+     * @param event Event passed by Forge
+     */
     @SubscribeEvent
     public static void attachLevelCapability(AttachCapabilitiesEvent<Level> event){
         if(event.getObject() instanceof ServerLevel level) {
@@ -80,8 +91,10 @@ public class PocketCellEvents {
         }
     }
 
-    /*
-        When a player respawns, this function copies the capability data to the newly spawned entity.
+    /**
+     * When a player respawns upon death or leaves & returns to a world, that player's old capability data is re-assigned
+     * to them so that it is not lost.
+     * @param event Event passed by Forge
      */
     @SubscribeEvent
     public static void keepPocketDataOnDeath(PlayerEvent.Clone event) {

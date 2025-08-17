@@ -14,11 +14,21 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+/**
+ * <h1>Pocket Cell</h1>
+ * <h3>Contains the functions & logic pertaining to the construction of Pocket Cells</h3>
+ */
 public class PocketCell {
 
-    private static final int commonDimension = 17;
-    /*
-        Constructs a pocket cell in the correct location. Returns false if pocket cell fails to build. Theoretically, should never happen.
+    private static final int commonDimension = 17; // Length, width, and start height of cells (i.e. 17x17x17). Only works with odd numbers.
+
+    /**
+     * Finds an empty spot for a Pocket Cell and places one in that location based on a Player's data.
+     * Adds that player to the players with cells list and sets that cell location as occupied.
+     * @param buildingBlock The building block of which to create the cell.
+     * @param pocketCellLevel The level the player's cell should be.
+     * @param pocketDimension The Pocket Dimension.
+     * @param entity The entity to create a cell for.
      */
     public static void buildNewPocketCell(Block buildingBlock, int pocketCellLevel, ServerLevel pocketDimension, Entity entity){
         pocketDimension.getCapability(PocketCellLevelDataProvider.POCKET_CELL_LEVEL_DATA).ifPresent(data -> {
@@ -140,8 +150,12 @@ public class PocketCell {
         });
     }
 
-    /*
-        Will generate a cell where commanded.
+    /**
+     * Generates Cell at location. Assigns no player or level data, just builds the blocks.
+     * @param buildingBlock The block to make the cell out of
+     * @param pocketCellLevel The level of the Pocket Cell
+     * @param pocketDimension The dimension to create the cell in
+     * @param center The Center position of where to create the cell
      */
     public static void forceBuildCell(Block buildingBlock, int pocketCellLevel, ServerLevel pocketDimension, BlockPos center){
         BlockPos builtCenterEast = center.east(commonDimension/2);
@@ -157,6 +171,13 @@ public class PocketCell {
         generateRoof(buildingBlock, pocketCellLevel, pocketDimension, center);
     }
 
+    /**
+     * Regenerates the roof and walls of a given Pocket Cell. Used for updating cells to the appropriate level.
+     * @param buildingBlock The block to make the walls and roof with
+     * @param pocketCellLevel The new level of the Pocket Cell
+     * @param pocketDimension The Pocket Dimension
+     * @param center The location of the cell
+     */
     public static void updateRoofAndWallHeight(Block buildingBlock, int pocketCellLevel, ServerLevel pocketDimension, BlockPos center){
         BlockPos builtCenterEast = center.east(commonDimension/2);
         BlockPos builtCenterWest = center.west(commonDimension/2);

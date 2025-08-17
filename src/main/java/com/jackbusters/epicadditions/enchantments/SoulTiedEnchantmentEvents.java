@@ -14,8 +14,9 @@ import net.minecraftforge.fml.common.Mod;
 @Mod.EventBusSubscriber(modid = EpicAdditions.MOD_ID)
 public class SoulTiedEnchantmentEvents {
 
-    /*
-        Will check player's inventory for soul-tied items and assure they're returned to new player as they were upon respawn.
+    /**
+     * Checks player's inventory for soul-tied items and assures they're returned to new player as they were upon respawn.
+     * @param event Event passed by Forge.
      */
     @SubscribeEvent
     public static void keepSoulTiedOnRespawn(PlayerEvent.Clone event){
@@ -31,8 +32,9 @@ public class SoulTiedEnchantmentEvents {
         }
     }
 
-    /*
-        Prevents soul-tied objects from dropping, which would cause duplication.
+    /**
+     * Prevents soul-tied objects from dropping, which would cause duplication.
+     * @param event Event passed by Forge.
      */
     @SubscribeEvent
     public static void preventSoulTiedFromDropping(LivingDropsEvent event){
