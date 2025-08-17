@@ -1,5 +1,6 @@
 package com.jackbusters.epicadditions.constructs;
 
+import com.jackbusters.epicadditions.capabilities.pocketcells.PocketCellLevelData;
 import com.jackbusters.epicadditions.capabilities.pocketcells.PocketCellLevelDataProvider;
 import com.jackbusters.epicadditions.capabilities.pocketcells.PocketCellProvider;
 import net.minecraft.core.BlockPos;
@@ -92,56 +93,16 @@ public class PocketCell {
                         int random = (int) ((Math.random() * 4) + 1); // Random value [1, 4]. 1 = North, 2 = East, 3 = South, 4 = West
                         if (random == 1 && !data.getOccupiedCellLocations().contains(potentialNorthCell)) {
                             added = true;
-                            List<BlockPos> tempLi = data.getOccupiedCellLocations();
-                            List<UUID> list = data.getPlayersWithCells();
-                            tempLi.add(potentialNorthCell);
-                            list.add(entity.getUUID());
-                            data.setOccupiedCellLocations(tempLi);
-                            data.setPlayersWithCells(list);
-                            entity.getCapability(PocketCellProvider.POCKET_CELL_DATA).ifPresent(pData -> {
-                                pData.setHasPocketCell(true);
-                                pData.setPocketCellIndex(data.getOccupiedCellLocations().size() - 1);
-                            });
-                            forceBuildCell(buildingBlock, pocketCellLevel, pocketDimension, potentialNorthCell);
+                            createCellForEntityAtLocation(potentialNorthCell, data, entity, buildingBlock, pocketCellLevel, pocketDimension);
                         } else if (random == 2 && !data.getOccupiedCellLocations().contains(potentialEastCell)) {
                             added = true;
-                            List<BlockPos> tempLi = data.getOccupiedCellLocations();
-                            List<UUID> list = data.getPlayersWithCells();
-                            tempLi.add(potentialEastCell);
-                            list.add(entity.getUUID());
-                            data.setOccupiedCellLocations(tempLi);
-                            data.setPlayersWithCells(list);
-                            entity.getCapability(PocketCellProvider.POCKET_CELL_DATA).ifPresent(pData -> {
-                                pData.setHasPocketCell(true);
-                                pData.setPocketCellIndex(data.getOccupiedCellLocations().size() - 1);
-                            });
-                            forceBuildCell(buildingBlock, pocketCellLevel, pocketDimension, potentialEastCell);
+                            createCellForEntityAtLocation(potentialEastCell, data, entity, buildingBlock, pocketCellLevel, pocketDimension);
                         } else if (random == 3 && !data.getOccupiedCellLocations().contains(potentialSouthCell)) {
                             added = true;
-                            List<BlockPos> tempLi = data.getOccupiedCellLocations();
-                            List<UUID> list = data.getPlayersWithCells();
-                            tempLi.add(potentialSouthCell);
-                            list.add(entity.getUUID());
-                            data.setOccupiedCellLocations(tempLi);
-                            data.setPlayersWithCells(list);
-                            entity.getCapability(PocketCellProvider.POCKET_CELL_DATA).ifPresent(pData -> {
-                                pData.setHasPocketCell(true);
-                                pData.setPocketCellIndex(data.getOccupiedCellLocations().size() - 1);
-                            });
-                            forceBuildCell(buildingBlock, pocketCellLevel, pocketDimension, potentialSouthCell);
+                            createCellForEntityAtLocation(potentialSouthCell, data, entity, buildingBlock, pocketCellLevel, pocketDimension);
                         } else if (random == 4 && !data.getOccupiedCellLocations().contains(potentialWestCell)) {
                             added = true;
-                            List<BlockPos> tempLi = data.getOccupiedCellLocations();
-                            List<UUID> list = data.getPlayersWithCells();
-                            tempLi.add(potentialWestCell);
-                            list.add(entity.getUUID());
-                            data.setOccupiedCellLocations(tempLi);
-                            data.setPlayersWithCells(list);
-                            entity.getCapability(PocketCellProvider.POCKET_CELL_DATA).ifPresent(pData -> {
-                                pData.setHasPocketCell(true);
-                                pData.setPocketCellIndex(data.getOccupiedCellLocations().size() - 1);
-                            });
-                            forceBuildCell(buildingBlock, pocketCellLevel, pocketDimension, potentialWestCell);
+                            createCellForEntityAtLocation(potentialWestCell, data, entity, buildingBlock, pocketCellLevel, pocketDimension);
                         }
                         iteration++;
                     }
@@ -190,6 +151,30 @@ public class PocketCell {
         generateWallsNorthSouth(buildingBlock, pocketCellLevel, pocketDimension, builtCenterNorth);
         generateWallsNorthSouth(buildingBlock, pocketCellLevel, pocketDimension, builtCenterSouth);
         generateRoof(buildingBlock, pocketCellLevel, pocketDimension, center);
+    }
+
+    /**
+     * Adds a cell to a location for an entity and sets data to reflect the changes.
+     * @param cellLocation Location of Pocket Cell
+     * @param data The Level's Pocket Cell data.
+     * @param entity The entity to assign a cell to.
+     * @param buildingBlock The construction material of the cell.
+     * @param pocketCellLevel The level of the cell.
+     * @param pocketDimension The Pocket Dimension.
+     */
+    private static void createCellForEntityAtLocation(BlockPos cellLocation, PocketCellLevelData data, Entity entity,
+                                                      Block buildingBlock, int pocketCellLevel, ServerLevel pocketDimension){
+        List<BlockPos> tempLi = data.getOccupiedCellLocations();
+        List<UUID> list = data.getPlayersWithCells();
+        tempLi.add(cellLocation);
+        list.add(entity.getUUID());
+        data.setOccupiedCellLocations(tempLi);
+        data.setPlayersWithCells(list);
+        entity.getCapability(PocketCellProvider.POCKET_CELL_DATA).ifPresent(pData -> {
+            pData.setHasPocketCell(true);
+            pData.setPocketCellIndex(data.getOccupiedCellLocations().size() - 1);
+        });
+        forceBuildCell(buildingBlock, pocketCellLevel, pocketDimension, cellLocation);
     }
 
     private static void removePreviousRoof(int pocketCellLevel, ServerLevel pocketDimension, BlockPos builtCenter){
