@@ -1,8 +1,10 @@
 package com.jackbusters.epicadditions.constructs;
 
+import com.jackbusters.epicadditions.EpicAdditions;
 import com.jackbusters.epicadditions.capabilities.pocketcells.PocketCellLevelData;
 import com.jackbusters.epicadditions.capabilities.pocketcells.PocketCellLevelDataProvider;
 import com.jackbusters.epicadditions.capabilities.pocketcells.PocketCellProvider;
+import com.mojang.logging.LogUtils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Vec3i;
 import net.minecraft.server.level.ServerLevel;
@@ -14,6 +16,7 @@ import net.minecraft.world.level.levelgen.structure.BoundingBox;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+import org.slf4j.Logger;
 
 /**
  * <h1>Pocket Cell</h1>
@@ -23,6 +26,7 @@ public class PocketCell {
 
     private static final int COMMON_DIMENSION = 17; // Length, width, and start height of cells (i.e. 17x17x17). Only works with odd numbers.
     private static final BlockPos INITIAL_START_POS = new BlockPos(0, -2000, 0); // Position of first cell in dimension.
+    private static final Logger logger = LogUtils.getLogger();
 
     /**
      * Finds an empty spot for a Pocket Cell and places one in that location based on a Player's data.
@@ -35,6 +39,9 @@ public class PocketCell {
     public static void buildNewPocketCell(Block buildingBlock, int pocketCellLevel, ServerLevel pocketDimension, Entity entity){
         pocketDimension.getCapability(PocketCellLevelDataProvider.POCKET_CELL_LEVEL_DATA).ifPresent(data -> {
             if(data.getOccupiedCellLocations().isEmpty()) { // If no cells have been created yet, create the first cell and start the data.
+                data.setVersionOfCellGen(EpicAdditions.MOD_VERSION);
+
+                logger.info("The Pocket Dimension has been initialized at version {}", data.getVersionOfCellGen());
 
                 List<BlockPos> startBlock = new ArrayList<>();
                 startBlock.add(INITIAL_START_POS);
@@ -54,8 +61,14 @@ public class PocketCell {
             else {
                 int distanceBetweenCellCenters = 36;
                 BlockPos lastAddedCell = data.getOccupiedCellLocations().get(data.getOccupiedCellLocations().size() - 1);
+                logger.info("Pocket Cell Generation Version: {}", data.getVersionOfCellGen());
 
-                createCellAsCircleForm(lastAddedCell, distanceBetweenCellCenters, data, entity, buildingBlock, pocketCellLevel, pocketDimension);
+                if(data.getVersionOfCellGen() != 0.0)
+                    createCellAsCircleForm(lastAddedCell, distanceBetweenCellCenters, data, entity, buildingBlock, pocketCellLevel, pocketDimension);
+                else {
+                    createCellAsRandomSnake(lastAddedCell, distanceBetweenCellCenters, data, entity, buildingBlock, pocketCellLevel, pocketDimension);
+                    logger.info("Detected Legacy Beta Pocket Cell generation. Using legacy cell generation to maintain compatibility.");
+                }
             }
         });
     }
@@ -104,7 +117,7 @@ public class PocketCell {
 
     /**
      * <h1>Cell Gen Option 2: Circle</h1>
-     * Creates new cells in a randomized "circle" formation.
+     * Creates new cells in a randomized "circle" formation. For cell gen versions Release 1.0 or above.
      * @param lastAddedCell The last cell that was added to the level.
      * @param distanceBetweenCellCenters The distance between
      * @param data The Level's Pocket Cell data.
@@ -161,7 +174,7 @@ public class PocketCell {
 
     /**
      * <h1>Cell Gen Option 1: Random Snake</h1>
-     * Creates new cells in a randomized "snake" formation.
+     * Creates new cells in a randomized "snake" formation. Used for Legacy (<=v0.5) Pocket Dimensions
      * @param lastAddedCell The last cell that was added to the level.
      * @param distanceBetweenCellCenters The distance between
      * @param data The Level's Pocket Cell data.

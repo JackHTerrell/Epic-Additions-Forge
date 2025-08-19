@@ -13,6 +13,7 @@ public class PocketCellLevelData {
     private List<BlockPos> occupiedCellLocations = new ArrayList<>();
     private List<UUID> playersWithCells = new ArrayList<>();
     private String lastOutwardDirection= "North";
+    private double versionOfCellGen;
 
     public String getLastOutwardDirection(){
         return this.lastOutwardDirection;
@@ -20,6 +21,14 @@ public class PocketCellLevelData {
 
     public void setLastOutwardDirection(String lastOutwardDirection){
         this.lastOutwardDirection = lastOutwardDirection;
+    }
+
+    public double getVersionOfCellGen(){
+        return this.versionOfCellGen;
+    }
+
+    public void setVersionOfCellGen(double versionOfCellGen){
+        this.versionOfCellGen = versionOfCellGen;
     }
 
     public List<BlockPos> getOccupiedCellLocations(){
@@ -42,12 +51,14 @@ public class PocketCellLevelData {
         saveBlockPosList(getOccupiedCellLocations(), new ListTag(), compoundTag);
         saveUUIDList(getPlayersWithCells(), new ListTag(), compoundTag);
         compoundTag.putString("last_outward_direction", getLastOutwardDirection());
+        compoundTag.putDouble("version_of_cell_gen", getVersionOfCellGen());
     }
 
     public void loadCompoundData(CompoundTag compoundTag){
         setOccupiedCellLocations(loadedBlockPosList(compoundTag));
         setPlayersWithCells(loadedUUIDList(compoundTag));
         setLastOutwardDirection(compoundTag.getString("last_outward_direction"));
+        setVersionOfCellGen(compoundTag.getDouble("version_of_cell_gen"));
     }
 
     private void saveBlockPosList(List<BlockPos> list, ListTag listTag, CompoundTag mainTag){

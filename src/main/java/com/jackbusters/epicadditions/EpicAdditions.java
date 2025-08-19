@@ -16,6 +16,7 @@ import net.minecraftforge.registries.NewRegistryEvent;
 @Mod(EpicAdditions.MOD_ID)
 public class EpicAdditions {
     public static final String MOD_ID = "epicadditions";
+    public static final double MOD_VERSION = 1.0;
     private final FMLJavaModLoadingContext modLoadingContext;
 
     public EpicAdditions(FMLJavaModLoadingContext modLoadingContext){
