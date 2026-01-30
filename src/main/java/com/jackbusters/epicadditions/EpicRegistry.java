@@ -164,7 +164,7 @@ public class EpicRegistry {
 
     public static void addToExistingTabs(BuildCreativeModeTabContentsEvent event){
         if(event.getTabKey().equals(CreativeModeTabs.TOOLS_AND_UTILITIES)) {
-            event.getEntries().putAfter(Items.RECOVERY_COMPASS.getDefaultInstance(), POCKET_DIMENSION_KEY.get().getDefaultInstance(), CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
+            event.getEntries().putAfter(Items.CLOCK.getDefaultInstance(), POCKET_DIMENSION_KEY.get().getDefaultInstance(), CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
         }
 
         if(event.getTabKey().equals(CreativeModeTabs.COMBAT)){
